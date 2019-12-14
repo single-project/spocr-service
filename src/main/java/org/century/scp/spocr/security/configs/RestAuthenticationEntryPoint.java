@@ -3,7 +3,6 @@ package org.century.scp.spocr.security.configs;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.OutputStream;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.century.scp.spocr.exceptions.models.ErrorResponse;
