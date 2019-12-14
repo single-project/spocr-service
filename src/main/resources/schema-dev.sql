@@ -23,3 +23,11 @@ CREATE TABLE public.security_user_role_table
 );
 INSERT INTO public.security_user (id, login, passwd, is_active, tabnum)
 VALUES(8957, 'user', '96e79218965eb72c92a549dd5a330112', true, 2533);
+CREATE TABLE public.counterparties
+(
+    id integer NOT NULL auto_increment,
+    name character varying(100) NOT NULL,
+    active boolean NOT NULL DEFAULT true,
+    version integer NOT NULL DEFAULT 0,
+    CONSTRAINT counterparties_pkey PRIMARY KEY (id)
+);
