@@ -6,6 +6,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 
 @SpringBootApplication(scanBasePackages = "org.century.scp.spocr")
 public class SpocrApp {
+
   public static void main(String[] args) {
     new SpringApplicationBuilder()
         .sources(SpocrApp.class)
