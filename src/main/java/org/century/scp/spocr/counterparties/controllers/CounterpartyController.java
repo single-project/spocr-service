@@ -69,6 +69,6 @@ public class CounterpartyController {
 
   @GetMapping(value = "/all")
   public ResponseEntity<List<Counterparty>> getItems() {
-    return ResponseEntity.ok(counterpartyService.getByParams());
+    return ResponseEntity.ok(counterpartyService.getAll());
   }
 }
