@@ -44,14 +44,14 @@ public class CounterpartyServiceImpl {
         .orElseThrow(() -> new SpocrException("Элемент с кодом " + id + " не найден"));
   }
 
-  public Page<Counterparty> getByParams(Map<String, Object> params) {
+  public Page<Counterparty> getAll(Map<String, Object> params) {
     String q = params.get("q") == null ? null : (String) params.get("q");
     Boolean active = params.get("active") == null ? null : (Boolean) params.get("active");
     Pageable pageable = (Pageable) params.get("page");
     return counterpartyRepository.search(q, active, pageable);
   }
 
-  public List<Counterparty> getByParams() {
+  public List<Counterparty> getAll() {
     return counterpartyRepository.findAll();
   }
 }
