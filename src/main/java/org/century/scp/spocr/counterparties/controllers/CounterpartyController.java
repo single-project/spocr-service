@@ -10,12 +10,12 @@ import org.century.scp.spocr.counterparties.services.CounterpartyServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,6 +41,11 @@ public class CounterpartyController {
   @PostMapping
   public ResponseEntity<Counterparty> addItem(@RequestBody Counterparty sporItem) {
     return ResponseEntity.ok(counterpartyService.add(sporItem));
+  }
+
+  @PatchMapping("/{id}")
+  public ResponseEntity<Counterparty> updateItem(@PathVariable Long id, @RequestBody String data) {
+    return ResponseEntity.ok(counterpartyService.update(id, data));
   }
 
   @GetMapping("/{id}")

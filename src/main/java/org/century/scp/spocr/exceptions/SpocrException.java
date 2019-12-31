@@ -7,4 +7,8 @@ public class SpocrException extends RuntimeException {
   public SpocrException(String message) {
     super(message);
   }
+
+  public SpocrException(Throwable cause) {
+    super(cause);
+  }
 }
