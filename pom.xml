@@ -7,6 +7,7 @@
   <groupId>org.century.scp</groupId>
   <artifactId>spocr</artifactId>
   <version>1.0.0</version>
+  <packaging>war</packaging>
 
   <name>Single point of counterparties reference</name>
   <description>The core of commercial counterparties reference</description>
@@ -121,7 +122,7 @@
       </plugin>
     </plugins>
 
-    <finalName>spor-app###${project.version}</finalName>
+    <finalName>spocr-app###${project.version}</finalName>
   </build>
 
 
