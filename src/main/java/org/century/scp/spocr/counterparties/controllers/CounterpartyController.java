@@ -9,6 +9,10 @@ import org.century.scp.spocr.counterparties.models.domain.Counterparty;
 import org.century.scp.spocr.counterparties.services.CounterpartyServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,8 +28,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/counterparties")
 public class CounterpartyController {
 
-  private static final String DEFAULT_PAGE_NUM = "0";
-  private static final String DEFAULT_PAGE_SIZE = "25";
+  private static final String DEFAULT_SORT_FIELD = "name";
+  private static final int DEFAULT_PAGE_SIZE = 200000;
 
   private CounterpartyServiceImpl counterpartyService;
 
@@ -48,13 +52,13 @@ public class CounterpartyController {
   public ResponseEntity<Page<Counterparty>> getItems(
       @RequestParam(value = "q", defaultValue = "", required = false) String q,
       @RequestParam(value = "active", defaultValue = "*", required = false) String active,
-      @RequestParam(value = "page", defaultValue = DEFAULT_PAGE_NUM, required = false) int page,
-      @RequestParam(value = "size", defaultValue = DEFAULT_PAGE_SIZE, required = false) int size) {
+      @PageableDefault(size = DEFAULT_PAGE_SIZE)
+          @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
+          Pageable pageable) {
     Map<String, Object> params = new HashMap<>();
     params.put("q", StringUtils.stripToNull(q));
     params.put("active", BooleanUtils.toBooleanObject(active));
-    params.put("page", page);
-    params.put("size", size);
+    params.put("page", pageable);
     return ResponseEntity.ok(counterpartyService.getByParams(params));
   }
 

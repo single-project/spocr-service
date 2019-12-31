@@ -9,6 +9,7 @@ import org.century.scp.spocr.exceptions.SpocrException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -36,10 +37,11 @@ public class CounterpartyServiceImpl {
   public Page<Counterparty> getByParams(Map<String, Object> params) {
     String q = params.get("q") == null ? null : (String) params.get("q");
     Boolean active = params.get("active") == null ? null : (Boolean) params.get("active");
+    Pageable pageable = (Pageable)params.get("page");
     return counterpartyRepository.search(
         q,
         active,
-        PageRequest.of((int) params.get("page"), (int) params.get("size"), Sort.by("id")));
+        pageable);
   }
 
   public List<Counterparty> getByParams() {
