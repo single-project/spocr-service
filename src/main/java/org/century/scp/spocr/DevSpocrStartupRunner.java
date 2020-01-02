@@ -32,7 +32,7 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
 
       String line;
       while ((line = reader.readLine()) != null) {
-        items.add(new Counterparty(null, line.split(";")[1], true, (long) 0));
+        items.add(new Counterparty(null, line.split(";")[1], true));
       }
     }
     repository.saveAll(items);

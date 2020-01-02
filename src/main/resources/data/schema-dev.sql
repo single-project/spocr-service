@@ -31,3 +31,11 @@ CREATE TABLE public.counterparties
     version integer NOT NULL DEFAULT 0,
     CONSTRAINT counterparties_pkey PRIMARY KEY (id)
 );
+CREATE TABLE public.events
+(
+    id integer NOT NULL auto_increment,
+    ident character varying(100) NOT NULL,
+    ts timestamp,
+    body text,
+    CONSTRAINT events_pkey PRIMARY KEY (id)
+);

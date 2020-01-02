@@ -11,4 +11,8 @@ public class SpocrException extends RuntimeException {
   public SpocrException(Throwable cause) {
     super(cause);
   }
+
+  public SpocrException(String message, Throwable cause) {
+    super(message, cause);
+  }
 }

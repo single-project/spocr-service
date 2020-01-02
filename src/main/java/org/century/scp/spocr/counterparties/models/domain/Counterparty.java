@@ -6,17 +6,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Version;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.century.scp.spocr.events.models.domain.AbstractAuditableEntity;
 
+@EqualsAndHashCode(callSuper = false)
 @Data
 @Entity
 @Table(name = "counterparties")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Counterparty {
+public class Counterparty extends AbstractAuditableEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,5 +30,4 @@ public class Counterparty {
   @Column(name = "active")
   private Boolean active;
 
-  @Version @Column private Long version;
 }

@@ -10,7 +10,7 @@ public class SpocrApp {
   public static void main(String[] args) {
     new SpringApplicationBuilder()
         .sources(SpocrApp.class)
-        // TODO: add unimportant features here
+        // TODO: create unimportant features here
         .bannerMode(Banner.Mode.CONSOLE)
         // TODO: turn off in prod
         .logStartupInfo(true)
