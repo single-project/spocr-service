@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.persistence.PostPersist;
 import javax.persistence.PostUpdate;
 import javax.persistence.PreRemove;
+import javax.persistence.Table;
 import lombok.extern.slf4j.Slf4j;
 import org.century.scp.spocr.events.models.domain.AbstractAuditableEntity;
 import org.century.scp.spocr.events.repositories.EventRepositoryImpl;
@@ -28,7 +29,7 @@ public class AuditableEntityListener {
     log.debug("PostPersist body {}", entity.toString());
     Map<String, Object> body = new HashMap<>();
     body.put("id", entity.getId());
-    eventRepository.insert("create", body);
+    eventRepository.insert("create-" + entity.getClass().getAnnotation(Table.class).name(), body);
   }
 
   @PostUpdate
@@ -37,7 +38,7 @@ public class AuditableEntityListener {
     Map<String, Object> body = new HashMap<>();
     body.put("id", entity.getId());
     body.put("fields", entity.getUpdatedFields());
-    eventRepository.insert("update", body);
+    eventRepository.insert("update-" + entity.getClass().getAnnotation(Table.class).name(), body);
   }
 
   @PreRemove
