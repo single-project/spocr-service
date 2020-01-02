@@ -23,10 +23,13 @@ public class EventRepositoryImpl {
     this.jdbcTemplate = jdbcTemplate;
   }
 
-  public List<Map<String, Object>> findAll() {
+  public List<Map<String, Object>> findAll(int q) {
     String sql =
-        "SELECT h.id, h.ident, h.ts, h.body" + " FROM public.events AS h" + " ORDER BY h.id";
-    return jdbcTemplate.queryForList(sql);
+        "SELECT h.id, h.ident, h.ts, h.body"
+            + " FROM public.events AS h"
+            + " WHERE h.id > ?"
+            + " ORDER BY h.id";
+    return jdbcTemplate.queryForList(sql, q);
   }
 
   public void insert(String ident, Map<String, Object> body) {
