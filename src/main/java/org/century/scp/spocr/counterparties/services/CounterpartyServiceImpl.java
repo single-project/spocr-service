@@ -7,6 +7,7 @@ import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.century.scp.spocr.counterparties.models.domain.Counterparty;
 import org.century.scp.spocr.counterparties.repositories.CounterpartyRepository;
+import org.century.scp.spocr.events.services.AuditableEntityServiceImpl;
 import org.century.scp.spocr.exceptions.SpocrException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class CounterpartyServiceImpl {
+public class CounterpartyServiceImpl extends AuditableEntityServiceImpl {
 
   private CounterpartyRepository counterpartyRepository;
 
@@ -24,14 +25,14 @@ public class CounterpartyServiceImpl {
     this.counterpartyRepository = counterpartyRepository;
   }
 
-  public Counterparty add(Counterparty spocrItem) {
+  public Counterparty create(Counterparty spocrItem) {
     return counterpartyRepository.save(spocrItem);
   }
 
   public Counterparty update(Long id, String data) {
     Counterparty counterparty = get(id);
     try {
-      counterparty = JsonMergePatchUtils.mergePatch(counterparty, data, Counterparty.class);
+      counterparty = mergePatch(counterparty, data, Counterparty.class);
     } catch (IOException | JsonPatchException e) {
       throw new SpocrException(e);
     }

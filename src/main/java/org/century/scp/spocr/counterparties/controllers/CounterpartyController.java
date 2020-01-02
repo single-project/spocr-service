@@ -40,7 +40,7 @@ public class CounterpartyController {
 
   @PostMapping
   public ResponseEntity<Counterparty> addItem(@RequestBody Counterparty sporItem) {
-    return ResponseEntity.ok(counterpartyService.add(sporItem));
+    return ResponseEntity.ok(counterpartyService.create(sporItem));
   }
 
   @PatchMapping("/{id}")
