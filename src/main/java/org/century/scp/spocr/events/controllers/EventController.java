@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*")
@@ -23,7 +24,8 @@ public class EventController {
   }
 
   @GetMapping
-  public ResponseEntity<List<Map<String, Object>>> getItems() {
-    return ResponseEntity.ok(eventRepository.findAll());
+  public ResponseEntity<List<Map<String, Object>>> getItems(
+      @RequestParam(value = "q", required = false, defaultValue = "id>0") String q) {
+    return ResponseEntity.ok(eventRepository.findAll(Integer.valueOf(q.split(">")[1])));
   }
 }
