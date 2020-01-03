@@ -39,3 +39,12 @@ CREATE TABLE public.events
     body text,
     CONSTRAINT events_pkey PRIMARY KEY (id)
 );
+CREATE TABLE public.shops
+(
+    id integer NOT NULL auto_increment,
+    name character varying(100) NOT NULL,
+    counterparty_id integer NOT NULL,
+    active boolean NOT NULL DEFAULT true,
+    version integer NOT NULL DEFAULT 0,
+    CONSTRAINT shops_pkey PRIMARY KEY (id)
+);
