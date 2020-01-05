@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.century.scp.spocr.counterparties.models.domain.Counterparty;
 import org.century.scp.spocr.counterparties.repositories.CounterpartyRepository;
 import org.century.scp.spocr.events.services.AuditableEntityServiceImpl;
+import org.century.scp.spocr.exceptions.SpocrEntityNotFoundException;
 import org.century.scp.spocr.exceptions.SpocrException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -42,7 +43,7 @@ public class CounterpartyServiceImpl extends AuditableEntityServiceImpl {
   public Counterparty get(long id) {
     return counterpartyRepository
         .findById(id)
-        .orElseThrow(() -> new SpocrException("Элемент с кодом " + id + " не найден"));
+        .orElseThrow(() -> new SpocrEntityNotFoundException(id, "контрагент"));
   }
 
   public Page<Counterparty> getByParams(Map<String, Object> params) {

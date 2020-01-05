@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.century.scp.spocr.events.services.AuditableEntityServiceImpl;
+import org.century.scp.spocr.exceptions.SpocrEntityNotFoundException;
 import org.century.scp.spocr.exceptions.SpocrException;
 import org.century.scp.spocr.shoptypes.models.domain.ShopType;
 import org.century.scp.spocr.shoptypes.repositories.ShopTypeRepository;
@@ -28,7 +29,7 @@ public class ShopTypesServiceImpl extends AuditableEntityServiceImpl {
   public ShopType get(long id) {
     return shopTypeRepository
         .findById(id)
-        .orElseThrow(() -> new SpocrException("Тип магазина с кодом " + id + " не найден"));
+        .orElseThrow(() -> new SpocrEntityNotFoundException(id, "тип магазина"));
   }
 
   public ShopType create(ShopType item) {

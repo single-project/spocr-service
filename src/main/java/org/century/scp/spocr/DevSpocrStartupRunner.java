@@ -60,8 +60,8 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
     }
 
     // add 2 new manufacturer
-    Manufacturer m1 = manufacturerRepository.save(new Manufacturer("m1", true));
-    Manufacturer m2 = manufacturerRepository.save(new Manufacturer("m2", true));
+    Manufacturer m1 = manufacturerRepository.save(new Manufacturer("m1"));
+    Manufacturer m2 = manufacturerRepository.save(new Manufacturer("m2"));
 
     // add 5 new shop types
     shopTypeRepository.save(new ShopType("st1", m1));
