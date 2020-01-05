@@ -9,6 +9,8 @@ import org.century.scp.spocr.events.services.AuditableEntityServiceImpl;
 import org.century.scp.spocr.exceptions.SpocrException;
 import org.century.scp.spocr.shops.models.domain.Shop;
 import org.century.scp.spocr.shops.repositories.ShopRepository;
+import org.century.scp.spocr.shoptypes.models.domain.ShopType;
+import org.century.scp.spocr.shoptypes.services.ShopTypesServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,10 +21,13 @@ import org.springframework.stereotype.Service;
 public class ShopServiceImpl extends AuditableEntityServiceImpl {
 
   private ShopRepository shopRepository;
+  private ShopTypesServiceImpl shopTypesService;
 
   @Autowired
-  public ShopServiceImpl(ShopRepository shopRepository) {
+  public ShopServiceImpl(ShopRepository shopRepository,
+      ShopTypesServiceImpl shopTypesService) {
     this.shopRepository = shopRepository;
+    this.shopTypesService = shopTypesService;
   }
 
   public Shop get(long id) {
@@ -33,6 +38,13 @@ public class ShopServiceImpl extends AuditableEntityServiceImpl {
 
   public Shop create(Shop item) {
     return shopRepository.save(item);
+  }
+
+  public Shop addShopType(Long id, ShopType shopType) {
+    Shop shop = get(id);
+    ShopType st = shopTypesService.get(shopType.getId());
+    shop.addShopType(st);
+    return shopRepository.save(shop);
   }
 
   public Shop update(Long id, String data) {

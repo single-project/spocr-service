@@ -1,6 +1,5 @@
-package org.century.scp.spocr.shops.models.domain;
+package org.century.scp.spocr.shoptypes.models.domain;
 
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,25 +7,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.century.scp.spocr.counterparties.models.domain.Counterparty;
 import org.century.scp.spocr.events.models.domain.AbstractAuditableEntity;
-import org.century.scp.spocr.shoptypes.models.domain.ShopType;
+import org.century.scp.spocr.manufactures.models.domain.Manufacturer;
 
 @EqualsAndHashCode(callSuper = false)
 @Data
 @Entity
-@Table(name = "shops")
+@Table(name = "shop_types")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Shop extends AbstractAuditableEntity {
+public class ShopType extends AbstractAuditableEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,28 +32,16 @@ public class Shop extends AbstractAuditableEntity {
   private String name;
 
   @ManyToOne(fetch = FetchType.EAGER, optional = false)
-  @JoinColumn(name = "counterparty_id", nullable = false)
-  private Counterparty counterparty;
-
-  @ManyToMany(fetch = FetchType.EAGER)
-  @JoinTable(
-      name = "shop_to_shop_types",
-      joinColumns = @JoinColumn(name = "shop_id"),
-      inverseJoinColumns = @JoinColumn(name = "shop_types_id"))
-  private Set<ShopType> shopTypes;
+  @JoinColumn(name = "manufactures_id", nullable = false)
+  private Manufacturer manufacturer;
 
   @Column(name = "active")
   private Boolean active;
 
-  public Shop(String name,
-      Counterparty counterparty) {
+  public ShopType(String name,
+      Manufacturer manufacturer) {
     this.name = name;
-    this.counterparty = counterparty;
+    this.manufacturer = manufacturer;
     this.active = true;
   }
-
-  public void addShopType(ShopType shopType) {
-    shopTypes.add(shopType);
-  }
-
 }

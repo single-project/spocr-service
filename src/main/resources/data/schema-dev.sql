@@ -48,3 +48,28 @@ CREATE TABLE public.shops
     version integer NOT NULL DEFAULT 0,
     CONSTRAINT shops_pkey PRIMARY KEY (id)
 );
+CREATE TABLE public.manufactures
+(
+    id integer NOT NULL auto_increment,
+    name character varying(100) NOT NULL,
+    active boolean NOT NULL DEFAULT true,
+    version integer NOT NULL DEFAULT 0,
+    CONSTRAINT manufactures_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.shop_types
+(
+    id integer NOT NULL auto_increment,
+    name character varying(100) NOT NULL,
+    active boolean NOT NULL DEFAULT true,
+    manufactures_id integer NOT NULL,
+    version integer NOT NULL DEFAULT 0,
+    CONSTRAINT shop_types_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.shop_to_shop_types
+(
+    id integer NOT NULL auto_increment,
+    shop_id integer NOT NULL,
+    shop_types_id integer NOT NULL,
+    CONSTRAINT shop_to_shop_types_pkey PRIMARY KEY (id),
+    CONSTRAINT shop_id_shop_types_id_uidx UNIQUE (shop_id, shop_types_id)
+);
