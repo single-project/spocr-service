@@ -1,5 +1,6 @@
 package org.century.scp.spocr.events.models.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
@@ -19,6 +20,7 @@ public abstract class AbstractAuditableEntity {
 
   public abstract Long getId();
 
+  @JsonIgnore
   @Transient
   @SaveTransientFieldsAfterMerge
   public List<String> updatedFields;

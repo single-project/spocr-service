@@ -1,15 +1,12 @@
-package org.century.scp.spocr.shops.controllers;
+package org.century.scp.spocr.manufactures.controllers;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.century.scp.spocr.counterparties.models.domain.Counterparty;
-import org.century.scp.spocr.counterparties.services.CounterpartyServiceImpl;
-import org.century.scp.spocr.shops.models.domain.Shop;
-import org.century.scp.spocr.shops.services.ShopServiceImpl;
-import org.century.scp.spocr.shoptypes.models.domain.ShopType;
+import org.century.scp.spocr.manufactures.models.domain.Manufacturer;
+import org.century.scp.spocr.manufactures.services.ManufacturerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +18,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,46 +25,36 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/shops")
-public class ShopController {
+@RequestMapping("/api/manufactures")
+public class ManufacturerController {
 
   private static final String DEFAULT_SORT_FIELD = "name";
   private static final int DEFAULT_PAGE_SIZE = 200000;
 
-  private ShopServiceImpl shopService;
-  private CounterpartyServiceImpl counterpartyService;
+  private ManufacturerServiceImpl manufacturerService;
 
   @Autowired
-  public ShopController(ShopServiceImpl shopService, CounterpartyServiceImpl counterpartyService) {
-    this.shopService = shopService;
-    this.counterpartyService = counterpartyService;
-  }
-
-  @PutMapping("/{id}")
-  public ResponseEntity<Shop> putShopTypeToShop(
-      @PathVariable Long id, @RequestBody ShopType shopType) {
-    return ResponseEntity.ok(shopService.addShopType(id, shopType));
+  public ManufacturerController(ManufacturerServiceImpl manufacturerService) {
+    this.manufacturerService = manufacturerService;
   }
 
   @PostMapping
-  public ResponseEntity<Shop> addItem(@RequestBody Shop shop) {
-    Counterparty counterparty = counterpartyService.get(shop.getCounterparty().getId());
-    shop.setCounterparty(counterparty);
-    return ResponseEntity.ok(shopService.create(shop));
+  public ResponseEntity<Manufacturer> addItem(@RequestBody Manufacturer manufacturer) {
+    return ResponseEntity.ok(manufacturerService.create(manufacturer));
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<Shop> updateItem(@PathVariable Long id, @RequestBody String data) {
-    return ResponseEntity.ok(shopService.update(id, data));
+  public ResponseEntity<Manufacturer> updateItem(@PathVariable Long id, @RequestBody String data) {
+    return ResponseEntity.ok(manufacturerService.update(id, data));
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Shop> getItem(@PathVariable(value = "id") long id) {
-    return ResponseEntity.ok(shopService.get(id));
+  public ResponseEntity<Manufacturer> getItem(@PathVariable(value = "id") long id) {
+    return ResponseEntity.ok(manufacturerService.get(id));
   }
 
   @GetMapping
-  public ResponseEntity<Page<Shop>> getItems(
+  public ResponseEntity<Page<Manufacturer>> getItems(
       @RequestParam(value = "q", defaultValue = "", required = false) String q,
       @RequestParam(value = "active", defaultValue = "*", required = false) String active,
       @PageableDefault(size = DEFAULT_PAGE_SIZE)
@@ -78,11 +64,11 @@ public class ShopController {
     params.put("q", StringUtils.stripToNull(q));
     params.put("active", BooleanUtils.toBooleanObject(active));
     params.put("page", pageable);
-    return ResponseEntity.ok(shopService.getByParams(params));
+    return ResponseEntity.ok(manufacturerService.getByParams(params));
   }
 
   @GetMapping(value = "/all")
-  public ResponseEntity<List<Shop>> getItems() {
-    return ResponseEntity.ok(shopService.getAll());
+  public ResponseEntity<List<Manufacturer>> getItems() {
+    return ResponseEntity.ok(manufacturerService.getAll());
   }
 }
