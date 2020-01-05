@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.century.scp.spocr.events.services.AuditableEntityServiceImpl;
+import org.century.scp.spocr.exceptions.SpocrEntityNotFoundException;
 import org.century.scp.spocr.exceptions.SpocrException;
 import org.century.scp.spocr.manufactures.models.domain.Manufacturer;
 import org.century.scp.spocr.manufactures.repositories.ManufacturerRepository;
@@ -28,7 +29,7 @@ public class ManufacturerServiceImpl extends AuditableEntityServiceImpl {
   public Manufacturer get(long id) {
     return manufacturerRepository
         .findById(id)
-        .orElseThrow(() -> new SpocrException("Производитель с кодом " + id + " не найден"));
+        .orElseThrow(() -> new SpocrEntityNotFoundException(id, "производитель"));
   }
 
   public Manufacturer create(Manufacturer item) {

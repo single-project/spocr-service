@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.century.scp.spocr.events.services.AuditableEntityServiceImpl;
+import org.century.scp.spocr.exceptions.SpocrEntityNotFoundException;
 import org.century.scp.spocr.exceptions.SpocrException;
 import org.century.scp.spocr.shops.models.domain.Shop;
 import org.century.scp.spocr.shops.repositories.ShopRepository;
@@ -33,7 +34,7 @@ public class ShopServiceImpl extends AuditableEntityServiceImpl {
   public Shop get(long id) {
     return shopRepository
         .findById(id)
-        .orElseThrow(() -> new SpocrException("Магазин с кодом " + id + " не найден"));
+        .orElseThrow(() -> new SpocrEntityNotFoundException(id, "магазин"));
   }
 
   public Shop create(Shop item) {

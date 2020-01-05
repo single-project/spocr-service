@@ -27,11 +27,11 @@ public class Manufacturer extends AbstractAuditableEntity {
   @Column(name = "name")
   private String name;
 
-  @Column(name = "active")
+  @Column(name = "active", columnDefinition = "boolean default true")
   private Boolean active;
 
-  public Manufacturer(String name, Boolean active) {
+  public Manufacturer(String name) {
     this.name = name;
-    this.active = active;
+    this.active = false;
   }
 }
