@@ -7,14 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.century.scp.spocr.counterparties.models.domain.Counterparty;
-import org.century.scp.spocr.counterparties.repositories.CounterpartyRepository;
 import org.century.scp.spocr.counterparties.services.CounterpartyServiceImpl;
 import org.century.scp.spocr.manufactures.models.domain.Manufacturer;
-import org.century.scp.spocr.manufactures.repositories.ManufacturerRepository;
+import org.century.scp.spocr.manufactures.services.ManufacturerServiceImpl;
 import org.century.scp.spocr.shops.models.domain.Shop;
 import org.century.scp.spocr.shops.services.ShopServiceImpl;
 import org.century.scp.spocr.shoptypes.models.domain.ShopType;
-import org.century.scp.spocr.shoptypes.repositories.ShopTypeRepository;
+import org.century.scp.spocr.shoptypes.services.ShopTypesServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -29,13 +28,11 @@ import org.springframework.stereotype.Component;
 public class DevSpocrStartupRunner implements ApplicationRunner {
 
   @Autowired
-  private CounterpartyRepository counterpartyRepository;
-  @Autowired
   private CounterpartyServiceImpl counterpartyService;
   @Autowired
-  private ManufacturerRepository manufacturerRepository;
+  private ManufacturerServiceImpl manufacturerService;
   @Autowired
-  private ShopTypeRepository shopTypeRepository;
+  private ShopTypesServiceImpl shopTypesService;
   @Autowired
   private ShopServiceImpl shopService;
 
@@ -49,10 +46,10 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
 
       String line;
       while ((line = reader.readLine()) != null) {
-        items.add(new Counterparty(null, line.split(";")[1], true));
+        items.add(new Counterparty(line.split(";")[1]));
       }
     }
-    counterpartyRepository.saveAll(items);
+    counterpartyService.createAll(items);
 
     // add 10 new shops
     for (int i = 1; i <= 10; i++) {
@@ -60,15 +57,15 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
     }
 
     // add 2 new manufacturer
-    Manufacturer m1 = manufacturerRepository.save(new Manufacturer("m1"));
-    Manufacturer m2 = manufacturerRepository.save(new Manufacturer("m2"));
+    Manufacturer m1 = manufacturerService.create(new Manufacturer("m1"));
+    Manufacturer m2 = manufacturerService.create(new Manufacturer("m2"));
 
     // add 5 new shop types
-    shopTypeRepository.save(new ShopType("st1", m1));
-    shopTypeRepository.save(new ShopType("st2", m1));
-    shopTypeRepository.save(new ShopType("st3", m1));
-    shopTypeRepository.save(new ShopType("st4", m2));
-    shopTypeRepository.save(new ShopType("st5", m2));
+    shopTypesService.create(new ShopType("st1", m1));
+    shopTypesService.create(new ShopType("st2", m1));
+    shopTypesService.create(new ShopType("st3", m1));
+    shopTypesService.create(new ShopType("st4", m2));
+    shopTypesService.create(new ShopType("st5", m2));
   }
 
   private Resource loadItems() {

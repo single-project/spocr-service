@@ -1,14 +1,14 @@
 package org.century.scp.spocr.counterparties.repositories;
 
+import org.century.scp.spocr.base.repositories.BaseRepository;
 import org.century.scp.spocr.counterparties.models.domain.Counterparty;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CounterpartyRepository extends JpaRepository<Counterparty, Long> {
+public interface CounterpartyRepository extends BaseRepository<Counterparty> {
   @Query(
       value =
           "SELECT * FROM {h-schema}counterparties"

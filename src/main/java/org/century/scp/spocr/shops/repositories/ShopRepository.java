@@ -1,12 +1,14 @@
 package org.century.scp.spocr.shops.repositories;
 
+import org.century.scp.spocr.base.repositories.BaseRepository;
 import org.century.scp.spocr.shops.models.domain.Shop;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
-public interface ShopRepository extends JpaRepository<Shop, Long> {
+@Repository
+public interface ShopRepository extends BaseRepository<Shop> {
 
   @Query(
       value =
