@@ -1,4 +1,4 @@
-package org.century.scp.spocr.base.models.domain;
+package org.century.scp.spocr.auditing.models.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
@@ -16,7 +16,9 @@ import org.century.scp.spocr.auditing.listeners.AuditableEntityListener;
 @Setter
 @MappedSuperclass
 @EntityListeners(AuditableEntityListener.class)
-public abstract class BaseEntity implements NamedEntity, VersionableEntity, PartialUpdatableEntity {
+public abstract class AbstractAuditableEntity {
+
+  public abstract Long getId();
 
   @JsonIgnore
   @Transient
@@ -24,13 +26,7 @@ public abstract class BaseEntity implements NamedEntity, VersionableEntity, Part
   public List<String> updatedFields;
 
   @Version
-  @Column(columnDefinition = "long not null default 0")
+  @Column
   private Long version;
-
-  public abstract Long getId();
-
-  public abstract String getName();
-
-  public abstract void setName(String name);
 
 }
