@@ -1,12 +1,14 @@
 package org.century.scp.spocr.manufactures.repositories;
 
+import org.century.scp.spocr.base.repositories.BaseRepository;
 import org.century.scp.spocr.manufactures.models.domain.Manufacturer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
-public interface ManufacturerRepository extends JpaRepository<Manufacturer, Long> {
+@Repository
+public interface ManufacturerRepository extends BaseRepository<Manufacturer> {
 
   @Query(
       value =

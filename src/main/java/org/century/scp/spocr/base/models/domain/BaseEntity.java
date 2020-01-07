@@ -1,0 +1,36 @@
+package org.century.scp.spocr.base.models.domain;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.EntityListeners;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
+import javax.persistence.Version;
+import lombok.Getter;
+import lombok.Setter;
+import org.century.scp.spocr.events.annotations.SaveTransientFieldsAfterMerge;
+import org.century.scp.spocr.events.listeners.AuditableEntityListener;
+
+@Getter
+@Setter
+@MappedSuperclass
+@EntityListeners(AuditableEntityListener.class)
+public abstract class BaseEntity implements NamedEntity, VersionableEntity, PartialUpdatableEntity {
+
+  @JsonIgnore
+  @Transient
+  @SaveTransientFieldsAfterMerge
+  public List<String> updatedFields;
+
+  @Version
+  @Column(columnDefinition = "long not null default 0")
+  private Long version;
+
+  public abstract Long getId();
+
+  public abstract String getName();
+
+  public abstract void setName(String name);
+
+}

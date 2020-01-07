@@ -10,7 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.century.scp.spocr.events.models.domain.AbstractAuditableEntity;
+import org.century.scp.spocr.base.models.domain.BaseEntity;
 
 @EqualsAndHashCode(callSuper = false)
 @Data
@@ -18,7 +18,7 @@ import org.century.scp.spocr.events.models.domain.AbstractAuditableEntity;
 @Table(name = "manufactures")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Manufacturer extends AbstractAuditableEntity {
+public class Manufacturer extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +27,7 @@ public class Manufacturer extends AbstractAuditableEntity {
   @Column(name = "name")
   private String name;
 
-  @Column(name = "active", columnDefinition = "boolean default true")
+  @Column(name = "active")
   private Boolean active;
 
   public Manufacturer(String name) {

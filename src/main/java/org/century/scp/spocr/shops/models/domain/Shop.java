@@ -16,8 +16,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.century.scp.spocr.base.models.domain.BaseEntity;
 import org.century.scp.spocr.counterparties.models.domain.Counterparty;
-import org.century.scp.spocr.events.models.domain.AbstractAuditableEntity;
 import org.century.scp.spocr.shoptypes.models.domain.ShopType;
 
 @EqualsAndHashCode(callSuper = false)
@@ -26,7 +26,7 @@ import org.century.scp.spocr.shoptypes.models.domain.ShopType;
 @Table(name = "shops")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Shop extends AbstractAuditableEntity {
+public class Shop extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

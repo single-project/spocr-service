@@ -13,7 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.century.scp.spocr.events.models.domain.AbstractAuditableEntity;
+import org.century.scp.spocr.base.models.domain.BaseEntity;
 import org.century.scp.spocr.manufactures.models.domain.Manufacturer;
 
 @EqualsAndHashCode(callSuper = false)
@@ -22,7 +22,7 @@ import org.century.scp.spocr.manufactures.models.domain.Manufacturer;
 @Table(name = "shop_types")
 @NoArgsConstructor
 @AllArgsConstructor
-public class ShopType extends AbstractAuditableEntity {
+public class ShopType extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
