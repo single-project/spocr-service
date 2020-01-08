@@ -9,7 +9,6 @@ import com.github.fge.jsonpatch.JsonPatchException;
 import com.github.fge.jsonpatch.mergepatch.JsonMergePatch;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import org.century.scp.spocr.base.models.domain.BaseEntity;
 import org.century.scp.spocr.base.repositories.BaseRepository;
 import org.century.scp.spocr.exceptions.SpocrEntityNotFoundException;
@@ -53,13 +52,6 @@ public abstract class BaseService<T extends BaseEntity> {
 
   public Page<T> getBySpecification(Specification<T> specification, Pageable pageable) {
     return entityRepository.findAll(specification, pageable);
-  }
-
-  public Page<T> getByParams(Map<String, Object> params) {
-    String q = params.get("q") == null ? null : (String) params.get("q");
-    Boolean active = params.get("active") == null ? null : (Boolean) params.get("active");
-    Pageable pageable = (Pageable) params.get("page");
-    return entityRepository.search(q, active, pageable);
   }
 
   public List<T> getAll() {

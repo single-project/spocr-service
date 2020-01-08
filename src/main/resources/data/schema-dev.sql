@@ -35,6 +35,7 @@ CREATE TABLE public.events
 (
     id integer NOT NULL auto_increment,
     ident character varying(100) NOT NULL,
+    entity character varying(100) NOT NULL,
     ts timestamp,
     body text,
     CONSTRAINT events_pkey PRIMARY KEY (id)
