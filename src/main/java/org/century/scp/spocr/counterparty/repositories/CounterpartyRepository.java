@@ -2,19 +2,9 @@ package org.century.scp.spocr.counterparty.repositories;
 
 import org.century.scp.spocr.base.repositories.BaseRepository;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CounterpartyRepository extends BaseRepository<Counterparty> {
-  @Query(
-      value =
-          "SELECT * FROM {h-schema}counterparties"
-              + " WHERE "
-              + "(:query is null or name like %:query%) "
-              + "and (:active is null or active=:active)",
-      nativeQuery = true)
-  public Page<Counterparty> search(String query, Boolean active, Pageable pageable);
+
 }
