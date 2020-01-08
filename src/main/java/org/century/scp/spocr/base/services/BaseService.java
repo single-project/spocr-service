@@ -16,6 +16,7 @@ import org.century.scp.spocr.exceptions.SpocrEntityNotFoundException;
 import org.century.scp.spocr.exceptions.SpocrException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
 public abstract class BaseService<T extends BaseEntity> {
 
@@ -48,6 +49,10 @@ public abstract class BaseService<T extends BaseEntity> {
     return entityRepository
         .findById(id)
         .orElseThrow(() -> new SpocrEntityNotFoundException(id, getEntityName()));
+  }
+
+  public Page<T> getBySpecification(Specification<T> specification, Pageable pageable) {
+    return entityRepository.findAll(specification, pageable);
   }
 
   public Page<T> getByParams(Map<String, Object> params) {
