@@ -1,5 +1,8 @@
 package org.century.scp.spocr.shoptype.services;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.century.scp.spocr.base.services.BaseService;
 import org.century.scp.spocr.shoptype.models.domain.ShopType;
@@ -24,5 +27,13 @@ public class ShopTypesServiceImpl extends BaseService<ShopType> {
   @Override
   public String getEntityName() {
     return "тип магазина";
+  }
+
+  public List<ShopType> getAll(List<ShopType> shopTypes) {
+    return entityRepository.findAllById(getIds(shopTypes));
+  }
+
+  private List<Long> getIds(Collection<ShopType> shopTypes) {
+    return shopTypes.stream().map(ShopType::getId).collect(Collectors.toList());
   }
 }

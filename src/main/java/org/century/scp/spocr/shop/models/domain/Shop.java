@@ -1,6 +1,7 @@
 package org.century.scp.spocr.shop.models.domain;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -44,15 +45,18 @@ public class Shop extends BaseEntity {
       name = "shop_to_shop_types",
       joinColumns = @JoinColumn(name = "shop_id"),
       inverseJoinColumns = @JoinColumn(name = "shop_types_id"))
-  private Set<ShopType> shopTypes;
+  private List<ShopType> shopTypes;
 
   @Column(name = "active")
   private Boolean active;
 
   public Shop(String name,
-      Counterparty counterparty) {
+      Counterparty counterparty,
+      ShopType shopType) {
     this.name = name;
     this.counterparty = counterparty;
+    this.shopTypes = new ArrayList<>();
+    this.shopTypes.add(shopType);
     this.active = true;
   }
 

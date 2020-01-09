@@ -10,6 +10,7 @@ import org.century.scp.spocr.counterparty.services.CounterpartyServiceImpl;
 import org.century.scp.spocr.shop.models.domain.Shop;
 import org.century.scp.spocr.shop.services.ShopServiceImpl;
 import org.century.scp.spocr.shoptype.models.domain.ShopType;
+import org.century.scp.spocr.shoptype.services.ShopTypesServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,11 +37,15 @@ public class ShopController {
   private static final int DEFAULT_PAGE_SIZE = 200000;
 
   private ShopServiceImpl shopService;
+  private ShopTypesServiceImpl shopTypesService;
   private CounterpartyServiceImpl counterpartyService;
 
   @Autowired
-  public ShopController(ShopServiceImpl shopService, CounterpartyServiceImpl counterpartyService) {
+  public ShopController(ShopServiceImpl shopService,
+      ShopTypesServiceImpl shopTypesService,
+      CounterpartyServiceImpl counterpartyService) {
     this.shopService = shopService;
+    this.shopTypesService = shopTypesService;
     this.counterpartyService = counterpartyService;
   }
 
@@ -53,7 +58,9 @@ public class ShopController {
   @PostMapping
   public ResponseEntity<Shop> addItem(@RequestBody Shop shop) {
     Counterparty counterparty = counterpartyService.get(shop.getCounterparty().getId());
+    List<ShopType> shopTypes = shopTypesService.getAll(shop.getShopTypes());
     shop.setCounterparty(counterparty);
+    shop.setShopTypes(shopTypes);
     return ResponseEntity.ok(shopService.create(shop));
   }
 

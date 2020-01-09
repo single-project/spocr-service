@@ -46,6 +46,17 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
     }
     counterpartyService.createAll(counterparties);
 
+    // add 2 new manufacturer
+    Manufacturer m1 = manufacturerService.create(new Manufacturer("ООО Нестле"));
+    Manufacturer m2 = manufacturerService.create(new Manufacturer("ООО Ферреро"));
+
+    // add 5 new shop types
+    shopTypesService.create(new ShopType("Супермаркет", m1));
+    shopTypesService.create(new ShopType("Маркет", m1));
+    shopTypesService.create(new ShopType("Магазин", m1));
+    shopTypesService.create(new ShopType("Ларек", m2));
+    shopTypesService.create(new ShopType("Прилавок", m2));
+
     // add 1000 new shops
     List<Shop> shops = new ArrayList<>();
     Resource resource = loadItems();
@@ -55,21 +66,13 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
       String line;
       while ((line = reader.readLine()) != null) {
         shops.add(
-            new Shop(line.split(";")[1], counterpartyService.get(new Random().nextInt(9) + 1)));
+            new Shop(
+                line.split(";")[1],
+                counterpartyService.get(new Random().nextInt(9) + 1),
+                shopTypesService.get(new Random().nextInt(5) + 1)));
       }
     }
     shopService.createAll(shops);
-
-    // add 2 new manufacturer
-    Manufacturer m1 = manufacturerService.create(new Manufacturer("m1"));
-    Manufacturer m2 = manufacturerService.create(new Manufacturer("m2"));
-
-    // add 5 new shop types
-    shopTypesService.create(new ShopType("Супермаркет", m1));
-    shopTypesService.create(new ShopType("Маркет", m1));
-    shopTypesService.create(new ShopType("Магазин", m1));
-    shopTypesService.create(new ShopType("Ларек", m2));
-    shopTypesService.create(new ShopType("Прилавок", m2));
   }
 
   private Resource loadItems() {

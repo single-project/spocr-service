@@ -32,6 +32,6 @@ public class Manufacturer extends BaseEntity {
 
   public Manufacturer(String name) {
     this.name = name;
-    this.active = false;
+    this.active = true;
   }
 }
