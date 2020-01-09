@@ -1,8 +1,5 @@
 package org.century.scp.spocr;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -19,8 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Profile;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -47,8 +42,8 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
     counterpartyService.createAll(counterparties);
 
     // add 2 new manufacturer
-    Manufacturer m1 = manufacturerService.create(new Manufacturer("ООО Нестле"));
-    Manufacturer m2 = manufacturerService.create(new Manufacturer("ООО Ферреро"));
+    Manufacturer m1 = manufacturerService.create(new Manufacturer("ООО Производитель1"));
+    Manufacturer m2 = manufacturerService.create(new Manufacturer("ООО Производитель2"));
 
     // add 5 new shop types
     shopTypesService.create(new ShopType("Супермаркет", m1));
@@ -59,23 +54,13 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
 
     // add 1000 new shops
     List<Shop> shops = new ArrayList<>();
-    Resource resource = loadItems();
-    InputStream stream = resource.getInputStream();
-    try (BufferedReader reader = new BufferedReader(new InputStreamReader(stream))) {
-
-      String line;
-      while ((line = reader.readLine()) != null) {
-        shops.add(
-            new Shop(
-                line.split(";")[1],
-                counterpartyService.get(new Random().nextInt(9) + 1),
-                shopTypesService.get(new Random().nextInt(5) + 1)));
-      }
+    for (int i = 1; i <= 1000; i++) {
+      shops.add(
+          new Shop(
+              "Магазин" + i,
+              counterpartyService.get(new Random().nextInt(9) + 1),
+              shopTypesService.get(new Random().nextInt(5) + 1)));
     }
     shopService.createAll(shops);
-  }
-
-  private Resource loadItems() {
-    return new ClassPathResource("data/data-dev.csv");
   }
 }
