@@ -1,6 +1,5 @@
 package org.century.scp.spocr.base.models.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
@@ -18,7 +17,6 @@ import org.century.scp.spocr.auditing.listeners.AuditableEntityListener;
 @EntityListeners(AuditableEntityListener.class)
 public abstract class BaseEntity implements NamedEntity, VersionableEntity, PartialUpdatableEntity {
 
-  @JsonIgnore
   @Transient
   @SaveTransientFieldsAfterMerge
   public List<String> updatedFields;
