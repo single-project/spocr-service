@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @Component
-public class SporEntityNotFoundExceptionHandler<E extends SpocrException> extends
-    AbstractExceptionHandler<E> {
+public class SporEntityNotFoundExceptionHandler<E extends SpocrException>
+    extends AbstractExceptionHandler<E> {
 
   public SporEntityNotFoundExceptionHandler() {
     super(SpocrEntityNotFoundException.class);
@@ -22,5 +22,4 @@ public class SporEntityNotFoundExceptionHandler<E extends SpocrException> extend
   public HttpStatus getStatus(E ex) {
     return HttpStatus.NOT_FOUND;
   }
-
 }

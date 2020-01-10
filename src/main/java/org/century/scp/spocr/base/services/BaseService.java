@@ -21,8 +21,7 @@ public abstract class BaseService<T extends BaseEntity> {
 
   public BaseRepository<T> entityRepository;
 
-  public BaseService(
-      BaseRepository<T> entityRepository) {
+  public BaseService(BaseRepository<T> entityRepository) {
     this.entityRepository = entityRepository;
   }
 

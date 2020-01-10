@@ -41,7 +41,8 @@ public class ShopController {
   private CounterpartyServiceImpl counterpartyService;
 
   @Autowired
-  public ShopController(ShopServiceImpl shopService,
+  public ShopController(
+      ShopServiceImpl shopService,
       ShopTypesServiceImpl shopTypesService,
       CounterpartyServiceImpl counterpartyService) {
     this.shopService = shopService;
@@ -77,15 +78,14 @@ public class ShopController {
   @GetMapping
   public ResponseEntity<Page<Shop>> getItems(
       @And({
-          @Spec(path = "name", params = "q", spec = LikeIgnoreCase.class),
-          @Spec(path = "active", params = "active", spec = Equal.class)
-      })
+            @Spec(path = "name", params = "q", spec = LikeIgnoreCase.class),
+            @Spec(path = "active", params = "active", spec = Equal.class)
+          })
           Specification<Shop> shopSpecification,
       @PageableDefault(size = DEFAULT_PAGE_SIZE)
-      @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
+          @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
           Pageable pageable) {
-    return ResponseEntity.ok(
-        shopService.getBySpecification(shopSpecification, pageable));
+    return ResponseEntity.ok(shopService.getBySpecification(shopSpecification, pageable));
   }
 
   @GetMapping(value = "/all")

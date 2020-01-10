@@ -51,8 +51,7 @@ public class ShopType extends BaseEntity {
   @Column(name = "active")
   private Boolean active;
 
-  public ShopType(String name,
-      Manufacturer manufacturer) {
+  public ShopType(String name, Manufacturer manufacturer) {
     this.name = name;
     this.manufacturer = manufacturer;
     this.active = true;
@@ -60,10 +59,6 @@ public class ShopType extends BaseEntity {
 
   @Override
   public String toString() {
-    return "ShopType{" +
-        "id=" + id +
-        ", name='" + name + '\'' +
-        ", active=" + active +
-        '}';
+    return "ShopType{" + "id=" + id + ", name='" + name + '\'' + ", active=" + active + '}';
   }
 }

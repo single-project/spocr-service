@@ -56,12 +56,12 @@ public class ManufacturerController {
   @GetMapping
   public ResponseEntity<Page<Manufacturer>> getItems(
       @And({
-          @Spec(path = "name", params = "q", spec = LikeIgnoreCase.class),
-          @Spec(path = "active", params = "active", spec = Equal.class)
-      })
+            @Spec(path = "name", params = "q", spec = LikeIgnoreCase.class),
+            @Spec(path = "active", params = "active", spec = Equal.class)
+          })
           Specification<Manufacturer> manufacturerSpecification,
       @PageableDefault(size = DEFAULT_PAGE_SIZE)
-      @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
+          @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
           Pageable pageable) {
     return ResponseEntity.ok(
         manufacturerService.getBySpecification(manufacturerSpecification, pageable));

@@ -17,9 +17,7 @@ import org.century.scp.spocr.auditing.listeners.AuditableEntityListener;
 @EntityListeners(AuditableEntityListener.class)
 public abstract class BaseEntity implements NamedEntity, VersionableEntity, PartialUpdatableEntity {
 
-  @Transient
-  @SaveTransientFieldsAfterMerge
-  public List<String> updatedFields;
+  @Transient @SaveTransientFieldsAfterMerge public List<String> updatedFields;
 
   @Version
   @Column(columnDefinition = "long not null default 0")
@@ -30,5 +28,4 @@ public abstract class BaseEntity implements NamedEntity, VersionableEntity, Part
   public abstract String getName();
 
   public abstract void setName(String name);
-
 }

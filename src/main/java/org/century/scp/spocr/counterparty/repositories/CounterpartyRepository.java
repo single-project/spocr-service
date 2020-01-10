@@ -5,6 +5,4 @@ import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CounterpartyRepository extends BaseRepository<Counterparty> {
-
-}
+public interface CounterpartyRepository extends BaseRepository<Counterparty> {}

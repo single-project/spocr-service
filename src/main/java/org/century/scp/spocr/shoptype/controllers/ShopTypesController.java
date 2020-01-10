@@ -37,8 +37,8 @@ public class ShopTypesController {
   private ManufacturerServiceImpl manufacturerService;
 
   @Autowired
-  public ShopTypesController(ShopTypesServiceImpl shopTypesService,
-      ManufacturerServiceImpl manufacturerService) {
+  public ShopTypesController(
+      ShopTypesServiceImpl shopTypesService, ManufacturerServiceImpl manufacturerService) {
     this.shopTypesService = shopTypesService;
     this.manufacturerService = manufacturerService;
   }
@@ -63,15 +63,14 @@ public class ShopTypesController {
   @GetMapping
   public ResponseEntity<Page<ShopType>> getItems(
       @And({
-          @Spec(path = "name", params = "q", spec = LikeIgnoreCase.class),
-          @Spec(path = "active", params = "active", spec = Equal.class)
-      })
+            @Spec(path = "name", params = "q", spec = LikeIgnoreCase.class),
+            @Spec(path = "active", params = "active", spec = Equal.class)
+          })
           Specification<ShopType> shopTypeSpecification,
       @PageableDefault(size = DEFAULT_PAGE_SIZE)
-      @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
+          @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
           Pageable pageable) {
-    return ResponseEntity.ok(
-        shopTypesService.getBySpecification(shopTypeSpecification, pageable));
+    return ResponseEntity.ok(shopTypesService.getBySpecification(shopTypeSpecification, pageable));
   }
 
   @GetMapping(value = "/all")

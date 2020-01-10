@@ -5,6 +5,4 @@ import org.century.scp.spocr.shop.models.domain.Shop;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ShopRepository extends BaseRepository<Shop> {
-
-}
+public interface ShopRepository extends BaseRepository<Shop> {}

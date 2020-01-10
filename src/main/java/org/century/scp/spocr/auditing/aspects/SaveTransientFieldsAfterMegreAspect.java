@@ -23,17 +23,22 @@ public class SaveTransientFieldsAfterMegreAspect {
     if (args.length > 0) {
       Object beforeMerge = args[0];
 
-      Field[] annotatedFieldsToPreserve = FieldUtils
-          .getFieldsWithAnnotation(beforeMerge.getClass(), SaveTransientFieldsAfterMerge.class);
-      Arrays.stream(annotatedFieldsToPreserve).forEach(field -> {
-        try {
-          FieldUtils
-              .writeField(field, afterMerge, FieldUtils.readField(field, beforeMerge, true), true);
-        } catch (IllegalAccessException exception) {
-          log.warn("Illegal accesss to field: {}, of entity: {}. Data was not preserved.",
-              field.getName(), beforeMerge.getClass());
-        }
-      });
+      Field[] annotatedFieldsToPreserve =
+          FieldUtils.getFieldsWithAnnotation(
+              beforeMerge.getClass(), SaveTransientFieldsAfterMerge.class);
+      Arrays.stream(annotatedFieldsToPreserve)
+          .forEach(
+              field -> {
+                try {
+                  FieldUtils.writeField(
+                      field, afterMerge, FieldUtils.readField(field, beforeMerge, true), true);
+                } catch (IllegalAccessException exception) {
+                  log.warn(
+                      "Illegal accesss to field: {}, of entity: {}. Data was not preserved.",
+                      field.getName(),
+                      beforeMerge.getClass());
+                }
+              });
     }
 
     return afterMerge;

@@ -23,14 +23,10 @@ import org.springframework.stereotype.Component;
 @Profile("dev")
 public class DevSpocrStartupRunner implements ApplicationRunner {
 
-  @Autowired
-  private CounterpartyServiceImpl counterpartyService;
-  @Autowired
-  private ManufacturerServiceImpl manufacturerService;
-  @Autowired
-  private ShopTypesServiceImpl shopTypesService;
-  @Autowired
-  private ShopServiceImpl shopService;
+  @Autowired private CounterpartyServiceImpl counterpartyService;
+  @Autowired private ManufacturerServiceImpl manufacturerService;
+  @Autowired private ShopTypesServiceImpl shopTypesService;
+  @Autowired private ShopServiceImpl shopService;
 
   @Override
   public void run(ApplicationArguments args) throws Exception {

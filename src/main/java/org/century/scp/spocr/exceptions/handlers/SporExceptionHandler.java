@@ -16,7 +16,6 @@ public class SporExceptionHandler<E extends SpocrException> extends AbstractExce
     super(SpocrException.class);
   }
 
-
   @Override
   public HttpStatus getStatus(E ex) {
     return HttpStatus.INTERNAL_SERVER_ERROR;

@@ -48,8 +48,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    http.httpBasic().disable()
-        .csrf().disable()
+    http.httpBasic()
+        .disable()
+        .csrf()
+        .disable()
         .authorizeRequests()
         .antMatchers("/auth/signin")
         .permitAll()
@@ -72,5 +74,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   protected void statelessSessionPolicy(HttpSecurity http) throws Exception {
     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
   }
-
 }

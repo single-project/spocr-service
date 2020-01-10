@@ -50,9 +50,7 @@ public class Shop extends BaseEntity {
   @Column(name = "active")
   private Boolean active;
 
-  public Shop(String name,
-      Counterparty counterparty,
-      ShopType shopType) {
+  public Shop(String name, Counterparty counterparty, ShopType shopType) {
     this.name = name;
     this.counterparty = counterparty;
     this.shopTypes = new ArrayList<>();
@@ -63,5 +61,4 @@ public class Shop extends BaseEntity {
   public void addShopType(ShopType shopType) {
     shopTypes.add(shopType);
   }
-
 }

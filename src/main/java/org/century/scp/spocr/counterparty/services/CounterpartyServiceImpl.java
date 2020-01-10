@@ -16,7 +16,6 @@ public class CounterpartyServiceImpl extends BaseService<Counterparty> {
     super(counterpartyRepository);
   }
 
-
   @Override
   public Class<Counterparty> getEntityClass() {
     return Counterparty.class;

@@ -56,9 +56,9 @@ public class CounterpartyController {
   @GetMapping
   public ResponseEntity<Page<Counterparty>> getItems(
       @And({
-          @Spec(path = "name", params = "q", spec = LikeIgnoreCase.class),
-          @Spec(path = "active", params = "active", spec = Equal.class)
-      })
+            @Spec(path = "name", params = "q", spec = LikeIgnoreCase.class),
+            @Spec(path = "active", params = "active", spec = Equal.class)
+          })
           Specification<Counterparty> counterpartySpecification,
       @PageableDefault(size = DEFAULT_PAGE_SIZE)
           @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})

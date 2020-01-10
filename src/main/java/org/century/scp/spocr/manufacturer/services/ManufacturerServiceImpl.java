@@ -10,11 +10,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class ManufacturerServiceImpl extends BaseService<Manufacturer> {
 
-  public ManufacturerServiceImpl(
-      ManufacturerRepository manufacturerRepository) {
+  public ManufacturerServiceImpl(ManufacturerRepository manufacturerRepository) {
     super(manufacturerRepository);
   }
-
 
   @Override
   public Class<Manufacturer> getEntityClass() {

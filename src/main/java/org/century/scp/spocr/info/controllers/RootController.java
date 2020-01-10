@@ -14,5 +14,4 @@ public class RootController {
   public String getAllEndpoints() {
     return "redirect:/actuator/mappings";
   }
-
 }
