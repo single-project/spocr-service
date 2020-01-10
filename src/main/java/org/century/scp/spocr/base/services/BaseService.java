@@ -9,6 +9,7 @@ import com.github.fge.jsonpatch.JsonPatchException;
 import com.github.fge.jsonpatch.mergepatch.JsonMergePatch;
 import java.io.IOException;
 import java.util.List;
+
 import org.century.scp.spocr.base.models.domain.BaseEntity;
 import org.century.scp.spocr.base.repositories.BaseRepository;
 import org.century.scp.spocr.exceptions.SpocrEntityNotFoundException;
@@ -16,6 +17,8 @@ import org.century.scp.spocr.exceptions.SpocrException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 public abstract class BaseService<T extends BaseEntity> {
 
@@ -33,6 +36,7 @@ public abstract class BaseService<T extends BaseEntity> {
     return entityRepository.save(object);
   }
 
+  @Transactional(isolation = Isolation.READ_COMMITTED)
   public T update(Long id, String data) {
     T object = get(id);
     try {
@@ -61,7 +65,7 @@ public abstract class BaseService<T extends BaseEntity> {
     return entityRepository.saveAll(objects);
   }
 
-  private static <T> T mergePatch(T t, String patch, Class<T> clazz)
+  protected static <T> T mergePatch(T t, String patch, Class<T> clazz)
       throws IOException, JsonPatchException {
     ObjectMapper mapper = new ObjectMapper();
     mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
