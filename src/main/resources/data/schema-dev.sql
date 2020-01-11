@@ -82,6 +82,5 @@ CREATE TABLE public.external_ids
     entity_type character varying(25) NOT NULL,
     ext_prog_id integer NOT NULL,
     CONSTRAINT external_ids_pkey PRIMARY KEY (id),
-    CONSTRAINT external_ids_uidx UNIQUE (entity_id, entity_ext_id, entity_type, ext_prog_id),
-    CONSTRAINT external_ids_uidx2 UNIQUE (entity_ext_id, entity_type, ext_prog_id),
+    CONSTRAINT external_ids_uidx UNIQUE (entity_ext_id, entity_type, ext_prog_id)
 );
