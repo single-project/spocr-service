@@ -74,3 +74,14 @@ CREATE TABLE public.shop_to_shop_types
     CONSTRAINT shop_to_shop_types_pkey PRIMARY KEY (id),
     CONSTRAINT shop_id_shop_types_id_uidx UNIQUE (shop_id, shop_types_id)
 );
+CREATE TABLE public.external_ids
+(
+    id integer NOT NULL auto_increment,
+    entity_id integer NOT NULL,
+    entity_ext_id integer NOT NULL,
+    entity_type character varying(25) NOT NULL,
+    ext_prog_id integer NOT NULL,
+    CONSTRAINT external_ids_pkey PRIMARY KEY (id),
+    CONSTRAINT external_ids_uidx UNIQUE (entity_id, entity_ext_id, entity_type, ext_prog_id),
+    CONSTRAINT external_ids_uidx2 UNIQUE (entity_ext_id, entity_type, ext_prog_id),
+);
