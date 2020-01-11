@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-@Profile("dev")
+@Profile({"dev", "prod"})
 public class DevSpocrStartupRunner implements ApplicationRunner {
 
   @Autowired private CounterpartyServiceImpl counterpartyService;
