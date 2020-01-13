@@ -26,6 +26,6 @@ public class EventController {
   @GetMapping
   public ResponseEntity<List<Map<String, Object>>> getItems(
       @RequestParam(value = "q", required = false, defaultValue = "id>0") String q) {
-    return ResponseEntity.ok(eventRepository.findAll(Integer.valueOf(q.split(">")[1])));
+    return ResponseEntity.ok(eventRepository.findAll(Integer.valueOf(q.split(">")[1].trim())));
   }
 }
