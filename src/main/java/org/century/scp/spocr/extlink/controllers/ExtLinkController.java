@@ -36,6 +36,7 @@ public class ExtLinkController {
   @GetMapping
   public ResponseEntity<List<ExtLink>> getItems(
       @And({
+            @Spec(path = "entityId", params = "id", spec = Equal.class),
             @Spec(path = "entityExtId", params = "ext-id", spec = Equal.class),
             @Spec(path = "entityType", params = "type", spec = Equal.class),
             @Spec(path = "extProgId", params = "prog", spec = Equal.class)
