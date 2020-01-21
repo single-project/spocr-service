@@ -10,13 +10,14 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.century.scp.spocr.base.models.domain.BaseEntity;
+import org.century.scp.spocr.counterparty.models.dto.CounterpartyView;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table(name = "counterparties")
 @NoArgsConstructor
-public class Counterparty extends BaseEntity {
+public class Counterparty extends BaseEntity<Counterparty, CounterpartyView> {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,5 +32,10 @@ public class Counterparty extends BaseEntity {
   public Counterparty(String name) {
     this.name = name;
     this.active = true;
+  }
+
+  @Override
+  public CounterpartyView map() {
+    return new CounterpartyView(this);
   }
 }

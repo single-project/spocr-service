@@ -20,6 +20,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.century.scp.spocr.base.models.domain.BaseEntity;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
+import org.century.scp.spocr.shop.models.dto.ShopView;
 import org.century.scp.spocr.shoptype.models.domain.ShopType;
 
 @EqualsAndHashCode(callSuper = false)
@@ -28,7 +29,7 @@ import org.century.scp.spocr.shoptype.models.domain.ShopType;
 @Table(name = "shops")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Shop extends BaseEntity {
+public class Shop extends BaseEntity<Shop, ShopView> {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,5 +62,10 @@ public class Shop extends BaseEntity {
 
   public void addShopType(ShopType shopType) {
     shopTypes.add(shopType);
+  }
+
+  @Override
+  public ShopView map() {
+    return new ShopView(this);
   }
 }
