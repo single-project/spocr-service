@@ -5,7 +5,9 @@ import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.century.scp.spocr.base.models.dto.PageResponse;
 import org.century.scp.spocr.manufacturer.models.domain.Manufacturer;
+import org.century.scp.spocr.manufacturer.models.dto.ManufacturerView;
 import org.century.scp.spocr.manufacturer.services.ManufacturerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,22 +41,22 @@ public class ManufacturerController {
   }
 
   @PostMapping
-  public ResponseEntity<Manufacturer> addItem(@RequestBody Manufacturer manufacturer) {
-    return ResponseEntity.ok(manufacturerService.create(manufacturer));
+  public ResponseEntity<ManufacturerView> addItem(@RequestBody Manufacturer manufacturer) {
+    return ResponseEntity.ok(manufacturerService.create(manufacturer).map());
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<Manufacturer> updateItem(@PathVariable Long id, @RequestBody String data) {
-    return ResponseEntity.ok(manufacturerService.update(id, data));
+  public ResponseEntity<ManufacturerView> updateItem(@PathVariable Long id, @RequestBody String data) {
+    return ResponseEntity.ok(manufacturerService.update(id, data).map());
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Manufacturer> getItem(@PathVariable(value = "id") long id) {
-    return ResponseEntity.ok(manufacturerService.get(id));
+  public ResponseEntity<ManufacturerView> getItem(@PathVariable(value = "id") long id) {
+    return ResponseEntity.ok(manufacturerService.get(id).map());
   }
 
   @GetMapping
-  public ResponseEntity<Page<Manufacturer>> getItems(
+  public ResponseEntity<PageResponse<Manufacturer, ManufacturerView>> getItems(
       @And({
             @Spec(path = "name", params = "q", spec = LikeIgnoreCase.class),
             @Spec(path = "active", params = "active", spec = Equal.class)
@@ -63,12 +65,8 @@ public class ManufacturerController {
       @PageableDefault(size = DEFAULT_PAGE_SIZE)
           @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
           Pageable pageable) {
-    return ResponseEntity.ok(
-        manufacturerService.getBySpecification(manufacturerSpecification, pageable));
+    Page<Manufacturer> page = manufacturerService.getBySpecification(manufacturerSpecification, pageable);
+    return ResponseEntity.ok(new PageResponse<>(page));
   }
 
-  @GetMapping(value = "/all")
-  public ResponseEntity<List<Manufacturer>> getItems() {
-    return ResponseEntity.ok(manufacturerService.getAll());
-  }
 }

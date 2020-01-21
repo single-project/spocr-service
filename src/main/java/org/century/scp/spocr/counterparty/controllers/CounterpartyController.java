@@ -1,11 +1,12 @@
 package org.century.scp.spocr.counterparty.controllers;
 
-import java.util.List;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.century.scp.spocr.base.models.dto.PageResponse;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
+import org.century.scp.spocr.counterparty.models.dto.CounterpartyView;
 import org.century.scp.spocr.counterparty.services.CounterpartyServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,22 +40,22 @@ public class CounterpartyController {
   }
 
   @PostMapping
-  public ResponseEntity<Counterparty> addItem(@RequestBody Counterparty sporItem) {
-    return ResponseEntity.ok(counterpartyService.create(sporItem));
+  public ResponseEntity<CounterpartyView> addItem(@RequestBody Counterparty sporItem) {
+    return ResponseEntity.ok(counterpartyService.create(sporItem).map());
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<Counterparty> updateItem(@PathVariable Long id, @RequestBody String data) {
-    return ResponseEntity.ok(counterpartyService.update(id, data));
+  public ResponseEntity<CounterpartyView> updateItem(@PathVariable Long id, @RequestBody String data) {
+    return ResponseEntity.ok(counterpartyService.update(id, data).map());
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Counterparty> getItem(@PathVariable(value = "id") long id) {
-    return ResponseEntity.ok(counterpartyService.get(id));
+  public ResponseEntity<CounterpartyView> getItem(@PathVariable(value = "id") long id) {
+    return ResponseEntity.ok(counterpartyService.get(id).map());
   }
 
   @GetMapping
-  public ResponseEntity<Page<Counterparty>> getItems(
+  public ResponseEntity<PageResponse<Counterparty, CounterpartyView>> getItems(
       @And({
             @Spec(path = "name", params = "q", spec = LikeIgnoreCase.class),
             @Spec(path = "active", params = "active", spec = Equal.class)
@@ -63,12 +64,8 @@ public class CounterpartyController {
       @PageableDefault(size = DEFAULT_PAGE_SIZE)
           @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
           Pageable pageable) {
-    return ResponseEntity.ok(
-        counterpartyService.getBySpecification(counterpartySpecification, pageable));
-  }
-
-  @GetMapping(value = "/all")
-  public ResponseEntity<List<Counterparty>> getItems() {
-    return ResponseEntity.ok(counterpartyService.getAll());
+    Page<Counterparty> page =
+        counterpartyService.getBySpecification(counterpartySpecification, pageable);
+    return ResponseEntity.ok(new PageResponse<>(page));
   }
 }

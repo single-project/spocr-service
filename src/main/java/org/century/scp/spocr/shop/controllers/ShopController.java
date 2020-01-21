@@ -5,10 +5,11 @@ import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
-import org.century.scp.spocr.base.models.dto.CutePageAndSlice;
+import org.century.scp.spocr.base.models.dto.PageResponse;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.services.CounterpartyServiceImpl;
 import org.century.scp.spocr.shop.models.domain.Shop;
+import org.century.scp.spocr.shop.models.dto.ShopView;
 import org.century.scp.spocr.shop.services.ShopServiceImpl;
 import org.century.scp.spocr.shoptype.models.domain.ShopType;
 import org.century.scp.spocr.shoptype.services.ShopTypesServiceImpl;
@@ -52,32 +53,32 @@ public class ShopController {
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<Shop> putShopTypeToShop(
+  public ResponseEntity<ShopView> putShopTypeToShop(
       @PathVariable Long id, @RequestBody ShopType shopType) {
-    return ResponseEntity.ok(shopService.addShopType(id, shopType));
+    return ResponseEntity.ok(shopService.addShopType(id, shopType).map());
   }
 
   @PostMapping
-  public ResponseEntity<Shop> addItem(@RequestBody Shop shop) {
+  public ResponseEntity<ShopView> addItem(@RequestBody Shop shop) {
     Counterparty counterparty = counterpartyService.get(shop.getCounterparty().getId());
     List<ShopType> shopTypes = shopTypesService.getAll(shop.getShopTypes());
     shop.setCounterparty(counterparty);
     shop.setShopTypes(shopTypes);
-    return ResponseEntity.ok(shopService.create(shop));
+    return ResponseEntity.ok(shopService.create(shop).map());
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<Shop> updateItem(@PathVariable Long id, @RequestBody String data) {
-    return ResponseEntity.ok(shopService.update(id, data));
+  public ResponseEntity<ShopView> updateItem(@PathVariable Long id, @RequestBody String data) {
+    return ResponseEntity.ok(shopService.update(id, data).map());
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Shop> getItem(@PathVariable(value = "id") long id) {
-    return ResponseEntity.ok(shopService.get(id));
+  public ResponseEntity<ShopView> getItem(@PathVariable(value = "id") long id) {
+    return ResponseEntity.ok((shopService.get(id).map()));
   }
 
   @GetMapping
-  public ResponseEntity<Page<Shop>> getItems(
+  public ResponseEntity<PageResponse<Shop, ShopView>> getItems(
       @And({
             @Spec(path = "name", params = "q", spec = LikeIgnoreCase.class),
             @Spec(path = "active", params = "active", spec = Equal.class)
@@ -86,11 +87,9 @@ public class ShopController {
       @PageableDefault(size = DEFAULT_PAGE_SIZE)
           @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
           Pageable pageable) {
-    return ResponseEntity.ok(shopService.getBySpecification(shopSpecification, pageable));
+    Page<Shop> page = shopService.getBySpecification(shopSpecification, pageable);
+    PageResponse<Shop, ShopView> pageResponse = new PageResponse<>(page);
+    return ResponseEntity.ok(pageResponse);
   }
 
-  @GetMapping(value = "/all")
-  public ResponseEntity<List<Shop>> getItems() {
-    return ResponseEntity.ok(shopService.getAll());
-  }
 }

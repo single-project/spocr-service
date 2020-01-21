@@ -18,8 +18,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.century.scp.spocr.base.models.domain.BaseEntity;
+import org.century.scp.spocr.base.models.dto.BaseEntityView;
 import org.century.scp.spocr.manufacturer.models.domain.Manufacturer;
 import org.century.scp.spocr.shop.models.domain.Shop;
+import org.century.scp.spocr.shoptype.models.dto.ShopTypeView;
 
 @EqualsAndHashCode(callSuper = false)
 @Data
@@ -60,5 +62,10 @@ public class ShopType extends BaseEntity {
   @Override
   public String toString() {
     return "ShopType{" + "id=" + id + ", name='" + name + '\'' + ", active=" + active + '}';
+  }
+
+  @Override
+  public ShopTypeView map() {
+    return new ShopTypeView(this);
   }
 }
