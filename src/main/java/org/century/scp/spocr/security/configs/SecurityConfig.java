@@ -24,6 +24,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Autowired private AuthenticationEntryPoint authenticationEntryPoint;
 
+  private static final String[] AUTH_WHITELIST = {
+      // -- auth
+      "/auth/signin",
+      // -- h2
+      "/h2-console/**",
+      // -- actuator
+      "/actuator/health",
+      "/actuator/mappings",
+      // -- swagger ui
+      "/v2/api-docs",
+      "/swagger-resources",
+      "/swagger-resources/**",
+      "/configuration/ui",
+      "/configuration/security",
+      "/swagger-ui.html",
+      "/webjars/**"
+  };
+
   @Bean
   @ConditionalOnMissingBean(RequestContextListener.class)
   public RequestContextListener requestContextListener() {
@@ -42,18 +60,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   }
 
   @Override
-  public void configure(WebSecurity web) throws Exception {
-    web.ignoring().antMatchers("/h2-console/**", "/actuator/health", "/actuator/mappings");
-  }
-
-  @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.httpBasic()
         .disable()
         .csrf()
         .disable()
         .authorizeRequests()
-        .antMatchers("/auth/signin")
+        .antMatchers(AUTH_WHITELIST)
         .permitAll()
         .anyRequest()
         .authenticated()
