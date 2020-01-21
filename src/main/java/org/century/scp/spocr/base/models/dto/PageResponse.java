@@ -19,6 +19,7 @@ public class PageResponse<T extends BaseEntity, K extends BaseEntityView> {
   private int numberOfElements;
   private int size;
   private int page;
+  private String sort;
 
   public PageResponse(Page<T> page) {
     this.content = map(page.getContent());
@@ -27,6 +28,7 @@ public class PageResponse<T extends BaseEntity, K extends BaseEntityView> {
     this.numberOfElements = page.getNumberOfElements();
     this.size = page.getSize();
     this.page = page.getNumber();
+    this.sort = page.getSort().toString();
   }
 
   private List<K> map(List<T> content) {
