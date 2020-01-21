@@ -12,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,9 +27,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/counterparties")
 public class CounterpartyController {
 
-  private static final String DEFAULT_SORT_FIELD = "name";
-  private static final int DEFAULT_PAGE_SIZE = 200000;
-
   private CounterpartyServiceImpl counterpartyService;
 
   @Autowired
@@ -45,7 +40,8 @@ public class CounterpartyController {
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<CounterpartyView> updateItem(@PathVariable Long id, @RequestBody String data) {
+  public ResponseEntity<CounterpartyView> updateItem(
+      @PathVariable Long id, @RequestBody String data) {
     return ResponseEntity.ok(counterpartyService.update(id, data).map());
   }
 
@@ -61,9 +57,7 @@ public class CounterpartyController {
             @Spec(path = "active", params = "active", spec = Equal.class)
           })
           Specification<Counterparty> counterpartySpecification,
-      @PageableDefault(size = DEFAULT_PAGE_SIZE)
-          @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
-          Pageable pageable) {
+      Pageable pageable) {
     Page<Counterparty> page =
         counterpartyService.getBySpecification(counterpartySpecification, pageable);
     return ResponseEntity.ok(new PageResponse<>(page));

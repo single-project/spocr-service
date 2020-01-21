@@ -1,6 +1,5 @@
 package org.century.scp.spocr.shoptype.controllers;
 
-import java.util.List;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
@@ -15,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,9 +28,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/shoptypes")
 public class ShopTypesController {
-
-  private static final String DEFAULT_SORT_FIELD = "name";
-  private static final int DEFAULT_PAGE_SIZE = 200000;
 
   private ShopTypesServiceImpl shopTypesService;
   private ManufacturerServiceImpl manufacturerService;
@@ -69,11 +63,8 @@ public class ShopTypesController {
             @Spec(path = "active", params = "active", spec = Equal.class)
           })
           Specification<ShopType> shopTypeSpecification,
-      @PageableDefault(size = DEFAULT_PAGE_SIZE)
-          @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
-          Pageable pageable) {
+      Pageable pageable) {
     Page<ShopType> page = shopTypesService.getBySpecification(shopTypeSpecification, pageable);
     return ResponseEntity.ok(new PageResponse<>(page));
   }
-
 }

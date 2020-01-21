@@ -17,8 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,9 +32,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/shops")
 public class ShopController {
-
-  private static final String DEFAULT_SORT_FIELD = "name";
-  private static final int DEFAULT_PAGE_SIZE = 200000;
 
   private ShopServiceImpl shopService;
   private ShopTypesServiceImpl shopTypesService;
@@ -84,12 +79,9 @@ public class ShopController {
             @Spec(path = "active", params = "active", spec = Equal.class)
           })
           Specification<Shop> shopSpecification,
-      @PageableDefault(size = DEFAULT_PAGE_SIZE)
-          @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
-          Pageable pageable) {
+      Pageable pageable) {
     Page<Shop> page = shopService.getBySpecification(shopSpecification, pageable);
     PageResponse<Shop, ShopView> pageResponse = new PageResponse<>(page);
     return ResponseEntity.ok(pageResponse);
   }
-
 }
