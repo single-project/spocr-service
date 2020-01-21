@@ -32,7 +32,7 @@ public class SwaggerConfig {
   private ApiInfo apiEndPointsInfo() {
     return new ApiInfoBuilder()
         .title("Single Point of Counterparty Reference API V1")
-        .description("Employee Management REST API")
+        .description("SPOCR References REST API")
         .contact(
             new Contact(
                 "Alex Kurutin",
