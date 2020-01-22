@@ -12,8 +12,8 @@ import org.springframework.data.domain.Page;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PageResponse<T extends BaseEntity, K extends BaseEntityView> {
-  private List<K> content;
+public class PageResponse<K extends BaseEntityView> {
+  private List<?> content;
   private int totalPages;
   private int totalElements;
   private int numberOfElements;
@@ -21,7 +21,7 @@ public class PageResponse<T extends BaseEntity, K extends BaseEntityView> {
   private int page;
   private String sort;
 
-  public PageResponse(Page<T> page) {
+  public PageResponse(Page<? extends BaseEntity<K>> page) {
     this.content = map(page.getContent());
     this.totalPages = page.getTotalPages();
     this.totalElements = page.getNumberOfElements();
@@ -31,10 +31,8 @@ public class PageResponse<T extends BaseEntity, K extends BaseEntityView> {
     this.sort = page.getSort().toString();
   }
 
-  private List<K> map(List<T> content) {
-    List<K> result = new ArrayList<>();
-    content.forEach(obj->result.add((K) obj.map()));
-    return result;
+  private List<K> map(List<? extends BaseEntity<K>> content) {
+    return content.stream().map(obj -> (K) obj.map()).collect(Collectors.toList());
   }
 
   @Getter
