@@ -1,13 +1,25 @@
 package org.century.scp.spocr;
 
+import static org.springframework.http.ResponseEntity.ok;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
+import org.century.scp.spocr.accesslevel.models.SystemRole;
+import org.century.scp.spocr.accesslevel.models.SystemRule;
+import org.century.scp.spocr.accesslevel.services.AccessLevelServiceImpl;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.services.CounterpartyServiceImpl;
+import org.century.scp.spocr.extlink.models.EntityType;
 import org.century.scp.spocr.manufacturer.models.domain.Manufacturer;
 import org.century.scp.spocr.manufacturer.services.ManufacturerServiceImpl;
+import org.century.scp.spocr.security.models.domain.SecurityUser;
+import org.century.scp.spocr.security.models.dto.AuthenticationResponse;
+import org.century.scp.spocr.security.services.CustomUserDetailsService;
+import org.century.scp.spocr.security.services.JwtTokenProvider;
 import org.century.scp.spocr.shop.models.domain.Shop;
 import org.century.scp.spocr.shop.services.ShopServiceImpl;
 import org.century.scp.spocr.shoptype.models.domain.ShopType;
@@ -16,6 +28,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -27,9 +44,16 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
   @Autowired private ManufacturerServiceImpl manufacturerService;
   @Autowired private ShopTypesServiceImpl shopTypesService;
   @Autowired private ShopServiceImpl shopService;
+  @Autowired private AccessLevelServiceImpl accessLevelService;
+  @Autowired private CustomUserDetailsService userDetailsService;
+  @Autowired private AuthenticationManager authenticationManager;
+  @Autowired private CustomUserDetailsService users;
+  @Autowired private JwtTokenProvider jwtTokenProvider;
 
   @Override
   public void run(ApplicationArguments args) throws Exception {
+      signInAsUser();
+
     // add 10 new counteragent
     List<Counterparty> counterparties = new ArrayList<>();
     for (int i = 1; i <= 10; i++) {
@@ -58,5 +82,43 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
               shopTypesService.get(new Random().nextInt(5) + 1)));
     }
     shopService.createAll(shops);
+
+
+
   }
+
+  public void signInAsUser() {
+    // ***** add system role - MANAGER ******
+    SystemRole role = accessLevelService.createRole("ROLE_MANAGER");
+
+    // add possible rules
+    SystemRule canReadRule = accessLevelService.createRule("READ_PRIVILEGE", EntityType.SHOP);
+    SystemRule canCreateRule = accessLevelService.createRule("CREATE_PRIVILEGE", EntityType.SHOP_TYPE);
+    SystemRule canUpdateRule = accessLevelService.createRule("UPDATE_PRIVILEGE", EntityType.SHOP_TYPE);
+
+    // link role to rules
+    accessLevelService.addRuleToRole(role.getId(), canReadRule.getId());
+    accessLevelService.addRuleToRole(role.getId(), canCreateRule.getId());
+    accessLevelService.addRuleToRole(role.getId(), canUpdateRule.getId());
+
+    // link user to role
+    userDetailsService.addRole(1, role);
+
+    // ***** add system role - READER ******
+    role = accessLevelService.createRole("ROLE_READER");
+
+    // link role to rules
+    accessLevelService.addRuleToRole(role.getId(), canReadRule.getId());
+
+    // link user to role
+    userDetailsService.addRole(2, role);
+
+    SecurityUser user = users.findUserByLogin("user");
+    Authentication auth = authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(user.getLogin(), "111111", user.getAuthorities()));
+
+    SecurityContext sc = SecurityContextHolder.getContext();
+    sc.setAuthentication(auth);
+  }
+
 }

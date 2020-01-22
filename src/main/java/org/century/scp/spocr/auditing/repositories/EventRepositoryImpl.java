@@ -25,15 +25,15 @@ public class EventRepositoryImpl {
 
   public List<Map<String, Object>> findAll(int q) {
     String sql =
-        "SELECT h.id, h.ident, h.entity, h.ts, h.body"
+        "SELECT h.id, h.ident, h.entity, h.ts, h.body, h.username"
             + " FROM public.events AS h"
             + " WHERE h.id > ?"
             + " ORDER BY h.id";
     return jdbcTemplate.queryForList(sql, q);
   }
 
-  public void insert(String ident, String entity, Map<String, Object> body) {
-    String sql = "INSERT INTO public.events " + "(ident, entity, ts, body) VALUES (?, ?, ?, ?)";
+  public void insert(String ident, String entity, Map<String, Object> body, String username) {
+    String sql = "INSERT INTO public.events " + "(ident, entity, ts, body, username) VALUES (?, ?, ?, ?, ?)";
     jdbcTemplate.update(
         sql,
         ps -> {
@@ -41,6 +41,7 @@ public class EventRepositoryImpl {
           ps.setString(2, entity);
           ps.setTimestamp(3, new Timestamp(new Date().getTime()));
           ps.setString(4, mapToJsonString(body));
+          ps.setString(5, username);
         });
   }
 

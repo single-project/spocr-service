@@ -17,6 +17,7 @@ import org.century.scp.spocr.exceptions.SpocrException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,11 +33,13 @@ public abstract class BaseService<T extends BaseEntity> {
 
   public abstract String getEntityName();
 
+  @PreAuthorize("hasAuthority('CREATE_PRIVILEGE')")
   public T create(T object) {
     return entityRepository.save(object);
   }
 
   @Transactional(isolation = Isolation.READ_COMMITTED)
+  @PreAuthorize("hasAuthority('UPDATE_PRIVILEGE')")
   public T update(Long id, String data) {
     T object = get(id);
     try {
@@ -47,20 +50,19 @@ public abstract class BaseService<T extends BaseEntity> {
     return entityRepository.save(object);
   }
 
+  @PreAuthorize("hasAuthority('READ_PRIVILEGE')")
   public T get(long id) {
     return entityRepository
         .findById(id)
         .orElseThrow(() -> new SpocrEntityNotFoundException(id, getEntityName()));
   }
 
+  @PreAuthorize("hasAuthority('READ_PRIVILEGE')")
   public Page<T> getBySpecification(Specification<T> specification, Pageable pageable) {
     return entityRepository.findAll(specification, pageable);
   }
 
-  public List<T> getAll() {
-    return entityRepository.findAll();
-  }
-
+  @PreAuthorize("hasAuthority('CREATE_PRIVILEGE')")
   public List<T> createAll(List<T> objects) {
     return entityRepository.saveAll(objects);
   }

@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 @Slf4j
-@Order(Ordered.HIGHEST_PRECEDENCE)
 @Component
 public class SporEntityNotFoundExceptionHandler<E extends SpocrException>
     extends AbstractExceptionHandler<E> {

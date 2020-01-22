@@ -22,7 +22,9 @@ CREATE TABLE public.security_user_role_table
 
 );
 INSERT INTO public.security_user (id, login, passwd, is_active, tabnum)
-VALUES(8957, 'user', '96e79218965eb72c92a549dd5a330112', true, 2533);
+VALUES(1, 'user', '96e79218965eb72c92a549dd5a330112', true, 100);
+INSERT INTO public.security_user (id, login, passwd, is_active, tabnum)
+VALUES(2, 'reader', '96e79218965eb72c92a549dd5a330112', true, 200);
 CREATE TABLE public.counterparties
 (
     id integer NOT NULL auto_increment,
@@ -38,6 +40,7 @@ CREATE TABLE public.events
     entity character varying(100) NOT NULL,
     ts timestamp,
     body text,
+    username character varying(100) NOT NULL,
     CONSTRAINT events_pkey PRIMARY KEY (id)
 );
 CREATE TABLE public.shops
@@ -83,4 +86,36 @@ CREATE TABLE public.external_ids
     ext_prog_id integer NOT NULL,
     CONSTRAINT external_ids_pkey PRIMARY KEY (id),
     CONSTRAINT external_ids_uidx UNIQUE (entity_ext_id, entity_type, ext_prog_id)
+);
+CREATE TABLE public.system_roles
+(
+    id integer NOT NULL auto_increment,
+    name character varying(100) NOT NULL,
+    active boolean NOT NULL DEFAULT true,
+    CONSTRAINT system_roles_pkey PRIMARY KEY (id),
+    CONSTRAINT system_roles_uidx UNIQUE (name)
+);
+CREATE TABLE public.user_to_system_roles
+(
+    id integer NOT NULL auto_increment,
+    user_id integer NOT NULL,
+    system_roles_id integer NOT NULL,
+    CONSTRAINT user_to_system_roles_pkey PRIMARY KEY (id),
+    CONSTRAINT user_to_system_roles_uidx UNIQUE (user_id, system_roles_id)
+);
+CREATE TABLE public.system_rules
+(
+    id integer NOT NULL auto_increment,
+    name character varying(100) NOT NULL,
+    active boolean NOT NULL DEFAULT true,
+    CONSTRAINT system_rules_pkey PRIMARY KEY (id),
+    CONSTRAINT system_rules_uidx UNIQUE (name)
+);
+CREATE TABLE public.role_to_rules
+(
+    id integer NOT NULL auto_increment,
+    system_role_id integer NOT NULL,
+    system_rules_id integer NOT NULL,
+    CONSTRAINT role_to_rules_pkey PRIMARY KEY (id),
+    CONSTRAINT role_to_rules_uidx UNIQUE (system_role_id, system_rules_id)
 );
