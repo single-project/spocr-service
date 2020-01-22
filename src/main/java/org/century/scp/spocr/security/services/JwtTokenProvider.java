@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+import org.century.scp.spocr.accesslevel.models.SystemRole;
 import org.century.scp.spocr.security.models.domain.SecurityRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -37,7 +38,7 @@ public class JwtTokenProvider {
     secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
   }
 
-  public String createToken(String username, List<SecurityRole> roles) {
+  public String createToken(String username, List<SystemRole> roles) {
     Claims claims = Jwts.claims().setSubject(username);
     claims.put("roles", roles);
     Date now = new Date();

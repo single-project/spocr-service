@@ -11,6 +11,7 @@ import org.century.scp.spocr.shop.repositories.ShopRepository;
 import org.century.scp.spocr.shoptype.models.domain.ShopType;
 import org.century.scp.spocr.shoptype.services.ShopTypesServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -33,6 +34,7 @@ public class ShopServiceImpl extends BaseService<Shop> {
   }
 
   @Override
+  @PreAuthorize("hasAuthority('UPDATE_PRIVILEGE')")
   public Shop update(Long id, String data) {
     Shop shop = get(id);
     try {

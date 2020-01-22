@@ -1,5 +1,7 @@
 package org.century.scp.spocr.auditing.listeners;
 
+import static org.springframework.security.core.context.SecurityContextHolder.getContext;
+
 import java.util.HashMap;
 import java.util.Map;
 import javax.persistence.PostPersist;
@@ -10,7 +12,10 @@ import org.century.scp.spocr.auditing.models.domain.EventEnum;
 import org.century.scp.spocr.auditing.repositories.EventRepositoryImpl;
 import org.century.scp.spocr.base.models.domain.BaseEntity;
 import org.century.scp.spocr.exceptions.SpocrException;
+import org.century.scp.spocr.security.models.domain.SecurityUser;
+import org.century.scp.spocr.security.services.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -20,7 +25,8 @@ public class AuditableEntityListener {
   private EventRepositoryImpl eventRepository;
 
   @Autowired
-  public AuditableEntityListener(EventRepositoryImpl eventRepository) {
+  public AuditableEntityListener(
+      EventRepositoryImpl eventRepository) {
     this.eventRepository = eventRepository;
   }
 
@@ -29,7 +35,7 @@ public class AuditableEntityListener {
     log.debug("PostPersist body {}", entity.toString());
     Map<String, Object> body = new HashMap<>();
     body.put("id", entity.getId());
-    eventRepository.insert(EventEnum.CREATED.name(), entity.getClass().getName(), body);
+    eventRepository.insert(EventEnum.CREATED.name(), entity.getClass().getName(), body, getCurrentUserLogin());
   }
 
   @PostUpdate
@@ -38,12 +44,16 @@ public class AuditableEntityListener {
     Map<String, Object> body = new HashMap<>();
     body.put("id", entity.getId());
     body.put("fields", entity.getUpdatedFields());
-    eventRepository.insert(EventEnum.UPDATED.name(), entity.getClass().getName(), body);
+    eventRepository.insert(EventEnum.UPDATED.name(), entity.getClass().getName(), body, getCurrentUserLogin());
   }
 
   @PreRemove
   private void beforeRemove(Object object) {
     throw new SpocrException(
         "Операция удаления - недопустима", new UnsupportedOperationException());
+  }
+
+  private String getCurrentUserLogin() {
+    return ((SecurityUser) getContext().getAuthentication().getPrincipal()).getLogin();
   }
 }
