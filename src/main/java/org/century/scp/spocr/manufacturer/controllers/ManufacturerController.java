@@ -51,7 +51,7 @@ public class ManufacturerController {
   }
 
   @GetMapping
-  public ResponseEntity<PageResponse<Manufacturer, ManufacturerView>> getItems(
+  public ResponseEntity<PageResponse<ManufacturerView>> getItems(
       @And({
             @Spec(path = "name", params = "q", spec = LikeIgnoreCase.class),
             @Spec(path = "active", params = "active", spec = Equal.class)

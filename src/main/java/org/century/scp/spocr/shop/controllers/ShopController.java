@@ -5,6 +5,7 @@ import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.century.scp.spocr.base.models.domain.BaseEntity;
 import org.century.scp.spocr.base.models.dto.PageResponse;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.services.CounterpartyServiceImpl;
@@ -73,7 +74,7 @@ public class ShopController {
   }
 
   @GetMapping
-  public ResponseEntity<PageResponse<Shop, ShopView>> getItems(
+  public ResponseEntity<PageResponse<ShopView>> getItems(
       @And({
             @Spec(path = "name", params = "q", spec = LikeIgnoreCase.class),
             @Spec(path = "active", params = "active", spec = Equal.class)
@@ -81,7 +82,7 @@ public class ShopController {
           Specification<Shop> shopSpecification,
       Pageable pageable) {
     Page<Shop> page = shopService.getBySpecification(shopSpecification, pageable);
-    PageResponse<Shop, ShopView> pageResponse = new PageResponse<>(page);
+    PageResponse<ShopView> pageResponse = new PageResponse<>(page);
     return ResponseEntity.ok(pageResponse);
   }
 }

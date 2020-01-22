@@ -16,7 +16,7 @@ import org.century.scp.spocr.base.models.dto.BaseEntityView;
 @Setter
 @MappedSuperclass
 @EntityListeners(AuditableEntityListener.class)
-public abstract class BaseEntity<T extends BaseEntity, K extends BaseEntityView>
+public abstract class BaseEntity<K extends BaseEntityView>
     implements NamedEntity, VersionableEntity, PartialUpdatableEntity {
 
   @Transient @SaveTransientFieldsAfterMerge public List<String> updatedFields;

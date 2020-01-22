@@ -19,7 +19,7 @@ import org.century.scp.spocr.counterparty.models.dto.CounterpartyView;
 @Entity
 @Table(name = "counterparties")
 @NoArgsConstructor
-public class Counterparty extends BaseEntity<Counterparty, CounterpartyView> {
+public class Counterparty extends BaseEntity<CounterpartyView> {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

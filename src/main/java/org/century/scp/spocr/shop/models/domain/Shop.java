@@ -29,7 +29,7 @@ import org.century.scp.spocr.shoptype.models.domain.ShopType;
 @Table(name = "shops")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Shop extends BaseEntity<Shop, ShopView> {
+public class Shop extends BaseEntity<ShopView> {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

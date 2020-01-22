@@ -57,7 +57,7 @@ public class ShopTypesController {
   }
 
   @GetMapping
-  public ResponseEntity<PageResponse<ShopType, ShopTypeView>> getItems(
+  public ResponseEntity<PageResponse<ShopTypeView>> getItems(
       @And({
             @Spec(path = "name", params = "q", spec = LikeIgnoreCase.class),
             @Spec(path = "active", params = "active", spec = Equal.class)

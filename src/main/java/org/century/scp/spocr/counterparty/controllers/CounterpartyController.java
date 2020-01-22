@@ -51,7 +51,7 @@ public class CounterpartyController {
   }
 
   @GetMapping
-  public ResponseEntity<PageResponse<Counterparty, CounterpartyView>> getItems(
+  public ResponseEntity<PageResponse<CounterpartyView>> getItems(
       @And({
             @Spec(path = "name", params = "q", spec = LikeIgnoreCase.class),
             @Spec(path = "active", params = "active", spec = Equal.class)

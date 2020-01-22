@@ -20,7 +20,7 @@ import org.century.scp.spocr.manufacturer.models.dto.ManufacturerView;
 @Table(name = "manufactures")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Manufacturer extends BaseEntity<Manufacturer, ManufacturerView> {
+public class Manufacturer extends BaseEntity<ManufacturerView> {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
