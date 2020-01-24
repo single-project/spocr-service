@@ -7,6 +7,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.century.scp.spocr.auditing.annotations.SaveTransientFieldsAfterMerge;
 import org.century.scp.spocr.auditing.listeners.AuditableEntityListener;
@@ -16,6 +17,7 @@ import org.century.scp.spocr.base.models.dto.BaseEntityView;
 @Setter
 @MappedSuperclass
 @EntityListeners(AuditableEntityListener.class)
+@NoArgsConstructor
 public abstract class BaseEntity<K extends BaseEntityView>
     implements NamedEntity, VersionableEntity, PartialUpdatableEntity {
 
@@ -25,6 +27,10 @@ public abstract class BaseEntity<K extends BaseEntityView>
   @Column(columnDefinition = "long not null default 0")
   private Long version;
 
+  public BaseEntity(Long version) {
+    this.version = version;
+  }
+
   public abstract Long getId();
 
   public abstract String getName();
@@ -33,5 +39,4 @@ public abstract class BaseEntity<K extends BaseEntityView>
 
   public abstract Boolean getActive();
 
-  public abstract K map();
 }

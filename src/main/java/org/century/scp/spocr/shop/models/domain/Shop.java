@@ -2,7 +2,6 @@ package org.century.scp.spocr.shop.models.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -52,6 +51,21 @@ public class Shop extends BaseEntity<ShopView> {
   @Column(name = "active")
   private Boolean active;
 
+  public Shop(
+      Long id,
+      String name,
+      Boolean active,
+      Long version,
+      Counterparty counterparty,
+      List<ShopType> shopTypes) {
+    super(version);
+    this.id = id;
+    this.name = name;
+    this.active = active;
+    this.shopTypes = shopTypes;
+    this.counterparty = counterparty;
+  }
+
   public Shop(String name, Counterparty counterparty, ShopType shopType) {
     this.name = name;
     this.counterparty = counterparty;
@@ -64,8 +78,7 @@ public class Shop extends BaseEntity<ShopView> {
     shopTypes.add(shopType);
   }
 
-  @Override
-  public ShopView map() {
-    return new ShopView(this);
+  public boolean linkedWithShopTypes() {
+    return shopTypes != null && shopTypes.size() > 0;
   }
 }

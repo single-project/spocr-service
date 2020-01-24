@@ -1,12 +1,8 @@
 package org.century.scp.spocr;
 
-import static org.springframework.http.ResponseEntity.ok;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.century.scp.spocr.accesslevel.models.SystemRole;
 import org.century.scp.spocr.accesslevel.models.SystemRule;
@@ -17,7 +13,6 @@ import org.century.scp.spocr.extlink.models.EntityType;
 import org.century.scp.spocr.manufacturer.models.domain.Manufacturer;
 import org.century.scp.spocr.manufacturer.services.ManufacturerServiceImpl;
 import org.century.scp.spocr.security.models.domain.SecurityUser;
-import org.century.scp.spocr.security.models.dto.AuthenticationResponse;
 import org.century.scp.spocr.security.services.CustomUserDetailsService;
 import org.century.scp.spocr.security.services.JwtTokenProvider;
 import org.century.scp.spocr.shop.models.domain.Shop;

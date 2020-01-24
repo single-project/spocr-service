@@ -1,6 +1,5 @@
 package org.century.scp.spocr.counterparty.models.domain;
 
-import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -19,6 +19,7 @@ import org.century.scp.spocr.counterparty.models.dto.CounterpartyView;
 @Entity
 @Table(name = "counterparties")
 @NoArgsConstructor
+@AllArgsConstructor
 public class Counterparty extends BaseEntity<CounterpartyView> {
 
   @Id
@@ -34,11 +35,6 @@ public class Counterparty extends BaseEntity<CounterpartyView> {
   public Counterparty(String name) {
     this.name = name;
     this.active = true;
-  }
-
-  @Override
-  public CounterpartyView map() {
-    return new CounterpartyView(this);
   }
 
   @Transient

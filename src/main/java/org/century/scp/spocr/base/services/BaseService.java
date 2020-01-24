@@ -9,7 +9,6 @@ import com.github.fge.jsonpatch.JsonPatchException;
 import com.github.fge.jsonpatch.mergepatch.JsonMergePatch;
 import java.io.IOException;
 import java.util.List;
-
 import org.century.scp.spocr.base.models.domain.BaseEntity;
 import org.century.scp.spocr.base.repositories.BaseRepository;
 import org.century.scp.spocr.exceptions.SpocrEntityNotFoundException;
@@ -17,6 +16,7 @@ import org.century.scp.spocr.exceptions.SpocrException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.lang.NonNull;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,6 +50,7 @@ public abstract class BaseService<T extends BaseEntity> {
     return entityRepository.save(object);
   }
 
+  @NonNull
   @PreAuthorize("hasAuthority('READ_PRIVILEGE')")
   public T get(long id) {
     return entityRepository
