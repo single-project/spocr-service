@@ -7,7 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -16,7 +15,6 @@ import org.century.scp.spocr.manufacturer.models.dto.ManufacturerView;
 
 @EqualsAndHashCode(callSuper = false)
 @Data
-@Builder
 @Entity
 @Table(name = "manufactures")
 @NoArgsConstructor
