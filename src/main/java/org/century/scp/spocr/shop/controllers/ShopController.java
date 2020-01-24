@@ -1,20 +1,19 @@
 package org.century.scp.spocr.shop.controllers;
 
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
-import org.century.scp.spocr.base.models.domain.BaseEntity;
-import org.century.scp.spocr.base.models.dto.PageResponse;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.services.CounterpartyServiceImpl;
+import org.century.scp.spocr.shop.mappers.ShopMapper;
 import org.century.scp.spocr.shop.models.domain.Shop;
 import org.century.scp.spocr.shop.models.dto.ShopView;
 import org.century.scp.spocr.shop.services.ShopServiceImpl;
 import org.century.scp.spocr.shoptype.models.domain.ShopType;
 import org.century.scp.spocr.shoptype.services.ShopTypesServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -32,49 +31,44 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/shops")
+@RequiredArgsConstructor
 public class ShopController {
 
-  private ShopServiceImpl shopService;
-  private ShopTypesServiceImpl shopTypesService;
-  private CounterpartyServiceImpl counterpartyService;
-
-  @Autowired
-  public ShopController(
-      ShopServiceImpl shopService,
-      ShopTypesServiceImpl shopTypesService,
-      CounterpartyServiceImpl counterpartyService) {
-    this.shopService = shopService;
-    this.shopTypesService = shopTypesService;
-    this.counterpartyService = counterpartyService;
-  }
+  private final ShopServiceImpl shopService;
+  private final ShopMapper shopMapper;
+  private final ShopTypesServiceImpl shopTypesService;
+  private final CounterpartyServiceImpl counterpartyService;
 
   @PutMapping("/{id}")
   public ResponseEntity<ShopView> putShopTypeToShop(
       @PathVariable Long id, @RequestBody ShopType shopType) {
-    return ResponseEntity.ok(shopService.addShopType(id, shopType).map());
+    return ResponseEntity.ok(shopMapper.map(shopService.addShopType(id, shopType)));
   }
 
   @PostMapping
   public ResponseEntity<ShopView> addItem(@RequestBody Shop shop) {
     Counterparty counterparty = counterpartyService.get(shop.getCounterparty().getId());
-    List<ShopType> shopTypes = shopTypesService.getAll(shop.getShopTypes());
     shop.setCounterparty(counterparty);
-    shop.setShopTypes(shopTypes);
-    return ResponseEntity.ok(shopService.create(shop).map());
+
+    if (shop.linkedWithShopTypes()) {
+      List<ShopType> shopTypes = shopTypesService.getAll(shop.getShopTypes());
+      shop.setShopTypes(shopTypes);
+    }
+    return ResponseEntity.ok(shopMapper.map(shopService.create(shop)));
   }
 
   @PatchMapping("/{id}")
   public ResponseEntity<ShopView> updateItem(@PathVariable Long id, @RequestBody String data) {
-    return ResponseEntity.ok(shopService.update(id, data).map());
+    return ResponseEntity.ok(shopMapper.map(shopService.update(id, data)));
   }
 
   @GetMapping("/{id}")
   public ResponseEntity<ShopView> getItem(@PathVariable(value = "id") long id) {
-    return ResponseEntity.ok((shopService.get(id).map()));
+    return ResponseEntity.ok((shopMapper.map(shopService.get(id))));
   }
 
   @GetMapping
-  public ResponseEntity<PageResponse<ShopView>> getItems(
+  public ResponseEntity<Page<ShopView>> getItems(
       @And({
             @Spec(path = "name", params = "q", spec = LikeIgnoreCase.class),
             @Spec(path = "active", params = "active", spec = Equal.class)
@@ -82,7 +76,6 @@ public class ShopController {
           Specification<Shop> shopSpecification,
       Pageable pageable) {
     Page<Shop> page = shopService.getBySpecification(shopSpecification, pageable);
-    PageResponse<ShopView> pageResponse = new PageResponse<>(page);
-    return ResponseEntity.ok(pageResponse);
+    return ResponseEntity.ok(shopMapper.map(page));
   }
 }

@@ -7,15 +7,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.century.scp.spocr.base.models.domain.BaseEntity;
-import org.century.scp.spocr.base.models.dto.BaseEntityView;
 import org.century.scp.spocr.manufacturer.models.dto.ManufacturerView;
 
 @EqualsAndHashCode(callSuper = false)
 @Data
+@Builder
 @Entity
 @Table(name = "manufactures")
 @NoArgsConstructor
@@ -37,8 +38,11 @@ public class Manufacturer extends BaseEntity<ManufacturerView> {
     this.active = true;
   }
 
-  @Override
-  public ManufacturerView map() {
-    return new ManufacturerView(this);
+  public Manufacturer(Long id, String name, Boolean active, Long version) {
+    super(version);
+    this.id = id;
+    this.name = name;
+    this.active = active;
   }
+
 }

@@ -1,31 +1,28 @@
 package org.century.scp.spocr.base.models.dto;
 
 import java.io.Serializable;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.century.scp.spocr.base.models.domain.BaseEntity;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public abstract class BaseEntityView implements Serializable {
-  private long id;
+
+  private Long id;
   private String name;
-  private long version;
+  private Long version;
   private boolean active;
 
-  public BaseEntityView(BaseEntity entity) {
-    this.id = entity.getId();
-    this.name = entity.getName();
-    this.version = entity.getVersion();
-    this.active = entity.getActive();
+  public BaseEntityView(Long id) {
+    this.id = id;
   }
 
-  public BaseEntityView(long id, String name, long version, boolean active) {
-    this.id = id;
+  public BaseEntityView(String name) {
     this.name = name;
-    this.version = version;
-    this.active = active;
+    this.active = true;
   }
 }

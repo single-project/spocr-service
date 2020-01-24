@@ -1,14 +1,14 @@
 package org.century.scp.spocr.counterparty.controllers;
 
+import lombok.RequiredArgsConstructor;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
-import org.century.scp.spocr.base.models.dto.PageResponse;
+import org.century.scp.spocr.counterparty.mappers.CounterpartyMapper;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.models.dto.CounterpartyView;
 import org.century.scp.spocr.counterparty.services.CounterpartyServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -25,33 +25,30 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/counterparties")
+@RequiredArgsConstructor
 public class CounterpartyController {
 
-  private CounterpartyServiceImpl counterpartyService;
-
-  @Autowired
-  public CounterpartyController(CounterpartyServiceImpl counterpartyService) {
-    this.counterpartyService = counterpartyService;
-  }
+  private final CounterpartyMapper counterpartyMapper;
+  private final CounterpartyServiceImpl counterpartyService;
 
   @PostMapping
   public ResponseEntity<CounterpartyView> addItem(@RequestBody Counterparty sporItem) {
-    return ResponseEntity.ok(counterpartyService.create(sporItem).map());
+    return ResponseEntity.ok(counterpartyMapper.map(counterpartyService.create(sporItem)));
   }
 
   @PatchMapping("/{id}")
   public ResponseEntity<CounterpartyView> updateItem(
       @PathVariable Long id, @RequestBody String data) {
-    return ResponseEntity.ok(counterpartyService.update(id, data).map());
+    return ResponseEntity.ok(counterpartyMapper.map(counterpartyService.update(id, data)));
   }
 
   @GetMapping("/{id}")
   public ResponseEntity<CounterpartyView> getItem(@PathVariable(value = "id") long id) {
-    return ResponseEntity.ok(counterpartyService.get(id).map());
+    return ResponseEntity.ok(counterpartyMapper.map(counterpartyService.get(id)));
   }
 
   @GetMapping
-  public ResponseEntity<PageResponse<CounterpartyView>> getItems(
+  public ResponseEntity<Page<CounterpartyView>> getItems(
       @And({
             @Spec(path = "name", params = "q", spec = LikeIgnoreCase.class),
             @Spec(path = "active", params = "active", spec = Equal.class)
@@ -60,6 +57,6 @@ public class CounterpartyController {
       Pageable pageable) {
     Page<Counterparty> page =
         counterpartyService.getBySpecification(counterpartySpecification, pageable);
-    return ResponseEntity.ok(new PageResponse<>(page));
+    return ResponseEntity.ok(counterpartyMapper.map(page));
   }
 }

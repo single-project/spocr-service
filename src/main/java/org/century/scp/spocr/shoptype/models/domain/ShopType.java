@@ -18,7 +18,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.century.scp.spocr.base.models.domain.BaseEntity;
-import org.century.scp.spocr.base.models.dto.BaseEntityView;
 import org.century.scp.spocr.manufacturer.models.domain.Manufacturer;
 import org.century.scp.spocr.shop.models.domain.Shop;
 import org.century.scp.spocr.shoptype.models.dto.ShopTypeView;
@@ -53,6 +52,14 @@ public class ShopType extends BaseEntity<ShopTypeView> {
   @Column(name = "active")
   private Boolean active;
 
+  public ShopType(Long id, String name, boolean active, long version, Manufacturer manufacturer) {
+    super(version);
+    this.id = id;
+    this.name = name;
+    this.active = active;
+    this.manufacturer = manufacturer;
+  }
+
   public ShopType(String name, Manufacturer manufacturer) {
     this.name = name;
     this.manufacturer = manufacturer;
@@ -64,8 +71,4 @@ public class ShopType extends BaseEntity<ShopTypeView> {
     return "ShopType{" + "id=" + id + ", name='" + name + '\'' + ", active=" + active + '}';
   }
 
-  @Override
-  public ShopTypeView map() {
-    return new ShopTypeView(this);
-  }
 }

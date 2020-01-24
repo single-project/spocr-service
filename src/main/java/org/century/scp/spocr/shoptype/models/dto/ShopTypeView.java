@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.century.scp.spocr.base.models.dto.BaseEntityView;
 import org.century.scp.spocr.manufacturer.models.dto.ManufacturerView;
-import org.century.scp.spocr.shoptype.models.domain.ShopType;
 
 @Getter
 @Setter
@@ -14,8 +13,10 @@ public class ShopTypeView extends BaseEntityView {
 
   private ManufacturerView manufacturer;
 
-  public ShopTypeView(ShopType entity) {
-    super(entity);
-    this.manufacturer = entity.getManufacturer().map();
+  public ShopTypeView(Long id, String name, Long version, boolean active,
+      ManufacturerView manufacturer) {
+    super(id, name, version, active);
+    this.manufacturer = manufacturer;
   }
+
 }
