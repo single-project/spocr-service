@@ -11,15 +11,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.century.scp.spocr.auditing.annotations.SaveTransientFieldsAfterMerge;
 import org.century.scp.spocr.auditing.listeners.AuditableEntityListener;
-import org.century.scp.spocr.base.models.dto.BaseEntityView;
 
 @Getter
 @Setter
 @MappedSuperclass
 @EntityListeners(AuditableEntityListener.class)
 @NoArgsConstructor
-public abstract class BaseEntity<K extends BaseEntityView>
-    implements NamedEntity, VersionableEntity, PartialUpdatableEntity {
+public abstract class BaseEntity implements VersionableEntity, PartialUpdatableEntity {
 
   @Transient @SaveTransientFieldsAfterMerge public List<String> updatedFields;
 
@@ -33,10 +31,5 @@ public abstract class BaseEntity<K extends BaseEntityView>
 
   public abstract Long getId();
 
-  public abstract String getName();
-
-  public abstract void setName(String name);
-
   public abstract Boolean getActive();
-
 }

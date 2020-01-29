@@ -11,11 +11,14 @@ import org.century.scp.spocr.manufacturer.models.dto.ManufacturerView;
 @NoArgsConstructor
 public class ShopTypeView extends BaseEntityView {
 
+  private String name;
+
   private ManufacturerView manufacturer;
 
   public ShopTypeView(Long id, String name, Long version, boolean active,
       ManufacturerView manufacturer) {
-    super(id, name, version, active);
+    super(id, version, active);
+    this.name = name;
     this.manufacturer = manufacturer;
   }
 

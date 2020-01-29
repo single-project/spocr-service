@@ -1,41 +1,47 @@
-package org.century.scp.spocr.counterparty.models.domain;
+package org.century.scp.spocr.address.models.domain;
 
+import java.util.LinkedHashMap;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.century.scp.spocr.base.converters.SuggestionConverter;
 import org.century.scp.spocr.base.models.domain.BaseEntity;
 
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @Data
 @Entity
-@Table(name = "counterparties")
+@Table(name = "addresses")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Counterparty extends BaseEntity {
+public class Address extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "name")
-  private String name;
+  @Column(name = "address")
+  private String address;
+
+  @Column(name = "comment")
+  private String comment;
+
+  @Column(name = "suggestion")
+  @Convert(converter = SuggestionConverter.class)
+  private LinkedHashMap suggestion;
 
   @Column(name = "active")
   private Boolean active;
 
-  public Counterparty(String name) {
-    this.name = name;
+  public Address(String address) {
+    this.address = address;
     this.active = true;
   }
-
-  @Transient
-  public Object suggestion;
 }

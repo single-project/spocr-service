@@ -10,11 +10,14 @@ import org.century.scp.spocr.base.models.dto.BaseEntityView;
 @NoArgsConstructor
 public class CounterpartyView extends BaseEntityView {
 
+  private String name;
+
   public CounterpartyView(String name) {
-    super(name);
+    this.name = name;
   }
 
   public CounterpartyView(Long id, String name, Long version, boolean active) {
-    super(id, name, version, active);
+    super(id, version, active);
+    this.name = name;
   }
 }

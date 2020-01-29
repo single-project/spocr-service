@@ -15,7 +15,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.century.scp.spocr.base.models.domain.BaseEntity;
 import org.century.scp.spocr.manufacturer.models.domain.Manufacturer;
-import org.century.scp.spocr.shoptype.models.dto.ShopTypeView;
 
 @EqualsAndHashCode(callSuper = false)
 @Data
@@ -23,7 +22,7 @@ import org.century.scp.spocr.shoptype.models.dto.ShopTypeView;
 @Table(name = "shop_types")
 @NoArgsConstructor
 @AllArgsConstructor
-public class ShopType extends BaseEntity<ShopTypeView> {
+public class ShopType extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
