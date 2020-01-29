@@ -48,6 +48,7 @@ CREATE TABLE public.shops
     id integer NOT NULL auto_increment,
     name character varying(100) NOT NULL,
     counterparty_id integer NOT NULL,
+    address_id integer,
     active boolean NOT NULL DEFAULT true,
     version integer NOT NULL DEFAULT 0,
     CONSTRAINT shops_pkey PRIMARY KEY (id)
@@ -118,4 +119,14 @@ CREATE TABLE public.role_to_rules
     system_rules_id integer NOT NULL,
     CONSTRAINT role_to_rules_pkey PRIMARY KEY (id),
     CONSTRAINT role_to_rules_uidx UNIQUE (system_role_id, system_rules_id)
+);
+CREATE TABLE public.addresses
+(
+    id integer NOT NULL auto_increment,
+    address character varying(100) NOT NULL,
+    comment character varying(500),
+    suggestion text,
+    active boolean NOT NULL DEFAULT true,
+    version integer NOT NULL DEFAULT 0,
+    CONSTRAINT addresses_pkey PRIMARY KEY (id)
 );

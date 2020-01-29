@@ -6,7 +6,9 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import org.century.scp.spocr.address.models.domain.Address;
 import org.century.scp.spocr.counterparty.mappers.CounterpartyMapper;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.models.dto.CounterpartyView;
@@ -33,7 +35,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import unit.org.century.scp.spocr.mappers.ShopTypeMapperTest.SpringTestConfig;
+import unit.org.century.scp.spocr.mappers.ShopMapperTest.SpringTestConfig;
 
 @ContextConfiguration(classes = SpringTestConfig.class)
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -50,13 +52,24 @@ public class ShopMapperTest {
     List<ShopType> shopTypes = new ArrayList<>();
     shopTypes.add(shopType1);
     shopTypes.add(shopType2);
+    String adr = "344002 Россия, г. Ростов-на-Дону, д. 36, кв. 25";
+    Address address = new Address(adr);
+    LinkedHashMap<Object, Object> suggestion = new LinkedHashMap<>();
+    suggestion.put(1, "s" + 1);
+    suggestion.put("s" + 1, 1);
+    address.setSuggestion(suggestion);
     Counterparty counterparty = new Counterparty((long) 4, "c4", true, (long) 1);
     Shop shop = new Shop((long) 5, "s5", true, (long) 0, counterparty, shopTypes);
+    shop.setAddress(address);
     ShopView shopView = shopMapper.map(shop);
 
     assertTrue(shopView.isActive());
     assertThat(shopView.getShopTypes().size(), is(2));
     assertThat(shopView.getCounterparty().getId(), is(counterparty.getId()));
+    assertTrue(shopView.getAddress().isActive());
+    assertEquals(adr, shopView.getAddress().getAddress());
+    assertThat(shopView.getAddress().getSuggestion().size(), is(2));
+    assertThat(shopView.getAddress().getSuggestion().get(1), is("s1"));
   }
 
   @Test

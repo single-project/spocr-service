@@ -12,15 +12,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.century.scp.spocr.address.models.domain.Address;
 import org.century.scp.spocr.base.models.domain.BaseEntity;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
-import org.century.scp.spocr.shop.models.dto.ShopView;
 import org.century.scp.spocr.shoptype.models.domain.ShopType;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @EqualsAndHashCode(callSuper = false)
 @Data
@@ -28,7 +31,7 @@ import org.century.scp.spocr.shoptype.models.domain.ShopType;
 @Table(name = "shops")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Shop extends BaseEntity<ShopView> {
+public class Shop extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,8 +51,14 @@ public class Shop extends BaseEntity<ShopView> {
       inverseJoinColumns = @JoinColumn(name = "shop_types_id"))
   private List<ShopType> shopTypes;
 
+  @Cascade(CascadeType.PERSIST)
+  @OneToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "address_id", referencedColumnName = "id")
+  private Address address;
+
   @Column(name = "active")
   private Boolean active;
+
 
   public Shop(
       Long id,

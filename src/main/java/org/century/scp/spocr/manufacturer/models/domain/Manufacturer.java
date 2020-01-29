@@ -11,7 +11,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.century.scp.spocr.base.models.domain.BaseEntity;
-import org.century.scp.spocr.manufacturer.models.dto.ManufacturerView;
 
 @EqualsAndHashCode(callSuper = false)
 @Data
@@ -19,7 +18,7 @@ import org.century.scp.spocr.manufacturer.models.dto.ManufacturerView;
 @Table(name = "manufactures")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Manufacturer extends BaseEntity<ManufacturerView> {
+public class Manufacturer extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
