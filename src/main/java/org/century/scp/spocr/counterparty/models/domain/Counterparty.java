@@ -38,4 +38,5 @@ public class Counterparty extends BaseEntity {
 
   @Transient
   public Object suggestion;
+
 }

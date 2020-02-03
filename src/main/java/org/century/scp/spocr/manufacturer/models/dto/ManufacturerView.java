@@ -20,4 +20,5 @@ public class ManufacturerView extends BaseEntityView {
     super(id, version, active);
     this.name = name;
   }
+
 }

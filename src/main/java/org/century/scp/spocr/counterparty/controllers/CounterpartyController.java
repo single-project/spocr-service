@@ -5,14 +5,17 @@ import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.century.scp.spocr.base.validators.OnCreate;
 import org.century.scp.spocr.counterparty.mappers.CounterpartyMapper;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.models.dto.CounterpartyView;
+import org.century.scp.spocr.counterparty.models.dto.RequestForCreateUpdateCounterparty;
 import org.century.scp.spocr.counterparty.services.CounterpartyServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -32,8 +35,10 @@ public class CounterpartyController {
   private final CounterpartyServiceImpl counterpartyService;
 
   @PostMapping
-  public ResponseEntity<CounterpartyView> addItem(@RequestBody Counterparty sporItem) {
-    return ResponseEntity.ok(counterpartyMapper.map(counterpartyService.create(sporItem)));
+  public ResponseEntity<CounterpartyView> addItem(
+      @Validated(OnCreate.class) @RequestBody RequestForCreateUpdateCounterparty cp) {
+    return ResponseEntity.ok(
+        counterpartyMapper.map(counterpartyService.create(counterpartyMapper.map(cp))));
   }
 
   @PatchMapping("/{id}")

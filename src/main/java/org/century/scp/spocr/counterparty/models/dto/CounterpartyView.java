@@ -1,5 +1,6 @@
 package org.century.scp.spocr.counterparty.models.dto;
 
+import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,5 +20,10 @@ public class CounterpartyView extends BaseEntityView {
   public CounterpartyView(Long id, String name, Long version, boolean active) {
     super(id, version, active);
     this.name = name;
+  }
+
+  @Override
+  public List<String> getUpdatedFields() {
+    return super.getUpdatedFields();
   }
 }

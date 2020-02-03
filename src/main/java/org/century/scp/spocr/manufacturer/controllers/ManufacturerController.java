@@ -5,14 +5,17 @@ import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.century.scp.spocr.base.validators.OnCreate;
 import org.century.scp.spocr.manufacturer.mappers.ManufacturerMapper;
 import org.century.scp.spocr.manufacturer.models.domain.Manufacturer;
 import org.century.scp.spocr.manufacturer.models.dto.ManufacturerView;
+import org.century.scp.spocr.manufacturer.models.dto.RequestForCreateUpdateManufacturer;
 import org.century.scp.spocr.manufacturer.services.ManufacturerServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -32,9 +35,10 @@ public class ManufacturerController {
   private final ManufacturerServiceImpl manufacturerService;
 
   @PostMapping
-  public ResponseEntity<ManufacturerView> addItem(@RequestBody Manufacturer manufacturer) {
+  public ResponseEntity<ManufacturerView> addItem(
+      @Validated(OnCreate.class) @RequestBody RequestForCreateUpdateManufacturer manufacturer) {
     return ResponseEntity.ok(
-        manufacturerMapper.map((manufacturerService.create(manufacturer))));
+        manufacturerMapper.map((manufacturerService.create(manufacturerMapper.map(manufacturer)))));
   }
 
   @PatchMapping("/{id}")

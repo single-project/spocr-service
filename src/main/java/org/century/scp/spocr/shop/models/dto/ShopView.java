@@ -31,4 +31,5 @@ public class ShopView extends BaseEntityView {
     this.shopTypes = shopTypes;
     this.counterparty = counterparty;
   }
+
 }

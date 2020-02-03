@@ -5,16 +5,19 @@ import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.century.scp.spocr.base.validators.OnCreate;
 import org.century.scp.spocr.manufacturer.models.domain.Manufacturer;
 import org.century.scp.spocr.manufacturer.services.ManufacturerServiceImpl;
 import org.century.scp.spocr.shoptype.mappers.ShopTypeMapper;
 import org.century.scp.spocr.shoptype.models.domain.ShopType;
+import org.century.scp.spocr.shoptype.models.dto.RequestForCreateUpdateShopType;
 import org.century.scp.spocr.shoptype.models.dto.ShopTypeView;
 import org.century.scp.spocr.shoptype.services.ShopTypesServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -35,10 +38,12 @@ public class ShopTypesController {
   private final ManufacturerServiceImpl manufacturerService;
 
   @PostMapping
-  public ResponseEntity<ShopTypeView> addItem(@RequestBody ShopType shopType) {
+  public ResponseEntity<ShopTypeView> addItem(
+      @Validated(OnCreate.class) @RequestBody RequestForCreateUpdateShopType shopType) {
+    ShopType st = shopTypeMapper.map(shopType);
     Manufacturer manufacturer = manufacturerService.get(shopType.getManufacturer().getId());
-    shopType.setManufacturer(manufacturer);
-    return ResponseEntity.ok(shopTypeMapper.map(shopTypesService.create(shopType)));
+    st.setManufacturer(manufacturer);
+    return ResponseEntity.ok(shopTypeMapper.map(shopTypesService.create(st)));
   }
 
   @PatchMapping("/{id}")

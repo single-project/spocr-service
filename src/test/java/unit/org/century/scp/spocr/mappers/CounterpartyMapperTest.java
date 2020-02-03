@@ -34,7 +34,7 @@ public class CounterpartyMapperTest {
 
     assertEquals(counterparty.getId(), counterpartyView.getId());
     assertEquals(counterparty.getName(), counterpartyView.getName());
-    assertEquals(counterparty.getActive(), counterpartyView.isActive());
+    assertEquals(counterparty.getActive(), counterpartyView.getActive());
   }
 
   @Test

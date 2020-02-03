@@ -63,10 +63,10 @@ public class ShopMapperTest {
     shop.setAddress(address);
     ShopView shopView = shopMapper.map(shop);
 
-    assertTrue(shopView.isActive());
+    assertTrue(shopView.getActive());
     assertThat(shopView.getShopTypes().size(), is(2));
     assertThat(shopView.getCounterparty().getId(), is(counterparty.getId()));
-    assertTrue(shopView.getAddress().isActive());
+    assertTrue(shopView.getAddress().getActive());
     assertEquals(adr, shopView.getAddress().getAddress());
     assertThat(shopView.getAddress().getSuggestion().size(), is(2));
     assertThat(shopView.getAddress().getSuggestion().get(1), is("s1"));
@@ -113,7 +113,7 @@ public class ShopMapperTest {
     assertEquals(shopView.getId(), shop.getId());
     assertEquals(shopView.getVersion(), shop.getVersion());
     assertEquals(shopView.getName(), shop.getName());
-    assertEquals(shopView.isActive(), shop.getActive());
+    assertEquals(shopView.getActive(), shop.getActive());
     assertThat(shop.getShopTypes().size(), is(2));
   }
 
