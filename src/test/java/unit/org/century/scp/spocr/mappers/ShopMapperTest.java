@@ -9,25 +9,18 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import org.century.scp.spocr.address.models.domain.Address;
-import org.century.scp.spocr.counterparty.mappers.CounterpartyMapper;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.models.dto.CounterpartyView;
-import org.century.scp.spocr.manufacturer.mappers.ManufacturerMapper;
 import org.century.scp.spocr.manufacturer.models.domain.Manufacturer;
 import org.century.scp.spocr.manufacturer.models.dto.ManufacturerView;
 import org.century.scp.spocr.shop.mappers.ShopMapper;
 import org.century.scp.spocr.shop.models.domain.Shop;
 import org.century.scp.spocr.shop.models.dto.ShopView;
-import org.century.scp.spocr.shoptype.mappers.ShopTypeMapper;
 import org.century.scp.spocr.shoptype.models.domain.ShopType;
 import org.century.scp.spocr.shoptype.models.dto.ShopTypeView;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -35,9 +28,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import unit.org.century.scp.spocr.mappers.ShopMapperTest.SpringTestConfig;
 
-@ContextConfiguration(classes = SpringTestConfig.class)
+@ContextConfiguration(classes = SpringMappersConfig.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ShopMapperTest {
 
@@ -115,30 +107,5 @@ public class ShopMapperTest {
     assertEquals(shopView.getName(), shop.getName());
     assertEquals(shopView.getActive(), shop.getActive());
     assertThat(shop.getShopTypes().size(), is(2));
-  }
-
-  @Configuration
-  @ComponentScan(basePackageClasses = ShopMapperTest.class)
-  public static class SpringTestConfig {
-
-    @Bean
-    public ManufacturerMapper manufacturerMapper() {
-      return Mappers.getMapper(ManufacturerMapper.class);
-    }
-
-    @Bean
-    public ShopTypeMapper shopTypeMapper() {
-      return Mappers.getMapper(ShopTypeMapper.class);
-    }
-
-    @Bean
-    public CounterpartyMapper counterpartyMapper() {
-      return Mappers.getMapper(CounterpartyMapper.class);
-    }
-
-    @Bean
-    public ShopMapper shopMapper() {
-      return Mappers.getMapper(ShopMapper.class);
-    }
   }
 }

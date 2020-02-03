@@ -9,23 +9,23 @@ import java.util.List;
 import org.century.scp.spocr.manufacturer.mappers.ManufacturerMapper;
 import org.century.scp.spocr.manufacturer.models.domain.Manufacturer;
 import org.century.scp.spocr.manufacturer.models.dto.ManufacturerView;
-import org.junit.Before;
 import org.junit.Test;
-import org.mapstruct.factory.Mappers;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+@ContextConfiguration(classes = SpringMappersConfig.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 public class ManufacturerMapperTest {
 
+  @Autowired
   private ManufacturerMapper manufacturerMapper;
-
-  @Before
-  public void setUp() {
-    manufacturerMapper = Mappers.getMapper(ManufacturerMapper.class);
-  }
 
   @Test
   public void correctMapManufacturerToView() {

@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.century.scp.spocr.manufacturer.mappers.ManufacturerMapper;
 import org.century.scp.spocr.manufacturer.models.domain.Manufacturer;
 import org.century.scp.spocr.manufacturer.models.dto.ManufacturerView;
 import org.century.scp.spocr.shoptype.mappers.ShopTypeMapper;
@@ -12,11 +11,7 @@ import org.century.scp.spocr.shoptype.models.domain.ShopType;
 import org.century.scp.spocr.shoptype.models.dto.ShopTypeView;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -24,9 +19,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import unit.org.century.scp.spocr.mappers.ShopTypeMapperTest.SpringTestConfig;
 
-@ContextConfiguration(classes = SpringTestConfig.class)
+
+@ContextConfiguration(classes = SpringMappersConfig.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ShopTypeMapperTest {
 
@@ -75,18 +70,4 @@ public class ShopTypeMapperTest {
     assertEquals(shopTypeView.getActive(), shopType.getActive());
   }
 
-  @Configuration
-  @ComponentScan(basePackageClasses = ShopTypeMapperTest.class)
-  public static class SpringTestConfig {
-
-    @Bean
-    public ManufacturerMapper manufacturerMapper() {
-      return Mappers.getMapper(ManufacturerMapper.class);
-    }
-
-    @Bean
-    public ShopTypeMapper shopTypeMapper() {
-      return Mappers.getMapper(ShopTypeMapper.class);
-    }
-  }
 }

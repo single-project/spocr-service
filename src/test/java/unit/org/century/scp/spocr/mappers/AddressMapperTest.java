@@ -13,11 +13,7 @@ import org.century.scp.spocr.address.models.domain.Address;
 import org.century.scp.spocr.address.models.dto.AddressView;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -25,9 +21,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import unit.org.century.scp.spocr.mappers.AddressMapperTest.SpringTestConfig;
 
-@ContextConfiguration(classes = SpringTestConfig.class)
+
+@ContextConfiguration(classes = SpringMappersConfig.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 public class AddressMapperTest {
 
@@ -95,13 +91,4 @@ public class AddressMapperTest {
     assertThat(address.getSuggestion().get(1), is("s1"));
   }
 
-  @Configuration
-  @ComponentScan(basePackageClasses = AddressMapperTest.class)
-  public static class SpringTestConfig {
-
-    @Bean
-    public AddressMapper addressMapper() {
-      return Mappers.getMapper(AddressMapper.class);
-    }
-  }
 }
