@@ -3,13 +3,11 @@ package org.century.scp.spocr.address.mappers;
 import org.century.scp.spocr.address.models.domain.Address;
 import org.century.scp.spocr.address.models.dto.AddressView;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.springframework.data.domain.Page;
 
 @Mapper
 public interface AddressMapper {
 
-  @Mapping(target = "updatedFields", ignore = true)
   AddressView map(Address entity);
 
   Address map(AddressView view);

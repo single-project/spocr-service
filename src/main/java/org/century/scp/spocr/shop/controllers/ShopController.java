@@ -6,12 +6,11 @@ import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
-import org.century.scp.spocr.base.validators.OnCreate;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.services.CounterpartyServiceImpl;
 import org.century.scp.spocr.shop.mappers.ShopMapper;
 import org.century.scp.spocr.shop.models.domain.Shop;
-import org.century.scp.spocr.shop.models.dto.RequestForCreateUpdateShop;
+import org.century.scp.spocr.shop.models.dto.RequestForCreateShop;
 import org.century.scp.spocr.shop.models.dto.ShopView;
 import org.century.scp.spocr.shop.services.ShopServiceImpl;
 import org.century.scp.spocr.shoptype.mappers.ShopTypeMapper;
@@ -51,16 +50,23 @@ public class ShopController {
   }
 
   @PostMapping
-  public ResponseEntity<ShopView> addItem(
-      @Validated(OnCreate.class) @RequestBody RequestForCreateUpdateShop shop) {
+  public ResponseEntity<ShopView> addItem(@Validated @RequestBody RequestForCreateShop shop) {
+    // ******** start *********
+    // TODO: вынести все в сервис
     Counterparty counterparty = counterpartyService.get(shop.getCounterparty().getId());
     Shop s = shopMapper.map(shop);
     s.setCounterparty(counterparty);
+
+    // TODO: добавить вменяемую валидацию нового адреса
+    if (s.getAddress() != null) {
+      s.getAddress().setId(null);
+    }
 
     if (s.linkedWithShopTypes()) {
       List<ShopType> shopTypes = shopTypesService.getAll(s.getShopTypes());
       s.setShopTypes(shopTypes);
     }
+    // ******** end *********
     return ResponseEntity.ok(shopMapper.map(shopService.create(s)));
   }
 

@@ -9,12 +9,14 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import org.century.scp.spocr.address.models.domain.Address;
+import org.century.scp.spocr.address.models.dto.AddressView;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.models.dto.CounterpartyView;
 import org.century.scp.spocr.manufacturer.models.domain.Manufacturer;
 import org.century.scp.spocr.manufacturer.models.dto.ManufacturerView;
 import org.century.scp.spocr.shop.mappers.ShopMapper;
 import org.century.scp.spocr.shop.models.domain.Shop;
+import org.century.scp.spocr.shop.models.dto.RequestForCreateShop;
 import org.century.scp.spocr.shop.models.dto.ShopView;
 import org.century.scp.spocr.shoptype.models.domain.ShopType;
 import org.century.scp.spocr.shoptype.models.dto.ShopTypeView;
@@ -97,8 +99,14 @@ public class ShopMapperTest {
     shopTypeViews.add(shopTypeView1);
     shopTypeViews.add(shopTypeView2);
     CounterpartyView counterpartyView = new CounterpartyView((long) 4, "c4", (long) 0, true);
-    ShopView shopView =
-        new ShopView((long) 5, "s5", (long) 0, true, shopTypeViews, counterpartyView);
+    String adr = "344002 Россия, г. Ростов-на-Дону, д. 36, кв. 25";
+    LinkedHashMap<Object, Object> suggestion = new LinkedHashMap<>();
+    suggestion.put(1, "s" + 1);
+    suggestion.put("s" + 1, 1);
+    AddressView addressView = new AddressView(adr, suggestion);
+    RequestForCreateShop shopView =
+        new RequestForCreateShop((long) 5, "s5", (long) 0, true, shopTypeViews, counterpartyView,
+            addressView);
 
     Shop shop = shopMapper.map(shopView);
 

@@ -18,4 +18,9 @@ public class AddressView extends BaseEntityView {
   public AddressView(String address) {
     this.address = address;
   }
+
+  public AddressView(String address, HashMap suggestion) {
+    this.address = address;
+    this.suggestion = suggestion;
+  }
 }

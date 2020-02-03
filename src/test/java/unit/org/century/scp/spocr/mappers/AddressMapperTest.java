@@ -79,10 +79,9 @@ public class AddressMapperTest {
     LinkedHashMap<Object, Object> suggestion = new LinkedHashMap<>();
     suggestion.put(1, "s" + 1);
     suggestion.put("s" + 1, 1);
-    AddressView addressView = new AddressView(adr);
+    AddressView addressView = new AddressView(adr, suggestion);
     long i = 194;
     addressView.setId(i);
-    addressView.setSuggestion(suggestion);
 
     Address address = addressMapper.map(addressView);
     assertThat(address.getId(), is(i));

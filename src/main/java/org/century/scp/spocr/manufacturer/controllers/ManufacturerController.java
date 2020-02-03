@@ -5,11 +5,10 @@ import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
-import org.century.scp.spocr.base.validators.OnCreate;
 import org.century.scp.spocr.manufacturer.mappers.ManufacturerMapper;
 import org.century.scp.spocr.manufacturer.models.domain.Manufacturer;
 import org.century.scp.spocr.manufacturer.models.dto.ManufacturerView;
-import org.century.scp.spocr.manufacturer.models.dto.RequestForCreateUpdateManufacturer;
+import org.century.scp.spocr.manufacturer.models.dto.RequestForCreateManufacturer;
 import org.century.scp.spocr.manufacturer.services.ManufacturerServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,7 +35,7 @@ public class ManufacturerController {
 
   @PostMapping
   public ResponseEntity<ManufacturerView> addItem(
-      @Validated(OnCreate.class) @RequestBody RequestForCreateUpdateManufacturer manufacturer) {
+      @Validated @RequestBody RequestForCreateManufacturer manufacturer) {
     return ResponseEntity.ok(
         manufacturerMapper.map((manufacturerService.create(manufacturerMapper.map(manufacturer)))));
   }

@@ -5,12 +5,11 @@ import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
-import org.century.scp.spocr.base.validators.OnCreate;
 import org.century.scp.spocr.manufacturer.models.domain.Manufacturer;
 import org.century.scp.spocr.manufacturer.services.ManufacturerServiceImpl;
 import org.century.scp.spocr.shoptype.mappers.ShopTypeMapper;
 import org.century.scp.spocr.shoptype.models.domain.ShopType;
-import org.century.scp.spocr.shoptype.models.dto.RequestForCreateUpdateShopType;
+import org.century.scp.spocr.shoptype.models.dto.RequestForCreateShopType;
 import org.century.scp.spocr.shoptype.models.dto.ShopTypeView;
 import org.century.scp.spocr.shoptype.services.ShopTypesServiceImpl;
 import org.springframework.data.domain.Page;
@@ -39,7 +38,7 @@ public class ShopTypesController {
 
   @PostMapping
   public ResponseEntity<ShopTypeView> addItem(
-      @Validated(OnCreate.class) @RequestBody RequestForCreateUpdateShopType shopType) {
+      @Validated @RequestBody RequestForCreateShopType shopType) {
     ShopType st = shopTypeMapper.map(shopType);
     Manufacturer manufacturer = manufacturerService.get(shopType.getManufacturer().getId());
     st.setManufacturer(manufacturer);

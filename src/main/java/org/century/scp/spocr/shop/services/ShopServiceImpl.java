@@ -44,7 +44,7 @@ public class ShopServiceImpl extends BaseService<Shop> {
     }
 
     List<ShopType> shopTypes = shop.getShopTypes();
-    if (shopTypes!=null && shopTypes.size()>0) {
+    if (shopTypes != null && shopTypes.size() > 0) {
       shop.setShopTypes(shopTypesService.getAll(shopTypes));
     }
     return entityRepository.save(shop);
@@ -59,5 +59,4 @@ public class ShopServiceImpl extends BaseService<Shop> {
   public String getEntityName() {
     return "магазин";
   }
-
 }

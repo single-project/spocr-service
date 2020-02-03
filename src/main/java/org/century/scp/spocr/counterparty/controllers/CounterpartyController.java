@@ -5,11 +5,10 @@ import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
-import org.century.scp.spocr.base.validators.OnCreate;
 import org.century.scp.spocr.counterparty.mappers.CounterpartyMapper;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.models.dto.CounterpartyView;
-import org.century.scp.spocr.counterparty.models.dto.RequestForCreateUpdateCounterparty;
+import org.century.scp.spocr.counterparty.models.dto.RequestForCreateCounterparty;
 import org.century.scp.spocr.counterparty.services.CounterpartyServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,7 +35,7 @@ public class CounterpartyController {
 
   @PostMapping
   public ResponseEntity<CounterpartyView> addItem(
-      @Validated(OnCreate.class) @RequestBody RequestForCreateUpdateCounterparty cp) {
+      @Validated @RequestBody RequestForCreateCounterparty cp) {
     return ResponseEntity.ok(
         counterpartyMapper.map(counterpartyService.create(counterpartyMapper.map(cp))));
   }

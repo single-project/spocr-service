@@ -15,8 +15,8 @@ import org.century.scp.spocr.shoptype.models.dto.ShopTypeView;
 public class ShopView extends BaseEntityView {
 
   private String name;
-  private List<ShopTypeView> shopTypes;
   private AddressView address;
+  private List<ShopTypeView> shopTypes;
   private CounterpartyView counterparty;
 
   public ShopView(
@@ -24,12 +24,13 @@ public class ShopView extends BaseEntityView {
       String name,
       Long version,
       boolean active,
+      AddressView address,
       List<ShopTypeView> shopTypes,
       CounterpartyView counterparty) {
     super(id, version, active);
     this.name = name;
     this.shopTypes = shopTypes;
     this.counterparty = counterparty;
+    this.address = address;
   }
-
 }

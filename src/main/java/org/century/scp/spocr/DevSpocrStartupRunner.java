@@ -70,9 +70,9 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
     shopTypesService.create(new ShopType("Ларек", m2));
     shopTypesService.create(new ShopType("Прилавок", m2));
 
-    // add 1000 new shops
+    // add 100 new shops
     List<Shop> shops = new ArrayList<>();
-    for (int i = 1; i <= 1000; i++) {
+    for (int i = 1; i <= 100; i++) {
       Shop shop =
           new Shop(
               "Магазин" + i,
