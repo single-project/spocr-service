@@ -6,18 +6,22 @@ import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.century.scp.spocr.base.validators.OnCreate;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.services.CounterpartyServiceImpl;
 import org.century.scp.spocr.shop.mappers.ShopMapper;
 import org.century.scp.spocr.shop.models.domain.Shop;
+import org.century.scp.spocr.shop.models.dto.RequestForCreateUpdateShop;
 import org.century.scp.spocr.shop.models.dto.ShopView;
 import org.century.scp.spocr.shop.services.ShopServiceImpl;
+import org.century.scp.spocr.shoptype.mappers.ShopTypeMapper;
 import org.century.scp.spocr.shoptype.models.domain.ShopType;
 import org.century.scp.spocr.shoptype.services.ShopTypesServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -36,6 +40,7 @@ public class ShopController {
 
   private final ShopServiceImpl shopService;
   private final ShopMapper shopMapper;
+  private final ShopTypeMapper shopTypeMapper;
   private final ShopTypesServiceImpl shopTypesService;
   private final CounterpartyServiceImpl counterpartyService;
 
@@ -46,15 +51,17 @@ public class ShopController {
   }
 
   @PostMapping
-  public ResponseEntity<ShopView> addItem(@RequestBody Shop shop) {
+  public ResponseEntity<ShopView> addItem(
+      @Validated(OnCreate.class) @RequestBody RequestForCreateUpdateShop shop) {
     Counterparty counterparty = counterpartyService.get(shop.getCounterparty().getId());
-    shop.setCounterparty(counterparty);
+    Shop s = shopMapper.map(shop);
+    s.setCounterparty(counterparty);
 
-    if (shop.linkedWithShopTypes()) {
-      List<ShopType> shopTypes = shopTypesService.getAll(shop.getShopTypes());
-      shop.setShopTypes(shopTypes);
+    if (s.linkedWithShopTypes()) {
+      List<ShopType> shopTypes = shopTypesService.getAll(s.getShopTypes());
+      s.setShopTypes(shopTypes);
     }
-    return ResponseEntity.ok(shopMapper.map(shopService.create(shop)));
+    return ResponseEntity.ok(shopMapper.map(shopService.create(s)));
   }
 
   @PatchMapping("/{id}")

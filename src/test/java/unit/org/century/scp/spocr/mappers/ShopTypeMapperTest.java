@@ -72,7 +72,7 @@ public class ShopTypeMapperTest {
     assertEquals(shopTypeView.getId(), shopType.getId());
     assertEquals(shopTypeView.getVersion(), shopType.getVersion());
     assertEquals(shopTypeView.getName(), shopType.getName());
-    assertEquals(shopTypeView.isActive(), shopType.getActive());
+    assertEquals(shopTypeView.getActive(), shopType.getActive());
   }
 
   @Configuration
