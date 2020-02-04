@@ -36,4 +36,5 @@ public class RequestForCreateCounterparty extends CounterpartyView {
   public String getName() {
     return super.getName();
   }
+
 }
