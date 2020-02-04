@@ -13,6 +13,8 @@ import org.century.scp.spocr.address.services.AddressServiceImpl;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.services.CounterpartyServiceImpl;
 import org.century.scp.spocr.extlink.models.EntityType;
+import org.century.scp.spocr.legaltype.models.domain.LegalType;
+import org.century.scp.spocr.legaltype.services.LegalTypeServiceImpl;
 import org.century.scp.spocr.manufacturer.models.domain.Manufacturer;
 import org.century.scp.spocr.manufacturer.services.ManufacturerServiceImpl;
 import org.century.scp.spocr.security.models.domain.SecurityUser;
@@ -47,15 +49,25 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
   @Autowired private CustomUserDetailsService users;
   @Autowired
   private AddressServiceImpl addressService;
+  @Autowired
+  private LegalTypeServiceImpl legalTypeService;
 
   @Override
   public void run(ApplicationArguments args) throws Exception {
     signInAsUser();
 
+    // add 1 new legal types
+    LegalType legalType = LegalType.builder().name("ИП").okpfType("2014").active(true)
+        .okfpFullName("Индивидуальный предприниматель").okfpShortName("ИП").build();
+    legalType = legalTypeService.create(legalType);
+
+
     // add 10 new counteragent
     List<Counterparty> counterparties = new ArrayList<>();
     for (int i = 1; i <= 10; i++) {
-      counterparties.add(new Counterparty("Контагент" + i));
+      Counterparty e = new Counterparty("Контагент" + i);
+      e.setLegalType(legalType);
+      counterparties.add(e);
     }
     counterpartyService.createAll(counterparties);
 
@@ -83,7 +95,7 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
       suggestion.put(i, "s" + i);
       suggestion.put("s" + i, i);
       address.setSuggestion(suggestion);
-      //address = addressService.create(address);
+      // address = addressService.create(address);
       shop.setAddress(address);
       shops.add(shop);
     }

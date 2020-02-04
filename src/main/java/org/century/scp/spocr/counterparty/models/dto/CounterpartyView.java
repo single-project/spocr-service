@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.century.scp.spocr.base.models.dto.BaseEntityView;
+import org.century.scp.spocr.legaltype.models.dto.LegalTypeView;
 import org.century.scp.spocr.paymentdetails.models.dto.PaymentDetailsView;
 
 @Getter
@@ -12,6 +13,7 @@ import org.century.scp.spocr.paymentdetails.models.dto.PaymentDetailsView;
 public class CounterpartyView extends BaseEntityView {
 
   private String name;
+  private LegalTypeView legalType;
   private String fullName;
   private String inn;
   private String kpp;
