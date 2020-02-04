@@ -28,7 +28,15 @@ VALUES(2, 'reader', '96e79218965eb72c92a549dd5a330112', true, 200);
 CREATE TABLE public.counterparties
 (
     id integer NOT NULL auto_increment,
-    name character varying(100) NOT NULL,
+    name character varying(300) NOT NULL,
+    full_name character varying(1000),
+    inn character varying(10),
+    kpp character varying(9),
+    ogrn character varying(15),
+    ogrn_date date,
+    ogrn_authority character varying(1000),
+    okpo character varying(40),
+    okonh character varying(100),
     counterparty_payment_details_id integer,
     active boolean NOT NULL DEFAULT true,
     version integer NOT NULL DEFAULT 0,

@@ -12,6 +12,14 @@ import org.century.scp.spocr.paymentdetails.models.dto.PaymentDetailsView;
 public class CounterpartyView extends BaseEntityView {
 
   private String name;
+  private String fullName;
+  private String inn;
+  private String kpp;
+  private String ogrn;
+  private String ogrnDate;
+  private String ogrnAuthority;
+  private String okpo;
+  private String okonh;
   private PaymentDetailsView paymentDetails;
 
   public CounterpartyView(String name) {

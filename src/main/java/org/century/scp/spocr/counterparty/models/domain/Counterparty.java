@@ -34,6 +34,30 @@ public class Counterparty extends BaseEntity {
   @Column(name = "name")
   private String name;
 
+  @Column(name = "full_name")
+  private String fullName;
+
+  @Column(name = "inn")
+  private String inn;
+
+  @Column(name = "kpp")
+  private String kpp;
+
+  @Column(name = "ogrn")
+  private String ogrn;
+
+  @Column(name = "ogrn_date")
+  private String ogrnDate;
+
+  @Column(name = "ogrn_authority")
+  private String ogrnAuthority;
+
+  @Column(name = "okpo")
+  private String okpo;
+
+  @Column(name = "okonh")
+  private String okonh;
+
   @Cascade({CascadeType.PERSIST, CascadeType.MERGE})
   @OneToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "counterparty_payment_details_id", referencedColumnName = "id")
@@ -45,6 +69,15 @@ public class Counterparty extends BaseEntity {
   public Counterparty(String name) {
     this.name = name;
     this.active = true;
+  }
+
+  public Counterparty(Long id, String name,
+      PaymentDetails paymentDetails, Boolean active, Object suggestion) {
+    this.id = id;
+    this.name = name;
+    this.paymentDetails = paymentDetails;
+    this.active = active;
+    this.suggestion = suggestion;
   }
 
   @Transient
