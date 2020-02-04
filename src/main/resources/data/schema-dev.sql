@@ -29,6 +29,7 @@ CREATE TABLE public.counterparties
 (
     id integer NOT NULL auto_increment,
     name character varying(100) NOT NULL,
+    counterparty_payment_details_id integer,
     active boolean NOT NULL DEFAULT true,
     version integer NOT NULL DEFAULT 0,
     CONSTRAINT counterparties_pkey PRIMARY KEY (id)
@@ -129,4 +130,15 @@ CREATE TABLE public.addresses
     active boolean NOT NULL DEFAULT true,
     version integer NOT NULL DEFAULT 0,
     CONSTRAINT addresses_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.counterparty_payment_details
+(
+    id integer NOT NULL auto_increment,
+    payment_account character varying(20) NOT NULL,
+    corresponding_account character varying(20),
+    bic character varying(9) NOT NULL,
+    bank character varying(300) NOT NULL,
+    active boolean NOT NULL DEFAULT true,
+    version integer NOT NULL DEFAULT 0,
+    CONSTRAINT counterparty_payment_details_pkey PRIMARY KEY (id)
 );

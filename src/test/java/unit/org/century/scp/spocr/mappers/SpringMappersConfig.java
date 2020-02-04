@@ -3,6 +3,7 @@ package unit.org.century.scp.spocr.mappers;
 import org.century.scp.spocr.address.mappers.AddressMapper;
 import org.century.scp.spocr.counterparty.mappers.CounterpartyMapper;
 import org.century.scp.spocr.manufacturer.mappers.ManufacturerMapper;
+import org.century.scp.spocr.paymentdetails.mappers.PaymentDetailsMapper;
 import org.century.scp.spocr.shop.mappers.ShopMapper;
 import org.century.scp.spocr.shoptype.mappers.ShopTypeMapper;
 import org.mapstruct.factory.Mappers;
@@ -37,5 +38,10 @@ public class SpringMappersConfig {
   @Bean
   public ShopMapper shopMapper() {
     return Mappers.getMapper(ShopMapper.class);
+  }
+
+  @Bean
+  public PaymentDetailsMapper paymentDetailsMapper() {
+    return Mappers.getMapper(PaymentDetailsMapper.class);
   }
 }

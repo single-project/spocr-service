@@ -9,6 +9,7 @@ import java.util.List;
 import org.century.scp.spocr.counterparty.mappers.CounterpartyMapper;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.models.dto.CounterpartyView;
+import org.century.scp.spocr.paymentdetails.models.domain.PaymentDetails;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,8 @@ public class CounterpartyMapperTest {
 
   @Test
   public void correctMapCounterpartyToView() {
-    Counterparty counterparty = new Counterparty((long) 1, "name1", true, null);
+    PaymentDetails paymentDetails = new PaymentDetails((long) 1, "", "", "", "", true);
+    Counterparty counterparty = new Counterparty((long) 1, "name1", paymentDetails, true, null);
     CounterpartyView counterpartyView = counterpartyMapper.map(counterparty);
 
     assertEquals(counterparty.getId(), counterpartyView.getId());
@@ -39,9 +41,15 @@ public class CounterpartyMapperTest {
 
   @Test
   public void correctMapPageToPageView() {
-    Counterparty counterparty1 = new Counterparty((long) 1, "name1", true, (long) 10);
-    Counterparty counterparty2 = new Counterparty((long) 2, "name2", true, (long) 10);
-    Counterparty counterparty3 = new Counterparty((long) 3, "name3", true, (long) 10);
+    PaymentDetails paymentDetails1 = new PaymentDetails((long) 1, "", "", "", "", true);
+    PaymentDetails paymentDetails2 = new PaymentDetails((long) 2, "", "", "", "", true);
+    PaymentDetails paymentDetails3 = new PaymentDetails((long) 3, "", "", "", "", true);
+    Counterparty counterparty1 =
+        new Counterparty((long) 1, "name1", paymentDetails1, true, (long) 10);
+    Counterparty counterparty2 =
+        new Counterparty((long) 2, "name2", paymentDetails2, true, (long) 10);
+    Counterparty counterparty3 =
+        new Counterparty((long) 3, "name3", paymentDetails3, true, (long) 10);
     List<Counterparty> manufacturers = new ArrayList<>();
     manufacturers.add(counterparty1);
     manufacturers.add(counterparty2);
