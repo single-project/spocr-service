@@ -29,6 +29,7 @@ CREATE TABLE public.counterparties
 (
     id integer NOT NULL auto_increment,
     name character varying(300) NOT NULL,
+    legal_type_id integer,
     full_name character varying(1000),
     inn character varying(10),
     kpp character varying(9),
@@ -149,4 +150,17 @@ CREATE TABLE public.counterparty_payment_details
     active boolean NOT NULL DEFAULT true,
     version integer NOT NULL DEFAULT 0,
     CONSTRAINT counterparty_payment_details_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.legal_types
+(
+    id integer NOT NULL auto_increment,
+    name character varying(50) NOT NULL,
+    okpf_short_name character varying(50),
+    okpf_full_name character varying(100),
+    okpf_id character varying(15),
+    okpf_type character varying(25),
+    active boolean NOT NULL DEFAULT true,
+    version integer NOT NULL DEFAULT 0,
+    CONSTRAINT legal_types_pkey PRIMARY KEY (id),
+    CONSTRAINT legal_types_uidx UNIQUE (name)
 );

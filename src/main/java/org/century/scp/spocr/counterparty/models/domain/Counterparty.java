@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -15,6 +16,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.century.scp.spocr.base.models.domain.BaseEntity;
+import org.century.scp.spocr.legaltype.models.domain.LegalType;
 import org.century.scp.spocr.paymentdetails.models.domain.PaymentDetails;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -33,6 +35,10 @@ public class Counterparty extends BaseEntity {
 
   @Column(name = "name")
   private String name;
+
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "legal_type_id")
+  private LegalType legalType;
 
   @Column(name = "full_name")
   private String fullName;

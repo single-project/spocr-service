@@ -23,6 +23,6 @@ public class CounterpartyServiceImpl extends BaseService<Counterparty> {
 
   @Override
   public String getEntityName() {
-    return "контагент";
+    return "контрагент";
   }
 }
