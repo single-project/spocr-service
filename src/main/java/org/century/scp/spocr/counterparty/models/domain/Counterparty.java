@@ -1,6 +1,8 @@
 package org.century.scp.spocr.counterparty.models.domain;
 
+import java.util.LinkedHashMap;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -10,11 +12,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.century.scp.spocr.base.converters.SuggestionConverter;
 import org.century.scp.spocr.base.models.domain.BaseEntity;
 import org.century.scp.spocr.legaltype.models.domain.LegalType;
 import org.century.scp.spocr.paymentdetails.models.domain.PaymentDetails;
@@ -39,6 +42,9 @@ public class Counterparty extends BaseEntity {
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "legal_type_id")
   private LegalType legalType;
+
+  @Column(name = "short_name")
+  private String shortName;
 
   @Column(name = "full_name")
   private String fullName;
@@ -77,8 +83,12 @@ public class Counterparty extends BaseEntity {
     this.active = true;
   }
 
+  @Column(name = "suggestion")
+  @Convert(converter = SuggestionConverter.class)
+  private LinkedHashMap suggestion;
+
   public Counterparty(Long id, String name,
-      PaymentDetails paymentDetails, Boolean active, Object suggestion) {
+      PaymentDetails paymentDetails, Boolean active, LinkedHashMap suggestion) {
     this.id = id;
     this.name = name;
     this.paymentDetails = paymentDetails;
@@ -86,7 +96,26 @@ public class Counterparty extends BaseEntity {
     this.suggestion = suggestion;
   }
 
-  @Transient
-  public Object suggestion;
+  @Builder
+  public Counterparty(Long id, Long version, String name,
+      LegalType legalType, String fullName, String inn, String kpp, String ogrn,
+      String ogrnDate, String ogrnAuthority, String okpo, String okonh,
+      PaymentDetails paymentDetails, Boolean active, LinkedHashMap suggestion) {
+    super(version);
+    this.id = id;
+    this.name = name;
+    this.legalType = legalType;
+    this.fullName = fullName;
+    this.inn = inn;
+    this.kpp = kpp;
+    this.ogrn = ogrn;
+    this.ogrnDate = ogrnDate;
+    this.ogrnAuthority = ogrnAuthority;
+    this.okpo = okpo;
+    this.okonh = okonh;
+    this.paymentDetails = paymentDetails;
+    this.active = active;
+    this.suggestion = suggestion;
+  }
 
 }

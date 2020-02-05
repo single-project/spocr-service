@@ -38,6 +38,9 @@ public class ShopMapperTest {
   @Autowired
   private ShopMapper shopMapper;
 
+  @Autowired
+  private SpringMappersService springMappersService;
+
   @Test
   public void correctMapShopToView() {
     Manufacturer manufacturer = new Manufacturer((long) 1, "m1", true, (long) 1);
@@ -52,7 +55,7 @@ public class ShopMapperTest {
     suggestion.put(1, "s" + 1);
     suggestion.put("s" + 1, 1);
     address.setSuggestion(suggestion);
-    Counterparty counterparty = new Counterparty((long) 4, "c4", null, true, (long) 1);
+    Counterparty counterparty = springMappersService.createCounterparty(1);
     Shop shop = new Shop((long) 5, "s5", true, (long) 0, counterparty, shopTypes);
     shop.setAddress(address);
     ShopView shopView = shopMapper.map(shop);
@@ -74,7 +77,7 @@ public class ShopMapperTest {
     List<ShopType> shopTypes = new ArrayList<>();
     shopTypes.add(shopType1);
     shopTypes.add(shopType2);
-    Counterparty counterparty = new Counterparty((long) 4, "c4", null, true, (long) 1);
+    Counterparty counterparty = springMappersService.createCounterparty(1);
     Shop shop1 = new Shop((long) 5, "s5", true, (long) 0, counterparty, shopTypes);
     Shop shop2 = new Shop((long) 6, "s6", true, (long) 0, counterparty, shopTypes);
     List<Shop> shops = new ArrayList<>();

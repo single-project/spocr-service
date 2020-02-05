@@ -9,7 +9,6 @@ import org.century.scp.spocr.accesslevel.models.SystemRole;
 import org.century.scp.spocr.accesslevel.models.SystemRule;
 import org.century.scp.spocr.accesslevel.services.AccessLevelServiceImpl;
 import org.century.scp.spocr.address.models.domain.Address;
-import org.century.scp.spocr.address.services.AddressServiceImpl;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.services.CounterpartyServiceImpl;
 import org.century.scp.spocr.extlink.models.EntityType;
@@ -48,25 +47,43 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
   @Autowired private AuthenticationManager authenticationManager;
   @Autowired private CustomUserDetailsService users;
   @Autowired
-  private AddressServiceImpl addressService;
-  @Autowired
   private LegalTypeServiceImpl legalTypeService;
 
   @Override
   public void run(ApplicationArguments args) throws Exception {
     signInAsUser();
 
-    // add 1 new legal types
-    LegalType legalType = LegalType.builder().name("ИП").okpfType("2014").active(true)
-        .okfpFullName("Индивидуальный предприниматель").okfpShortName("ИП").build();
-    legalType = legalTypeService.create(legalType);
+    // add 3 new legal types
+    LegalType legalType0 = LegalType.builder().name("Физ.лицо").active(true).build();
 
+    LegalType legalType1 =
+        LegalType.builder()
+            .name("ИП")
+            .active(true)
+            .okpfType("2014")
+            .okpfId("50102")
+            .okfpShortName("ИП")
+            .okfpFullName("Индивидуальный предприниматель")
+            .build();
+    LegalType legalType2 =
+        LegalType.builder()
+            .name("ООО")
+            .active(true)
+            .okpfType("2014")
+            .okpfId("12300")
+            .okfpShortName("ООО")
+            .okfpFullName("Общество с ограниченной ответственностью")
+            .build();
+
+    legalType0 = legalTypeService.create(legalType0);
+    legalType1 = legalTypeService.create(legalType1);
+    legalType2 = legalTypeService.create(legalType2);
 
     // add 10 new counteragent
     List<Counterparty> counterparties = new ArrayList<>();
     for (int i = 1; i <= 10; i++) {
       Counterparty e = new Counterparty("Контагент" + i);
-      e.setLegalType(legalType);
+      e.setLegalType(legalType1);
       counterparties.add(e);
     }
     counterpartyService.createAll(counterparties);
