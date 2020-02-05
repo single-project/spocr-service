@@ -50,4 +50,9 @@ public class SpringMappersConfig {
   public LegalTypeMapper legalTypeMapper() {
     return Mappers.getMapper(LegalTypeMapper.class);
   }
+
+  @Bean
+  public SpringMappersService springMappersService() {
+    return new SpringMappersService();
+  }
 }

@@ -30,6 +30,7 @@ CREATE TABLE public.counterparties
     id integer NOT NULL auto_increment,
     name character varying(300) NOT NULL,
     legal_type_id integer,
+    short_name  character varying(300),
     full_name character varying(1000),
     inn character varying(10),
     kpp character varying(9),
@@ -39,6 +40,7 @@ CREATE TABLE public.counterparties
     okpo character varying(40),
     okonh character varying(100),
     counterparty_payment_details_id integer,
+    suggestion text,
     active boolean NOT NULL DEFAULT true,
     version integer NOT NULL DEFAULT 0,
     CONSTRAINT counterparties_pkey PRIMARY KEY (id)

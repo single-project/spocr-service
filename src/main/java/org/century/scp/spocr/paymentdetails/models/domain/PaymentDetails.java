@@ -6,18 +6,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.century.scp.spocr.base.models.domain.BaseEntity;
+
 
 @EqualsAndHashCode(callSuper = false)
 @Data
 @Entity
 @Table(name = "counterparty_payment_details")
 @NoArgsConstructor
-@AllArgsConstructor
 public class PaymentDetails extends BaseEntity {
 
   @Id
@@ -38,4 +38,16 @@ public class PaymentDetails extends BaseEntity {
 
   @Column(name = "active")
   private Boolean active;
+
+  @Builder
+  public PaymentDetails(Long id, Long version, String paymentAccount, String correspondingAccount,
+      String bic, String bank, Boolean active) {
+    super(version);
+    this.id = id;
+    this.bic = bic;
+    this.bank = bank;
+    this.active = active;
+    this.paymentAccount = paymentAccount;
+    this.correspondingAccount = correspondingAccount;
+  }
 }
