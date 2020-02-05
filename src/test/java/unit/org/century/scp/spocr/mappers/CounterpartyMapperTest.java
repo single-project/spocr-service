@@ -17,6 +17,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import unit.org.century.scp.spocr.mappers.configs.SpringMappersConfig;
+import unit.org.century.scp.spocr.mappers.factories.CounterpartyFactoryService;
 
 @ContextConfiguration(classes = SpringMappersConfig.class)
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -25,11 +27,12 @@ public class CounterpartyMapperTest {
   @Autowired
   private CounterpartyMapper counterpartyMapper;
   @Autowired
-  private SpringMappersService springMappersService;
+  private CounterpartyFactoryService counterpartyFactoryService;
 
   @Test
   public void correctMapyWithLegalRekvViewToCounterparty() {
-    RequestForCreateCounterparty view = springMappersService.createCounterpartyRequestForCreate();
+    RequestForCreateCounterparty view = counterpartyFactoryService
+        .createCounterpartyRequestForCreate();
     Counterparty counterparty = counterpartyMapper.map(view);
 
     assertEquals(view.getActive(), counterparty.getActive());
@@ -40,7 +43,7 @@ public class CounterpartyMapperTest {
   @Test
   public void correctMapCounterpartyToView() {
     long counterpartyId = 1;
-    Counterparty counterparty = springMappersService.createCounterparty(counterpartyId);
+    Counterparty counterparty = counterpartyFactoryService.createCounterparty(counterpartyId);
 
     CounterpartyView counterpartyView = counterpartyMapper.map(counterparty);
     assertEquals(counterparty.getId(), counterpartyView.getId());
@@ -60,7 +63,7 @@ public class CounterpartyMapperTest {
   @Test
   public void correctMapPageToPageView() {
     int size = 3;
-    List<Counterparty> counterparties = springMappersService.createCounterpartyList(size);
+    List<Counterparty> counterparties = counterpartyFactoryService.createCounterpartyList(size);
 
     PageImpl<Counterparty> counterpartyPage =
         new PageImpl<>(counterparties, PageRequest.of(0, 10, Sort.by(Direction.ASC, "id")), size);

@@ -30,9 +30,30 @@ public class CounterpartyView extends BaseEntityView {
     this.name = name;
   }
 
-  public CounterpartyView(Boolean active, String name,
-      LegalTypeView legalType, LegalRekvView legalRekv,
-      PaymentDetailsView paymentDetails, HashMap suggestion) {
+  public CounterpartyView(
+      Long id,
+      Boolean active,
+      Long version,
+      String name,
+      LegalTypeView legalType,
+      LegalRekvView legalRekv,
+      PaymentDetailsView paymentDetails,
+      HashMap suggestion) {
+    super(id, version, active);
+    this.name = name;
+    this.legalType = legalType;
+    this.legalRekv = legalRekv;
+    this.paymentDetails = paymentDetails;
+    this.suggestion = suggestion;
+  }
+
+  public CounterpartyView(
+      Boolean active,
+      String name,
+      LegalTypeView legalType,
+      LegalRekvView legalRekv,
+      PaymentDetailsView paymentDetails,
+      HashMap suggestion) {
     this.name = name;
     this.legalType = legalType;
     this.legalRekv = legalRekv;

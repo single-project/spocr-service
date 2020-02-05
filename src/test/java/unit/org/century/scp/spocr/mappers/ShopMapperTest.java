@@ -5,10 +5,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import org.century.scp.spocr.address.models.domain.Address;
 import org.century.scp.spocr.address.models.dto.AddressView;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.models.dto.CounterpartyView;
@@ -30,6 +27,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import unit.org.century.scp.spocr.mappers.configs.SpringMappersConfig;
+import unit.org.century.scp.spocr.mappers.factories.CounterpartyFactoryService;
+import unit.org.century.scp.spocr.mappers.factories.ManufacturerFactoryService;
+import unit.org.century.scp.spocr.mappers.factories.ShopFactoryService;
 
 @ContextConfiguration(classes = SpringMappersConfig.class)
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -37,54 +38,47 @@ public class ShopMapperTest {
 
   @Autowired
   private ShopMapper shopMapper;
-
   @Autowired
-  private SpringMappersService springMappersService;
+  private ShopFactoryService shopFactoryService;
+  @Autowired
+  private CounterpartyFactoryService counterpartyFactoryService;
+  @Autowired
+  private ManufacturerFactoryService manufacturerFactoryService;
 
   @Test
   public void correctMapShopToView() {
-    Manufacturer manufacturer = new Manufacturer((long) 1, "m1", true, (long) 1);
-    ShopType shopType1 = new ShopType((long) 2, "st2", true, (long) 1, manufacturer);
-    ShopType shopType2 = new ShopType((long) 3, "st3", true, (long) 1, manufacturer);
-    List<ShopType> shopTypes = new ArrayList<>();
-    shopTypes.add(shopType1);
-    shopTypes.add(shopType2);
-    String adr = "344002 Россия, г. Ростов-на-Дону, д. 36, кв. 25";
-    Address address = new Address(adr);
-    LinkedHashMap<Object, Object> suggestion = new LinkedHashMap<>();
-    suggestion.put(1, "s" + 1);
-    suggestion.put("s" + 1, 1);
-    address.setSuggestion(suggestion);
-    Counterparty counterparty = springMappersService.createCounterparty(1);
-    Shop shop = new Shop((long) 5, "s5", true, (long) 0, counterparty, shopTypes);
-    shop.setAddress(address);
+    long manufacturerId = 1;
+    Manufacturer manufacturer = manufacturerFactoryService.createManufacturer(manufacturerId);
+    int size = 2;
+    List<ShopType> shopTypes = manufacturerFactoryService.createShopTypes(manufacturer, size);
+    long counterpartyId = 10;
+    Counterparty counterparty = counterpartyFactoryService.createCounterparty(counterpartyId);
+    long shopId = 100;
+    Shop shop = shopFactoryService.createShop(shopId, counterparty, shopTypes);
     ShopView shopView = shopMapper.map(shop);
 
     assertTrue(shopView.getActive());
     assertThat(shopView.getShopTypes().size(), is(2));
     assertThat(shopView.getCounterparty().getId(), is(counterparty.getId()));
     assertTrue(shopView.getAddress().getActive());
-    assertEquals(adr, shopView.getAddress().getAddress());
-    assertThat(shopView.getAddress().getSuggestion().size(), is(2));
-    assertThat(shopView.getAddress().getSuggestion().get(1), is("s1"));
+    assertEquals(shop.getAddress().getAddress(), shopView.getAddress().getAddress());
+    assertThat(
+        shopView.getAddress().getSuggestion().get("value"),
+        is(shop.getAddress().getSuggestion().get("value")));
   }
 
   @Test
   public void correctMapPageToPageView() {
-    Manufacturer manufacturer = new Manufacturer((long) 1, "m1", true, (long) 1);
-    ShopType shopType1 = new ShopType((long) 2, "st2", true, (long) 1, manufacturer);
-    ShopType shopType2 = new ShopType((long) 3, "st3", true, (long) 1, manufacturer);
-    List<ShopType> shopTypes = new ArrayList<>();
-    shopTypes.add(shopType1);
-    shopTypes.add(shopType2);
-    Counterparty counterparty = springMappersService.createCounterparty(1);
-    Shop shop1 = new Shop((long) 5, "s5", true, (long) 0, counterparty, shopTypes);
-    Shop shop2 = new Shop((long) 6, "s6", true, (long) 0, counterparty, shopTypes);
-    List<Shop> shops = new ArrayList<>();
-    shops.add(shop1);
-    shops.add(shop2);
+    long manufacturerId = 1;
+    Manufacturer manufacturer = manufacturerFactoryService.createManufacturer(manufacturerId);
+    int size = 2;
+    List<ShopType> shopTypes = manufacturerFactoryService.createShopTypes(manufacturer, size);
+    long counterpartyId = 10;
+    Counterparty counterparty = counterpartyFactoryService.createCounterparty(counterpartyId);
+    size = 2;
+    List<Shop> shops = shopFactoryService.createShop(size, counterparty, shopTypes);
     PageImpl<Shop> shopPage =
-        new PageImpl<>(shops, PageRequest.of(0, 10, Sort.by(Direction.ASC, "id")), 3);
+        new PageImpl<>(shops, PageRequest.of(0, 10, Sort.by(Direction.ASC, "id")), size);
     Page<ShopView> shopViews = shopMapper.map(shopPage);
 
     assertEquals(shopPage.getTotalElements(), shopViews.getTotalElements());
@@ -93,30 +87,25 @@ public class ShopMapperTest {
 
   @Test
   public void correctMapViewToShop() {
-    ManufacturerView manufacturerView = new ManufacturerView((long) 1, "m1", (long) 0, true);
-    ShopTypeView shopTypeView1 =
-        new ShopTypeView((long) 2, "st2", (long) 0, true, manufacturerView);
-    ShopTypeView shopTypeView2 =
-        new ShopTypeView((long) 3, "st3", (long) 0, true, manufacturerView);
-    List<ShopTypeView> shopTypeViews = new ArrayList<>();
-    shopTypeViews.add(shopTypeView1);
-    shopTypeViews.add(shopTypeView2);
-    CounterpartyView counterpartyView = new CounterpartyView((long) 4, "c4", (long) 0, true);
-    String adr = "344002 Россия, г. Ростов-на-Дону, д. 36, кв. 25";
-    LinkedHashMap<Object, Object> suggestion = new LinkedHashMap<>();
-    suggestion.put(1, "s" + 1);
-    suggestion.put("s" + 1, 1);
-    AddressView addressView = new AddressView(adr, suggestion);
+    long manufacturerId = 1;
+    ManufacturerView manufacturerView =
+        manufacturerFactoryService.createManufacturerView(manufacturerId);
+
+    int size = 2;
+    List<ShopTypeView> shopTypeViews =
+        manufacturerFactoryService.createShopTypeViews(manufacturerView, size);
+    long counterpartyId = 100;
+    CounterpartyView counterpartyView =
+        counterpartyFactoryService.createCounterpartyRequestForUpdate(counterpartyId);
+    AddressView addressView = shopFactoryService.createAddressView();
     RequestForCreateShop shopView =
-        new RequestForCreateShop(
-            (long) 5, "s5", (long) 0, true, shopTypeViews, counterpartyView, addressView);
+        shopFactoryService.createShopRequestForCreate(shopTypeViews, counterpartyView, addressView);
 
     Shop shop = shopMapper.map(shopView);
-
     assertEquals(shopView.getId(), shop.getId());
     assertEquals(shopView.getVersion(), shop.getVersion());
     assertEquals(shopView.getName(), shop.getName());
     assertEquals(shopView.getActive(), shop.getActive());
-    assertThat(shop.getShopTypes().size(), is(2));
+    assertThat(shop.getShopTypes().size(), is(size));
   }
 }

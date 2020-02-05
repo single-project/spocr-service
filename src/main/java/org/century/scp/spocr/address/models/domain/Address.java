@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -20,7 +19,6 @@ import org.century.scp.spocr.base.models.domain.BaseEntity;
 @Entity
 @Table(name = "addresses")
 @NoArgsConstructor
-@AllArgsConstructor
 public class Address extends BaseEntity {
 
   @Id
@@ -43,5 +41,14 @@ public class Address extends BaseEntity {
   public Address(String address) {
     this.address = address;
     this.active = true;
+  }
+
+  public Address(Long id, String address, String comment, LinkedHashMap suggestion,
+      Boolean active) {
+    this.id = id;
+    this.address = address;
+    this.comment = comment;
+    this.suggestion = suggestion;
+    this.active = active;
   }
 }

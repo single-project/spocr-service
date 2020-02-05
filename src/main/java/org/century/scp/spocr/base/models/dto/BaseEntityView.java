@@ -16,6 +16,15 @@ public abstract class BaseEntityView implements Serializable {
     this.active = true;
   }
 
+  public BaseEntityView(Boolean active) {
+    this.active = active;
+  }
+
+  public BaseEntityView(Long version, Boolean active) {
+    this.version = version;
+    this.active = active;
+  }
+
   public BaseEntityView(Long id, Long version, Boolean active) {
     this.id = id;
     this.version = version;

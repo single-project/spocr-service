@@ -25,7 +25,7 @@ public interface CounterpartyMapper {
   @Mapping(target = "legalRekv.okonh", source = "okonh")
   CounterpartyView map(Counterparty entity);
 
-  @Mapping(target = "shortName", source = "legalRekv.shortName")
+  @Mapping(target = "name", source = "legalRekv.shortName")
   @Mapping(target = "fullName", source = "legalRekv.fullName")
   @Mapping(target = "inn", source = "legalRekv.inn")
   @Mapping(target = "kpp", source = "legalRekv.kpp")

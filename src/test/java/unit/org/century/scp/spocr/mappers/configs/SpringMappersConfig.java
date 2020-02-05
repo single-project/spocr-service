@@ -1,4 +1,4 @@
-package unit.org.century.scp.spocr.mappers;
+package unit.org.century.scp.spocr.mappers.configs;
 
 import org.century.scp.spocr.address.mappers.AddressMapper;
 import org.century.scp.spocr.counterparty.mappers.CounterpartyMapper;
@@ -11,6 +11,9 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import unit.org.century.scp.spocr.mappers.factories.CounterpartyFactoryService;
+import unit.org.century.scp.spocr.mappers.factories.ManufacturerFactoryService;
+import unit.org.century.scp.spocr.mappers.factories.ShopFactoryService;
 
 @Configuration
 @ComponentScan(basePackageClasses = SpringMappersConfig.class)
@@ -52,7 +55,17 @@ public class SpringMappersConfig {
   }
 
   @Bean
-  public SpringMappersService springMappersService() {
-    return new SpringMappersService();
+  public CounterpartyFactoryService counterpartyFactoryService() {
+    return new CounterpartyFactoryService();
+  }
+
+  @Bean
+  public ManufacturerFactoryService manufacturerFactoryService() {
+    return new ManufacturerFactoryService();
+  }
+
+  @Bean
+  public ShopFactoryService createShopFactoryService() {
+    return new ShopFactoryService();
   }
 }

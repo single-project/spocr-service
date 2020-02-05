@@ -16,9 +16,8 @@ public class ManufacturerView extends BaseEntityView {
     this.name = name;
   }
 
-  public ManufacturerView(long id, String name, Long version, boolean active) {
+  public ManufacturerView(long id, String name, Long version, Boolean active) {
     super(id, version, active);
     this.name = name;
   }
-
 }

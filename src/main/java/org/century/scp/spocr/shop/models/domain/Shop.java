@@ -14,7 +14,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -30,7 +29,6 @@ import org.hibernate.annotations.CascadeType;
 @Entity
 @Table(name = "shops")
 @NoArgsConstructor
-@AllArgsConstructor
 public class Shop extends BaseEntity {
 
   @Id
@@ -59,6 +57,17 @@ public class Shop extends BaseEntity {
   @Column(name = "active")
   private Boolean active;
 
+
+  public Shop(Long id, String name,
+      Counterparty counterparty,
+      List<ShopType> shopTypes, Address address, Boolean active) {
+    this.id = id;
+    this.name = name;
+    this.counterparty = counterparty;
+    this.shopTypes = shopTypes;
+    this.address = address;
+    this.active = active;
+  }
 
   public Shop(
       Long id,

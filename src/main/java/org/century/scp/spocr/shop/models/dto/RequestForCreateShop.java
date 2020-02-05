@@ -11,14 +11,12 @@ import org.century.scp.spocr.shoptype.models.dto.ShopTypeView;
 public class RequestForCreateShop extends ShopView {
 
   public RequestForCreateShop(
-      Long id,
       String name,
-      Long version,
       boolean active,
       List<ShopTypeView> shopTypes,
       CounterpartyView counterparty,
       AddressView address) {
-    super(id, name, version, active, address, shopTypes, counterparty);
+    super(name, active, address, shopTypes, counterparty);
   }
 
   @Null

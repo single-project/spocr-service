@@ -20,14 +20,12 @@ public class ShopView extends BaseEntityView {
   private CounterpartyView counterparty;
 
   public ShopView(
-      Long id,
       String name,
-      Long version,
       boolean active,
       AddressView address,
       List<ShopTypeView> shopTypes,
       CounterpartyView counterparty) {
-    super(id, version, active);
+    super(active);
     this.name = name;
     this.shopTypes = shopTypes;
     this.counterparty = counterparty;

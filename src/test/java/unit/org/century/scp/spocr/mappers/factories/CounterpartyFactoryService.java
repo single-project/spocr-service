@@ -1,18 +1,20 @@
-package unit.org.century.scp.spocr.mappers;
+package unit.org.century.scp.spocr.mappers.factories;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.models.dto.LegalRekvView;
 import org.century.scp.spocr.counterparty.models.dto.RequestForCreateCounterparty;
+import org.century.scp.spocr.counterparty.models.dto.RequestForUpdateCounterparty;
 import org.century.scp.spocr.legaltype.models.domain.LegalType;
 import org.century.scp.spocr.legaltype.models.dto.LegalTypeView;
 import org.century.scp.spocr.paymentdetails.models.domain.PaymentDetails;
 import org.century.scp.spocr.paymentdetails.models.dto.PaymentDetailsView;
 
-public class SpringMappersService {
+public class CounterpartyFactoryService {
 
   public List<Counterparty> createCounterpartyList(int size) {
     List<Counterparty> counterparties = new ArrayList<>();
@@ -79,6 +81,21 @@ public class SpringMappersService {
         .legalRekv(createLegalRekvView())
         .paymentDetails(createPaymentDetailsView())
         .suggestion(createSuggestion())
+        .build();
+  }
+
+  public RequestForUpdateCounterparty createCounterpartyRequestForUpdate(long counterpartyId) {
+    List<String> updatedFields = Arrays.asList("name", "suggestion");
+    return RequestForUpdateCounterparty.builder()
+        .id(counterpartyId)
+        .name("name" + counterpartyId)
+        .version((long) 0)
+        .active(true)
+        .legalType(createLegalTypeView())
+        .legalRekv(createLegalRekvView())
+        .paymentDetails(createPaymentDetailsView())
+        .suggestion(createSuggestion())
+        .updatedFields(updatedFields)
         .build();
   }
 
