@@ -11,6 +11,7 @@ import org.century.scp.spocr.counterparty.services.CounterpartyServiceImpl;
 import org.century.scp.spocr.shop.mappers.ShopMapper;
 import org.century.scp.spocr.shop.models.domain.Shop;
 import org.century.scp.spocr.shop.models.dto.RequestForCreateShop;
+import org.century.scp.spocr.shop.models.dto.RequestForUpdateShop;
 import org.century.scp.spocr.shop.models.dto.ShopView;
 import org.century.scp.spocr.shop.services.ShopServiceImpl;
 import org.century.scp.spocr.shoptype.mappers.ShopTypeMapper;
@@ -71,8 +72,9 @@ public class ShopController {
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<ShopView> updateItem(@PathVariable Long id, @RequestBody String data) {
-    return ResponseEntity.ok(shopMapper.map(shopService.update(id, data)));
+  public ResponseEntity<ShopView> updateItem(@PathVariable Long id,
+      @RequestBody RequestForUpdateShop patch) {
+    return ResponseEntity.ok(shopMapper.map(shopService.update(id, shopMapper.map(patch))));
   }
 
   @GetMapping("/{id}")

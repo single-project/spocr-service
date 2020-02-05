@@ -69,21 +69,6 @@ public class Shop extends BaseEntity {
     this.active = active;
   }
 
-  public Shop(
-      Long id,
-      String name,
-      Boolean active,
-      Long version,
-      Counterparty counterparty,
-      List<ShopType> shopTypes) {
-    super(version);
-    this.id = id;
-    this.name = name;
-    this.active = active;
-    this.shopTypes = shopTypes;
-    this.counterparty = counterparty;
-  }
-
   public Shop(String name, Counterparty counterparty, ShopType shopType) {
     this.name = name;
     this.counterparty = counterparty;

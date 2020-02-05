@@ -4,6 +4,7 @@ import org.century.scp.spocr.address.mappers.AddressMapper;
 import org.century.scp.spocr.counterparty.mappers.CounterpartyMapper;
 import org.century.scp.spocr.shop.models.domain.Shop;
 import org.century.scp.spocr.shop.models.dto.RequestForCreateShop;
+import org.century.scp.spocr.shop.models.dto.RequestForUpdateShop;
 import org.century.scp.spocr.shop.models.dto.ShopView;
 import org.century.scp.spocr.shoptype.mappers.ShopTypeMapper;
 import org.mapstruct.Mapper;
@@ -15,6 +16,8 @@ public interface ShopMapper {
   ShopView map(Shop entity);
 
   Shop map(RequestForCreateShop view);
+
+  Shop map(RequestForUpdateShop view);
 
   default Page<ShopView> map(Page<Shop> page) {
     return page.map(this::map);

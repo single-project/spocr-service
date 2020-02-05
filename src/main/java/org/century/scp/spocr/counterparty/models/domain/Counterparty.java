@@ -1,6 +1,7 @@
 package org.century.scp.spocr.counterparty.models.domain;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -118,4 +119,8 @@ public class Counterparty extends BaseEntity {
     this.suggestion = suggestion;
   }
 
+  @Override
+  public List<String> getUpdatedFields() {
+    return super.getUpdatedFields();
+  }
 }

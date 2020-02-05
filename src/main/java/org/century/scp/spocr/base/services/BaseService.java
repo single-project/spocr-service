@@ -3,11 +3,11 @@ package org.century.scp.spocr.base.services;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.fge.jsonpatch.JsonPatchException;
 import com.github.fge.jsonpatch.mergepatch.JsonMergePatch;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import org.century.scp.spocr.base.models.domain.BaseEntity;
 import org.century.scp.spocr.base.repositories.BaseRepository;
@@ -40,10 +40,10 @@ public abstract class BaseService<T extends BaseEntity> {
 
   @Transactional(isolation = Isolation.READ_COMMITTED)
   @PreAuthorize("hasAuthority('UPDATE_PRIVILEGE')")
-  public T update(Long id, String data) {
+  public T update(Long id, T patch) {
     T object = get(id);
     try {
-      object = mergePatch(object, data, getEntityClass());
+      object = mergePatch(object, patch, getEntityClass());
     } catch (IOException | JsonPatchException e) {
       throw new SpocrException(e);
     }
@@ -68,16 +68,19 @@ public abstract class BaseService<T extends BaseEntity> {
     return entityRepository.saveAll(objects);
   }
 
-  protected static <T> T mergePatch(T t, String patch, Class<T> clazz)
+  protected T mergePatch(T currentEntity, T patchEntity, Class<T> clazz)
       throws IOException, JsonPatchException {
     ObjectMapper mapper = new ObjectMapper();
     mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-    JsonNode node = mapper.convertValue(t, JsonNode.class);
-    JsonNode patchNode = mapper.readTree(patch);
+    JsonNode node = mapper.convertValue(currentEntity, JsonNode.class);
+    JsonNode patchNode = mapper.convertValue(patchEntity, JsonNode.class);
+    List<String> fields = new ArrayList<>();
+    patchNode.fieldNames().forEachRemaining(fields::add);
+    List<String> updatedFields = patchEntity.getUpdatedFields();
+    fields.stream().filter(f -> !updatedFields.contains(f))
+        .forEach(((ObjectNode) patchNode)::remove);
     JsonMergePatch mergePatch = JsonMergePatch.fromJson(patchNode);
     node = mergePatch.apply(node);
-    ArrayNode fields = ((ObjectNode) node).putArray("updatedFields");
-    patchNode.fieldNames().forEachRemaining(fields::add);
     return mapper.treeToValue(node, clazz);
   }
 }

@@ -9,6 +9,7 @@ import org.century.scp.spocr.counterparty.mappers.CounterpartyMapper;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.models.dto.CounterpartyView;
 import org.century.scp.spocr.counterparty.models.dto.RequestForCreateCounterparty;
+import org.century.scp.spocr.counterparty.models.dto.RequestForUpdateCounterparty;
 import org.century.scp.spocr.counterparty.services.CounterpartyServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,8 +43,9 @@ public class CounterpartyController {
 
   @PatchMapping("/{id}")
   public ResponseEntity<CounterpartyView> updateItem(
-      @PathVariable Long id, @RequestBody String data) {
-    return ResponseEntity.ok(counterpartyMapper.map(counterpartyService.update(id, data)));
+      @PathVariable Long id, @RequestBody RequestForUpdateCounterparty patch) {
+    Counterparty patchedEntity = counterpartyMapper.map(patch);
+    return ResponseEntity.ok(counterpartyMapper.map(counterpartyService.update(id, patchedEntity)));
   }
 
   @GetMapping("/{id}")

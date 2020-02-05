@@ -35,10 +35,10 @@ public class ShopServiceImpl extends BaseService<Shop> {
 
   @Override
   @PreAuthorize("hasAuthority('UPDATE_PRIVILEGE')")
-  public Shop update(Long id, String data) {
+  public Shop update(Long id, Shop patch) {
     Shop shop = get(id);
     try {
-      shop = mergePatch(shop, data, getEntityClass());
+      shop = mergePatch(shop, patch, getEntityClass());
     } catch (IOException | JsonPatchException e) {
       throw new SpocrException(e);
     }

@@ -2,6 +2,8 @@ package org.century.scp.spocr.counterparty.mappers;
 
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.models.dto.CounterpartyView;
+import org.century.scp.spocr.counterparty.models.dto.RequestForCreateCounterparty;
+import org.century.scp.spocr.counterparty.models.dto.RequestForUpdateCounterparty;
 import org.century.scp.spocr.legaltype.mappers.LegalTypeMapper;
 import org.century.scp.spocr.paymentdetails.mappers.PaymentDetailsMapper;
 import org.mapstruct.Mapper;
@@ -34,7 +36,18 @@ public interface CounterpartyMapper {
   @Mapping(target = "ogrnAuthority", source = "legalRekv.ogrnAuthority")
   @Mapping(target = "okpo", source = "legalRekv.okpo")
   @Mapping(target = "okonh", source = "legalRekv.okonh")
-  Counterparty map(CounterpartyView view);
+  Counterparty map(RequestForCreateCounterparty view);
+
+  @Mapping(target = "name", source = "legalRekv.shortName")
+  @Mapping(target = "fullName", source = "legalRekv.fullName")
+  @Mapping(target = "inn", source = "legalRekv.inn")
+  @Mapping(target = "kpp", source = "legalRekv.kpp")
+  @Mapping(target = "ogrn", source = "legalRekv.ogrn")
+  @Mapping(target = "ogrnDate", source = "legalRekv.ogrnDate")
+  @Mapping(target = "ogrnAuthority", source = "legalRekv.ogrnAuthority")
+  @Mapping(target = "okpo", source = "legalRekv.okpo")
+  @Mapping(target = "okonh", source = "legalRekv.okonh")
+  Counterparty map(RequestForUpdateCounterparty view);
 
   default Page<CounterpartyView> map(Page<Counterparty> page) {
     return page.map(this::map);

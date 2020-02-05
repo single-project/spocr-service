@@ -9,6 +9,7 @@ import org.century.scp.spocr.manufacturer.mappers.ManufacturerMapper;
 import org.century.scp.spocr.manufacturer.models.domain.Manufacturer;
 import org.century.scp.spocr.manufacturer.models.dto.ManufacturerView;
 import org.century.scp.spocr.manufacturer.models.dto.RequestForCreateManufacturer;
+import org.century.scp.spocr.manufacturer.models.dto.RequestForUpdateManufacturer;
 import org.century.scp.spocr.manufacturer.services.ManufacturerServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,8 +43,9 @@ public class ManufacturerController {
 
   @PatchMapping("/{id}")
   public ResponseEntity<ManufacturerView> updateItem(
-      @PathVariable Long id, @RequestBody String data) {
-    return ResponseEntity.ok(manufacturerMapper.map(manufacturerService.update(id, data)));
+      @PathVariable Long id, @RequestBody RequestForUpdateManufacturer patch) {
+    return ResponseEntity
+        .ok(manufacturerMapper.map(manufacturerService.update(id, manufacturerMapper.map(patch))));
   }
 
   @GetMapping("/{id}")

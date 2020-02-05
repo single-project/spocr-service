@@ -10,6 +10,7 @@ import org.century.scp.spocr.manufacturer.services.ManufacturerServiceImpl;
 import org.century.scp.spocr.shoptype.mappers.ShopTypeMapper;
 import org.century.scp.spocr.shoptype.models.domain.ShopType;
 import org.century.scp.spocr.shoptype.models.dto.RequestForCreateShopType;
+import org.century.scp.spocr.shoptype.models.dto.RequestForUpdateShopType;
 import org.century.scp.spocr.shoptype.models.dto.ShopTypeView;
 import org.century.scp.spocr.shoptype.services.ShopTypesServiceImpl;
 import org.springframework.data.domain.Page;
@@ -46,8 +47,10 @@ public class ShopTypesController {
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<ShopTypeView> updateItem(@PathVariable Long id, @RequestBody String data) {
-    return ResponseEntity.ok(shopTypeMapper.map(shopTypesService.update(id, data)));
+  public ResponseEntity<ShopTypeView> updateItem(@PathVariable Long id,
+      @RequestBody RequestForUpdateShopType patch) {
+    return ResponseEntity
+        .ok(shopTypeMapper.map(shopTypesService.update(id, shopTypeMapper.map(patch))));
   }
 
   @GetMapping("/{id}")
