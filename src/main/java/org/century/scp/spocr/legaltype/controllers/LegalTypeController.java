@@ -37,7 +37,8 @@ public class LegalTypeController {
   public ResponseEntity<Page<LegalTypeView>> getItems(
       @And({
           @Spec(path = "name", params = "q", spec = LikeIgnoreCase.class),
-          @Spec(path = "active", params = "active", spec = Equal.class)
+          @Spec(path = "active", params = "active", spec = Equal.class),
+          @Spec(path = "okpfId", params = "opfCode", spec = Equal.class)
       })
           Specification<LegalType> legalTypeSpecification,
       Pageable pageable) {

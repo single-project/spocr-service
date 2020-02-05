@@ -16,6 +16,8 @@ import org.century.scp.spocr.legaltype.models.domain.LegalType;
 import org.century.scp.spocr.legaltype.services.LegalTypeServiceImpl;
 import org.century.scp.spocr.manufacturer.models.domain.Manufacturer;
 import org.century.scp.spocr.manufacturer.services.ManufacturerServiceImpl;
+import org.century.scp.spocr.paymentdetails.models.domain.PaymentDetails;
+import org.century.scp.spocr.paymentdetails.services.PaymentDetailsServiceImpl;
 import org.century.scp.spocr.security.models.domain.SecurityUser;
 import org.century.scp.spocr.security.services.CustomUserDetailsService;
 import org.century.scp.spocr.shop.models.domain.Shop;
@@ -48,6 +50,8 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
   @Autowired private CustomUserDetailsService users;
   @Autowired
   private LegalTypeServiceImpl legalTypeService;
+  @Autowired
+  private PaymentDetailsServiceImpl paymentDetailsService;
 
   @Override
   public void run(ApplicationArguments args) throws Exception {
@@ -82,8 +86,18 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
     // add 10 new counteragent
     List<Counterparty> counterparties = new ArrayList<>();
     for (int i = 1; i <= 10; i++) {
+      PaymentDetails paymentDetails =
+          PaymentDetails.builder()
+              .active(true)
+              .bic("000")
+              .bank("444")
+              .paymentAccount("111")
+              .correspondingAccount("222")
+              .build();
+
       Counterparty e = new Counterparty("Контагент" + i);
       e.setLegalType(legalType1);
+      e.setPaymentDetails(paymentDetails);
       counterparties.add(e);
     }
     counterpartyService.createAll(counterparties);

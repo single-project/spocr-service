@@ -18,8 +18,8 @@ public class LegalTypeView extends BaseEntityView {
   private String name;
   private Boolean active;
 
-  private String okfpShortName;
-  private String okfpFullName;
-  private String okpfId;
-  private String okpfType;
+  private String opfShort;
+  private String opfFull;
+  private String opfCode;
+  private String opfType;
 }
