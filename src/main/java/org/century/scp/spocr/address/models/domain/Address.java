@@ -28,6 +28,12 @@ public class Address extends BaseEntity {
   @Column(name = "address")
   private String address;
 
+  @Column
+  private Double latitude;
+
+  @Column
+  private Double longitude;
+
   @Column(name = "comment")
   private String comment;
 
