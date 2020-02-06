@@ -136,6 +136,8 @@ CREATE TABLE public.addresses
 (
     id integer NOT NULL auto_increment,
     address character varying(100) NOT NULL,
+    latitude double,
+    longitude double,
     comment character varying(500),
     suggestion text,
     active boolean NOT NULL DEFAULT true,

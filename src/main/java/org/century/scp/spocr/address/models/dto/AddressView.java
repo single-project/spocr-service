@@ -14,10 +14,8 @@ public class AddressView extends BaseEntityView {
   private String address;
   private String comment;
   private HashMap suggestion;
-
-  public AddressView(String address) {
-    this.address = address;
-  }
+  private Double latitude;
+  private Double longitude;
 
   public AddressView(String address, HashMap suggestion) {
     this.address = address;
