@@ -1,20 +1,54 @@
 package org.century.scp.spocr.counterparty.mappers;
 
+import org.century.scp.spocr.base.models.dto.BaseEntityListView;
+import org.century.scp.spocr.base.utils.Strings;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.models.dto.CounterpartyView;
-import org.century.scp.spocr.counterparty.models.dto.RequestForCreateCounterparty;
 import org.century.scp.spocr.counterparty.models.dto.RequestForUpdateCounterparty;
+import org.century.scp.spocr.counterparty.services.CounterpartyServiceImpl;
 import org.century.scp.spocr.legaltype.mappers.LegalTypeMapper;
 import org.century.scp.spocr.paymentdetails.mappers.PaymentDetailsMapper;
+import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.Named;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 
-@Mapper(
-    nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL,
-    uses = {PaymentDetailsMapper.class, LegalTypeMapper.class})
-public interface CounterpartyMapper {
+@Mapper(uses = {PaymentDetailsMapper.class, LegalTypeMapper.class})
+public abstract class CounterpartyMapper {
+
+  @Autowired
+  private CounterpartyServiceImpl service;
+
+  @Named("setParentFromContext")
+  public Counterparty getParentFromContext(BaseEntityListView parent) {
+    return parent == null ? null : service.get(parent.getId());
+  }
+
+  @Mapping(target = "parent", qualifiedByName = "setParentFromContext")
+  @Mapping(target = "name", source = "legalRekv.shortName")
+  @Mapping(target = "fullName", source = "legalRekv.fullName")
+  @Mapping(target = "inn", source = "legalRekv.inn")
+  @Mapping(target = "kpp", source = "legalRekv.kpp")
+  @Mapping(target = "ogrn", source = "legalRekv.ogrn")
+  @Mapping(target = "ogrnDate", source = "legalRekv.ogrnDate")
+  @Mapping(target = "ogrnAuthority", source = "legalRekv.ogrnAuthority")
+  @Mapping(target = "okpo", source = "legalRekv.okpo")
+  @Mapping(target = "okonh", source = "legalRekv.okonh")
+  public abstract Counterparty map(CounterpartyView req);
+
+  @Mapping(target = "name", source = "legalRekv.shortName")
+  @Mapping(target = "fullName", source = "legalRekv.fullName")
+  @Mapping(target = "inn", source = "legalRekv.inn")
+  @Mapping(target = "kpp", source = "legalRekv.kpp")
+  @Mapping(target = "ogrn", source = "legalRekv.ogrn")
+  @Mapping(target = "ogrnDate", source = "legalRekv.ogrnDate")
+  @Mapping(target = "ogrnAuthority", source = "legalRekv.ogrnAuthority")
+  @Mapping(target = "okpo", source = "legalRekv.okpo")
+  @Mapping(target = "okonh", source = "legalRekv.okonh")
+  public abstract Counterparty map(RequestForUpdateCounterparty req);
 
   @Mapping(target = "legalRekv.shortName", source = "shortName")
   @Mapping(target = "legalRekv.fullName", source = "fullName")
@@ -25,31 +59,17 @@ public interface CounterpartyMapper {
   @Mapping(target = "legalRekv.ogrnAuthority", source = "ogrnAuthority")
   @Mapping(target = "legalRekv.okpo", source = "okpo")
   @Mapping(target = "legalRekv.okonh", source = "okonh")
-  CounterpartyView map(Counterparty entity);
+  public abstract CounterpartyView map(Counterparty entity);
 
-  @Mapping(target = "name", source = "legalRekv.shortName")
-  @Mapping(target = "fullName", source = "legalRekv.fullName")
-  @Mapping(target = "inn", source = "legalRekv.inn")
-  @Mapping(target = "kpp", source = "legalRekv.kpp")
-  @Mapping(target = "ogrn", source = "legalRekv.ogrn")
-  @Mapping(target = "ogrnDate", source = "legalRekv.ogrnDate")
-  @Mapping(target = "ogrnAuthority", source = "legalRekv.ogrnAuthority")
-  @Mapping(target = "okpo", source = "legalRekv.okpo")
-  @Mapping(target = "okonh", source = "legalRekv.okonh")
-  Counterparty map(RequestForCreateCounterparty view);
+  @AfterMapping
+  protected void afterMappingSetNameIfIsNull(
+      @MappingTarget Counterparty target, CounterpartyView source) {
+    if (Strings.isNullOrEmpty(target.getName())) {
+      target.setName(source.getName());
+    }
+  }
 
-  @Mapping(target = "name", source = "legalRekv.shortName")
-  @Mapping(target = "fullName", source = "legalRekv.fullName")
-  @Mapping(target = "inn", source = "legalRekv.inn")
-  @Mapping(target = "kpp", source = "legalRekv.kpp")
-  @Mapping(target = "ogrn", source = "legalRekv.ogrn")
-  @Mapping(target = "ogrnDate", source = "legalRekv.ogrnDate")
-  @Mapping(target = "ogrnAuthority", source = "legalRekv.ogrnAuthority")
-  @Mapping(target = "okpo", source = "legalRekv.okpo")
-  @Mapping(target = "okonh", source = "legalRekv.okonh")
-  Counterparty map(RequestForUpdateCounterparty view);
-
-  default Page<CounterpartyView> map(Page<Counterparty> page) {
+  public Page<CounterpartyView> map(Page<Counterparty> page) {
     return page.map(this::map);
   }
 }

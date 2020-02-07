@@ -37,14 +37,15 @@ public class CounterpartyController {
   @PostMapping
   public ResponseEntity<CounterpartyView> addItem(
       @Validated @RequestBody RequestForCreateCounterparty cp) {
+    Counterparty newEntitty = attachCounterpartyParent(cp);
     return ResponseEntity.ok(
-        counterpartyMapper.map(counterpartyService.create(counterpartyMapper.map(cp))));
+        counterpartyMapper.map(counterpartyService.create(newEntitty)));
   }
 
   @PatchMapping("/{id}")
   public ResponseEntity<CounterpartyView> updateItem(
       @PathVariable Long id, @RequestBody RequestForUpdateCounterparty patch) {
-    Counterparty patchedEntity = counterpartyMapper.map(patch);
+    Counterparty patchedEntity = attachCounterpartyParent(patch);
     return ResponseEntity.ok(counterpartyMapper.map(counterpartyService.update(id, patchedEntity)));
   }
 
@@ -64,5 +65,23 @@ public class CounterpartyController {
     Page<Counterparty> page =
         counterpartyService.getBySpecification(counterpartySpecification, pageable);
     return ResponseEntity.ok(counterpartyMapper.map(page));
+  }
+
+  private Counterparty attachCounterpartyParent(RequestForCreateCounterparty counterpartyView) {
+    Counterparty counterparty = counterpartyMapper.map(counterpartyView);
+    setParentFromContext(counterparty);
+    return counterparty;
+  }
+
+  private Counterparty attachCounterpartyParent(RequestForUpdateCounterparty counterpartyView) {
+    Counterparty counterparty = counterpartyMapper.map(counterpartyView);
+    setParentFromContext(counterparty);
+    return counterparty;
+  }
+
+  private void setParentFromContext(Counterparty counterparty) {
+    if (counterparty.getParent() != null && counterparty.getParent().getId() != null) {
+      counterparty.setParent(counterpartyService.get(counterparty.getParent().getId()));
+    }
   }
 }

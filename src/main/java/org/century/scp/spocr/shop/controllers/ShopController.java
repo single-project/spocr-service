@@ -72,8 +72,8 @@ public class ShopController {
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<ShopView> updateItem(@PathVariable Long id,
-      @RequestBody RequestForUpdateShop patch) {
+  public ResponseEntity<ShopView> updateItem(
+      @PathVariable Long id, @RequestBody RequestForUpdateShop patch) {
     return ResponseEntity.ok(shopMapper.map(shopService.update(id, shopMapper.map(patch))));
   }
 
@@ -86,6 +86,8 @@ public class ShopController {
   public ResponseEntity<Page<ShopView>> getItems(
       @And({
             @Spec(path = "name", params = "q", spec = LikeIgnoreCase.class),
+          @Spec(path = "name", params = "name", spec = LikeIgnoreCase.class),
+          @Spec(path = "counterparty.id", params = "counterparty", spec = Equal.class),
             @Spec(path = "active", params = "active", spec = Equal.class)
           })
           Specification<Shop> shopSpecification,

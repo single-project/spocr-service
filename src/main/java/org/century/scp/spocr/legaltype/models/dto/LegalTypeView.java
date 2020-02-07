@@ -22,4 +22,8 @@ public class LegalTypeView extends BaseEntityView {
   private String opfFull;
   private String opfCode;
   private String opfType;
+
+  public LegalTypeView(Long id) {
+    this.id = id;
+  }
 }

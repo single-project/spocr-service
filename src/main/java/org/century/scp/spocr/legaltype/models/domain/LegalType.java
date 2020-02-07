@@ -44,4 +44,7 @@ public class LegalType extends BaseEntity {
   @Column(name = "active")
   private Boolean active;
 
+  public LegalType(Long id) {
+    setId(id);
+  }
 }

@@ -1,8 +1,11 @@
 package unit.org.century.scp.spocr.mappers;
 
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 import java.util.List;
+import org.century.scp.spocr.base.models.dto.BaseEntityListView;
 import org.century.scp.spocr.counterparty.mappers.CounterpartyMapper;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.models.dto.CounterpartyView;
@@ -28,6 +31,35 @@ public class CounterpartyMapperTest {
   private CounterpartyMapper counterpartyMapper;
   @Autowired
   private CounterpartyFactoryService counterpartyFactoryService;
+
+  @Test
+  public void correctMapNullShortNameToName() {
+    RequestForCreateCounterparty view = counterpartyFactoryService
+        .createCounterpartyRequestForCreate();
+    view.getLegalRekv().setShortName(null);
+    Counterparty counterparty = counterpartyMapper.map(view);
+    assertEquals(view.getName(), counterparty.getName());
+  }
+
+  @Test
+  public void correctMapViewToEntityWithParentId() {
+    long parentId = 100;
+    RequestForCreateCounterparty view = counterpartyFactoryService
+        .createCounterpartyRequestForCreate();
+    view.setParent(new BaseEntityListView(parentId, "parent"));
+    Counterparty counterparty = counterpartyMapper.map(view);
+    assertThat(counterparty.getParent().getId(), is(parentId));
+  }
+
+  @Test
+  public void correctMapEntityToViewWithParentId() {
+    long counterpartyId = 1;
+    long parentId = 100;
+    Counterparty entity = counterpartyFactoryService.createCounterparty(counterpartyId);
+    entity.setParent(counterpartyFactoryService.createCounterparty(parentId));
+    CounterpartyView view = counterpartyMapper.map(entity);
+    assertThat(view.getParent().getId(), is(parentId));
+  }
 
   @Test
   public void correctMapyWithLegalRekvViewToCounterparty() {

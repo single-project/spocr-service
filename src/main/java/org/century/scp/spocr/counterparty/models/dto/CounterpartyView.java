@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.century.scp.spocr.base.models.dto.BaseEntityListView;
 import org.century.scp.spocr.base.models.dto.BaseEntityView;
 import org.century.scp.spocr.legaltype.models.dto.LegalTypeView;
 import org.century.scp.spocr.paymentdetails.models.dto.PaymentDetailsView;
@@ -20,6 +21,7 @@ public class CounterpartyView extends BaseEntityView {
   private LegalRekvView legalRekv;
   private PaymentDetailsView paymentDetails;
   private HashMap suggestion;
+  private BaseEntityListView parent;
 
   public CounterpartyView(String name) {
     this.name = name;
@@ -54,10 +56,13 @@ public class CounterpartyView extends BaseEntityView {
       LegalRekvView legalRekv,
       PaymentDetailsView paymentDetails,
       HashMap suggestion) {
+    super(active);
     this.name = name;
     this.legalType = legalType;
     this.legalRekv = legalRekv;
     this.paymentDetails = paymentDetails;
     this.suggestion = suggestion;
   }
+
+
 }
