@@ -41,13 +41,13 @@ public abstract class BaseService<T extends BaseEntity> {
   @Transactional(isolation = Isolation.READ_COMMITTED)
   @PreAuthorize("hasAuthority('UPDATE_PRIVILEGE')")
   public T update(Long id, T patch) {
-    T object = get(id);
+    T current = get(id);
     try {
-      object = mergePatch(object, patch, getEntityClass());
+      current = mergePatch(current, patch, getEntityClass());
     } catch (IOException | JsonPatchException e) {
       throw new SpocrException(e);
     }
-    return entityRepository.save(object);
+    return entityRepository.save(current);
   }
 
   @NonNull
@@ -83,4 +83,6 @@ public abstract class BaseService<T extends BaseEntity> {
     node = mergePatch.apply(node);
     return mapper.treeToValue(node, clazz);
   }
+
+  //protected abstract T mergePatch(T current, T patch);
 }

@@ -41,6 +41,7 @@ CREATE TABLE public.counterparties
     okonh character varying(100),
     counterparty_payment_details_id integer,
     suggestion text,
+    parent_id integer,
     active boolean NOT NULL DEFAULT true,
     version integer NOT NULL DEFAULT 0,
     CONSTRAINT counterparties_pkey PRIMARY KEY (id)

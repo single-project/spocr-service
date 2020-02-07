@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.century.scp.spocr.base.models.dto.BaseEntityListView;
 import org.century.scp.spocr.legaltype.models.dto.LegalTypeView;
 import org.century.scp.spocr.paymentdetails.models.dto.PaymentDetailsView;
 
@@ -18,10 +19,11 @@ import org.century.scp.spocr.paymentdetails.models.dto.PaymentDetailsView;
 public class RequestForCreateCounterparty extends CounterpartyView {
 
   @Builder
-  public RequestForCreateCounterparty(Boolean active, String name,
+  public RequestForCreateCounterparty(String name,
       LegalTypeView legalType, LegalRekvView legalRekv,
-      PaymentDetailsView paymentDetails, HashMap suggestion) {
-    super(active, name, legalType, legalRekv, paymentDetails, suggestion);
+      PaymentDetailsView paymentDetails, HashMap suggestion,
+      BaseEntityListView parent) {
+    super(name, legalType, legalRekv, paymentDetails, suggestion, parent);
   }
 
   @Null
@@ -49,4 +51,8 @@ public class RequestForCreateCounterparty extends CounterpartyView {
     return super.getName();
   }
 
+  @Override
+  public BaseEntityListView getParent() {
+    return super.getParent();
+  }
 }

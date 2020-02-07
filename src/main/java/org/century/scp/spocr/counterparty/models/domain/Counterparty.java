@@ -79,17 +79,25 @@ public class Counterparty extends BaseEntity {
   @Column(name = "active")
   private Boolean active;
 
-  public Counterparty(String name) {
-    this.name = name;
-    this.active = true;
-  }
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "parent_id")
+  private Counterparty parent;
 
   @Column(name = "suggestion")
   @Convert(converter = SuggestionConverter.class)
   private LinkedHashMap suggestion;
 
-  public Counterparty(Long id, String name,
-      PaymentDetails paymentDetails, Boolean active, LinkedHashMap suggestion) {
+  public Counterparty(String name) {
+    this.name = name;
+    this.active = true;
+  }
+
+  public Counterparty(
+      Long id,
+      String name,
+      PaymentDetails paymentDetails,
+      Boolean active,
+      LinkedHashMap suggestion) {
     this.id = id;
     this.name = name;
     this.paymentDetails = paymentDetails;
@@ -98,10 +106,22 @@ public class Counterparty extends BaseEntity {
   }
 
   @Builder
-  public Counterparty(Long id, Long version, String name,
-      LegalType legalType, String fullName, String inn, String kpp, String ogrn,
-      String ogrnDate, String ogrnAuthority, String okpo, String okonh,
-      PaymentDetails paymentDetails, Boolean active, LinkedHashMap suggestion) {
+  public Counterparty(
+      Long id,
+      Long version,
+      String name,
+      LegalType legalType,
+      String fullName,
+      String inn,
+      String kpp,
+      String ogrn,
+      String ogrnDate,
+      String ogrnAuthority,
+      String okpo,
+      String okonh,
+      PaymentDetails paymentDetails,
+      Boolean active,
+      LinkedHashMap suggestion) {
     super(version);
     this.id = id;
     this.name = name;
