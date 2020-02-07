@@ -86,6 +86,7 @@ public class ShopController {
   public ResponseEntity<Page<ShopView>> getItems(
       @And({
             @Spec(path = "name", params = "q", spec = LikeIgnoreCase.class),
+          @Spec(path = "id", params = "id", spec = Equal.class),
           @Spec(path = "name", params = "name", spec = LikeIgnoreCase.class),
           @Spec(path = "counterparty.id", params = "counterparty", spec = Equal.class),
             @Spec(path = "active", params = "active", spec = Equal.class)
