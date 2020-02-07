@@ -24,7 +24,7 @@ public abstract class CounterpartyMapper {
 
   @Named("setParentFromContext")
   public Counterparty getParentFromContext(BaseEntityListView parent) {
-    return parent == null ? null : service.get(parent.getId());
+    return parent != null && parent.getId() != null ? service.get(parent.getId()) : null;
   }
 
   @Mapping(target = "parent", qualifiedByName = "setParentFromContext")
@@ -39,6 +39,7 @@ public abstract class CounterpartyMapper {
   @Mapping(target = "okonh", source = "legalRekv.okonh")
   public abstract Counterparty map(CounterpartyView req);
 
+  @Mapping(target = "parent", qualifiedByName = "setParentFromContext")
   @Mapping(target = "name", source = "legalRekv.shortName")
   @Mapping(target = "fullName", source = "legalRekv.fullName")
   @Mapping(target = "inn", source = "legalRekv.inn")

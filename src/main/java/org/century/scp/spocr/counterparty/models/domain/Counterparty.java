@@ -1,7 +1,6 @@
 package org.century.scp.spocr.counterparty.models.domain;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -14,7 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -39,6 +37,10 @@ public class Counterparty extends BaseEntity {
 
   @Column(name = "name")
   private String name;
+
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "parent_id")
+  private Counterparty parent;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "legal_type_id")
@@ -79,10 +81,6 @@ public class Counterparty extends BaseEntity {
   @Column(name = "active")
   private Boolean active;
 
-  @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "parent_id")
-  private Counterparty parent;
-
   @Column(name = "suggestion")
   @Convert(converter = SuggestionConverter.class)
   private LinkedHashMap suggestion;
@@ -92,55 +90,4 @@ public class Counterparty extends BaseEntity {
     this.active = true;
   }
 
-  public Counterparty(
-      Long id,
-      String name,
-      PaymentDetails paymentDetails,
-      Boolean active,
-      LinkedHashMap suggestion) {
-    this.id = id;
-    this.name = name;
-    this.paymentDetails = paymentDetails;
-    this.active = active;
-    this.suggestion = suggestion;
-  }
-
-  @Builder
-  public Counterparty(
-      Long id,
-      Long version,
-      String name,
-      LegalType legalType,
-      String fullName,
-      String inn,
-      String kpp,
-      String ogrn,
-      String ogrnDate,
-      String ogrnAuthority,
-      String okpo,
-      String okonh,
-      PaymentDetails paymentDetails,
-      Boolean active,
-      LinkedHashMap suggestion) {
-    super(version);
-    this.id = id;
-    this.name = name;
-    this.legalType = legalType;
-    this.fullName = fullName;
-    this.inn = inn;
-    this.kpp = kpp;
-    this.ogrn = ogrn;
-    this.ogrnDate = ogrnDate;
-    this.ogrnAuthority = ogrnAuthority;
-    this.okpo = okpo;
-    this.okonh = okonh;
-    this.paymentDetails = paymentDetails;
-    this.active = active;
-    this.suggestion = suggestion;
-  }
-
-  @Override
-  public List<String> getUpdatedFields() {
-    return super.getUpdatedFields();
-  }
 }

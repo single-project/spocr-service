@@ -11,6 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class BaseEntityListView {
 
-  private long id;
+  private Long id;
   private String name;
 }

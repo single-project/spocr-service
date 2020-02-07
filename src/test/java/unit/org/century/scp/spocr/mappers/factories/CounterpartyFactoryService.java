@@ -29,21 +29,22 @@ public class CounterpartyFactoryService {
     LegalType legalType = createLegalType(id);
     PaymentDetails paymentDetails = createPaymentDetails(id);
 
-    return Counterparty.builder()
-        .id(id)
-        .name("name" + id)
-        .active(true)
-        .legalType(legalType)
-        .paymentDetails(paymentDetails)
-        .suggestion(null)
-        .fullName("fullname" + id)
-        .inn("11122233" + id)
-        .kpp("222333444" + id)
-        .ogrn("ogrn" + id)
-        .ogrnDate("03.01.2014")
-        .okonh("okonh" + id)
-        .okpo("okpo" + id)
-        .build();
+    Counterparty counterparty = new Counterparty();
+    //TODO : fix it
+    counterparty.setId(id);
+    counterparty.setName("name" + id);
+    counterparty.setActive(true);
+    counterparty.setLegalType(legalType);
+    counterparty.setPaymentDetails(paymentDetails);
+    counterparty.setSuggestion(null);
+    counterparty.setFullName("fullname" + id);
+    counterparty.setInn("11122233" + id);
+    counterparty.setKpp("222333444" + id);
+    counterparty.setOgrn("ogrn" + id);
+    counterparty.setOgrnDate("03.01.2014");
+    counterparty.setOkonh("okonh" + id);
+    counterparty.setOkpo("okpo" + id);
+    return counterparty;
   }
 
   public LegalType createLegalType(long counterpartyId) {

@@ -15,9 +15,8 @@ public abstract class LegalTypeMapper {
   @Autowired
   private LegalTypeServiceImpl service;
 
-  public LegalType resolve(
-      LegalTypeView legalType, @TargetType Class<LegalType> entityClass) {
-    return legalType != null ? service.get(legalType.getId()) : null;
+  public LegalType resolve(LegalTypeView legalType, @TargetType Class<LegalType> entityClass) {
+    return legalType != null && legalType.getId() != null ? service.get(legalType.getId()) : null;
   }
 
   @Mapping(target = "opfShort", source = "okfpShortName")
