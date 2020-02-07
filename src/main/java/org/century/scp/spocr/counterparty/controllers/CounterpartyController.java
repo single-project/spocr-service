@@ -38,8 +38,7 @@ public class CounterpartyController {
   public ResponseEntity<CounterpartyView> addItem(
       @Validated @RequestBody RequestForCreateCounterparty cp) {
     Counterparty newEntitty = attachCounterpartyParent(cp);
-    return ResponseEntity.ok(
-        counterpartyMapper.map(counterpartyService.create(newEntitty)));
+    return ResponseEntity.ok(counterpartyMapper.map(counterpartyService.create(newEntitty)));
   }
 
   @PatchMapping("/{id}")
@@ -58,6 +57,8 @@ public class CounterpartyController {
   public ResponseEntity<Page<CounterpartyView>> getItems(
       @And({
             @Spec(path = "name", params = "q", spec = LikeIgnoreCase.class),
+          @Spec(path = "id", params = "id", spec = Equal.class),
+          @Spec(path = "name", params = "name", spec = LikeIgnoreCase.class),
             @Spec(path = "active", params = "active", spec = Equal.class)
           })
           Specification<Counterparty> counterpartySpecification,

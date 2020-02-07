@@ -47,10 +47,10 @@ public class ShopTypesController {
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<ShopTypeView> updateItem(@PathVariable Long id,
-      @RequestBody RequestForUpdateShopType patch) {
-    return ResponseEntity
-        .ok(shopTypeMapper.map(shopTypesService.update(id, shopTypeMapper.map(patch))));
+  public ResponseEntity<ShopTypeView> updateItem(
+      @PathVariable Long id, @RequestBody RequestForUpdateShopType patch) {
+    return ResponseEntity.ok(
+        shopTypeMapper.map(shopTypesService.update(id, shopTypeMapper.map(patch))));
   }
 
   @GetMapping("/{id}")
@@ -62,6 +62,9 @@ public class ShopTypesController {
   public ResponseEntity<Page<ShopTypeView>> getItems(
       @And({
             @Spec(path = "name", params = "q", spec = LikeIgnoreCase.class),
+          @Spec(path = "id", params = "id", spec = Equal.class),
+          @Spec(path = "name", params = "name", spec = LikeIgnoreCase.class),
+          @Spec(path = "manufacturer.id", params = "manufacturer", spec = LikeIgnoreCase.class),
             @Spec(path = "active", params = "active", spec = Equal.class)
           })
           Specification<ShopType> shopTypeSpecification,

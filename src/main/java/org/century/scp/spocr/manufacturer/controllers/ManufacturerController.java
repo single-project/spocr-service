@@ -44,8 +44,8 @@ public class ManufacturerController {
   @PatchMapping("/{id}")
   public ResponseEntity<ManufacturerView> updateItem(
       @PathVariable Long id, @RequestBody RequestForUpdateManufacturer patch) {
-    return ResponseEntity
-        .ok(manufacturerMapper.map(manufacturerService.update(id, manufacturerMapper.map(patch))));
+    return ResponseEntity.ok(
+        manufacturerMapper.map(manufacturerService.update(id, manufacturerMapper.map(patch))));
   }
 
   @GetMapping("/{id}")
@@ -57,6 +57,8 @@ public class ManufacturerController {
   public ResponseEntity<Page<ManufacturerView>> getItems(
       @And({
             @Spec(path = "name", params = "q", spec = LikeIgnoreCase.class),
+          @Spec(path = "id", params = "id", spec = Equal.class),
+          @Spec(path = "name", params = "name", spec = LikeIgnoreCase.class),
             @Spec(path = "active", params = "active", spec = Equal.class)
           })
           Specification<Manufacturer> manufacturerSpecification,
