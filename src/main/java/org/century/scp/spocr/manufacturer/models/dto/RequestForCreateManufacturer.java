@@ -36,5 +36,4 @@ public class RequestForCreateManufacturer extends ManufacturerView {
   public String getName() {
     return super.getName();
   }
-
 }

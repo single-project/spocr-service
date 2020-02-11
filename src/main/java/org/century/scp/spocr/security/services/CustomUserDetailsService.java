@@ -19,7 +19,8 @@ public class CustomUserDetailsService implements SecurityService, UserDetailsSer
   private final SecurityUserRepository userRepository;
 
   @Autowired
-  public CustomUserDetailsService(SecurityUserRepository userRepository, HttpServletRequest request) {
+  public CustomUserDetailsService(
+      SecurityUserRepository userRepository, HttpServletRequest request) {
     this.userRepository = userRepository;
     this.request = request;
   }
@@ -75,5 +76,4 @@ public class CustomUserDetailsService implements SecurityService, UserDetailsSer
     }
     return xfHeader.split(",")[0];
   }
-
 }

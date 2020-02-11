@@ -10,8 +10,7 @@ import org.springframework.stereotype.Service;
 public class PaymentDetailsServiceImpl extends BaseService<PaymentDetails> {
 
   @Autowired
-  public PaymentDetailsServiceImpl(
-      PaymentDetailsRepository entityRepository) {
+  public PaymentDetailsServiceImpl(PaymentDetailsRepository entityRepository) {
     super(entityRepository);
   }
 

@@ -89,5 +89,4 @@ public class Counterparty extends BaseEntity {
     this.name = name;
     this.active = true;
   }
-
 }

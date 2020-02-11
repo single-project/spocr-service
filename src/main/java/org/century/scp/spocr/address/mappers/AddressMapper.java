@@ -15,5 +15,4 @@ public interface AddressMapper {
   default Page<AddressView> map(Page<Address> page) {
     return page.map(this::map);
   }
-
 }

@@ -22,5 +22,4 @@ public interface ShopMapper {
   default Page<ShopView> map(Page<Shop> page) {
     return page.map(this::map);
   }
-
 }

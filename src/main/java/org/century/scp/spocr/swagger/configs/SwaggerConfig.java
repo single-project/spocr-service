@@ -1,10 +1,8 @@
 package org.century.scp.spocr.swagger.configs;
 
-import com.google.common.base.Predicate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RequestMapping;
-import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -27,7 +25,6 @@ public class SwaggerConfig {
         .build()
         .apiInfo(apiEndPointsInfo());
   }
-
 
   private ApiInfo apiEndPointsInfo() {
     return new ApiInfoBuilder()

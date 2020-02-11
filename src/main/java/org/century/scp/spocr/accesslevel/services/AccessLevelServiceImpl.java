@@ -42,13 +42,12 @@ public class AccessLevelServiceImpl {
   }
 
   public SystemRule createRule(String name, EntityType entityType) {
-    return ruleRepository.save(new SystemRule(name ));
+    return ruleRepository.save(new SystemRule(name));
   }
 
-  public SystemRule updateRule(
-      long id, String name, EntityType entityType) {
+  public SystemRule updateRule(long id, String name, EntityType entityType) {
     SystemRule rule = getRule(id);
-    rule.setName(name );
+    rule.setName(name);
     return ruleRepository.save(rule);
   }
 

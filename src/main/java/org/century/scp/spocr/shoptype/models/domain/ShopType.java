@@ -56,5 +56,4 @@ public class ShopType extends BaseEntity {
   public String toString() {
     return "ShopType{" + "id=" + id + ", name='" + name + '\'' + ", active=" + active + '}';
   }
-
 }

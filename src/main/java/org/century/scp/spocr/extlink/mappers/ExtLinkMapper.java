@@ -14,5 +14,4 @@ public interface ExtLinkMapper {
   ExtLink map(RequestForCreateExtLink view);
 
   List<ExtLinkView> map(List<ExtLink> list);
-
 }

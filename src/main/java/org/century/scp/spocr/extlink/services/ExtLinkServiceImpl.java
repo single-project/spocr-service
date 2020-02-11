@@ -15,8 +15,7 @@ public class ExtLinkServiceImpl {
   private ExtLinkRepository extLinkRepository;
 
   @Autowired
-  public ExtLinkServiceImpl(
-      ExtLinkRepository extLinkRepository) {
+  public ExtLinkServiceImpl(ExtLinkRepository extLinkRepository) {
     this.extLinkRepository = extLinkRepository;
   }
 

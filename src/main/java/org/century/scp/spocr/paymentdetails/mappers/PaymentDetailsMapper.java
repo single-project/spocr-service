@@ -15,5 +15,4 @@ public interface PaymentDetailsMapper {
   default Page<PaymentDetailsView> map(Page<PaymentDetails> page) {
     return page.map(this::map);
   }
-
 }

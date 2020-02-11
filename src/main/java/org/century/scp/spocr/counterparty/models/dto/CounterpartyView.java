@@ -63,6 +63,4 @@ public class CounterpartyView extends BaseEntityView {
     this.paymentDetails = paymentDetails;
     this.suggestion = suggestion;
   }
-
-
 }

@@ -41,5 +41,4 @@ public class Manufacturer extends BaseEntity {
     this.name = name;
     this.active = active;
   }
-
 }

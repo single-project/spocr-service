@@ -12,7 +12,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.century.scp.spocr.base.models.domain.BaseEntity;
 
-
 @EqualsAndHashCode(callSuper = false)
 @Data
 @Entity
@@ -40,8 +39,14 @@ public class PaymentDetails extends BaseEntity {
   private Boolean active;
 
   @Builder
-  public PaymentDetails(Long id, Long version, String paymentAccount, String correspondingAccount,
-      String bic, String bank, Boolean active) {
+  public PaymentDetails(
+      Long id,
+      Long version,
+      String paymentAccount,
+      String correspondingAccount,
+      String bic,
+      String bank,
+      Boolean active) {
     super(version);
     this.id = id;
     this.bic = bic;

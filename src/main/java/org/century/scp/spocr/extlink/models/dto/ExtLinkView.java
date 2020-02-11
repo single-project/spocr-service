@@ -13,5 +13,4 @@ public class ExtLinkView {
   private int entityExtId;
   private EntityType entityType;
   private int extProgId;
-
 }

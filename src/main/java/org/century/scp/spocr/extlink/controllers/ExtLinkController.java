@@ -30,7 +30,6 @@ public class ExtLinkController {
   private final ExtLinkMapper extLinkMapper;
   private final ExtLinkServiceImpl extLinkService;
 
-
   @PostMapping
   public ResponseEntity<ExtLinkView> addItem(
       @Validated @RequestBody RequestForCreateExtLink sporItem) {
@@ -46,8 +45,8 @@ public class ExtLinkController {
             @Spec(path = "extProgId", params = "prog", spec = Equal.class)
           })
           Specification<ExtLink> extLinkSpecification) {
-    return ResponseEntity
-        .ok(extLinkMapper.map(extLinkService.getBySpecification(extLinkSpecification)));
+    return ResponseEntity.ok(
+        extLinkMapper.map(extLinkService.getBySpecification(extLinkSpecification)));
   }
 
   @GetMapping("/available-entity-types")

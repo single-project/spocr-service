@@ -49,8 +49,8 @@ public class Address extends BaseEntity {
     this.active = true;
   }
 
-  public Address(Long id, String address, String comment, LinkedHashMap suggestion,
-      Boolean active) {
+  public Address(
+      Long id, String address, String comment, LinkedHashMap suggestion, Boolean active) {
     this.id = id;
     this.address = address;
     this.comment = comment;

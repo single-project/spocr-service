@@ -33,7 +33,8 @@ public class EventRepositoryImpl {
   }
 
   public void insert(String ident, String entity, Map<String, Object> body, String username) {
-    String sql = "INSERT INTO public.events " + "(ident, entity, ts, body, username) VALUES (?, ?, ?, ?, ?)";
+    String sql =
+        "INSERT INTO public.events " + "(ident, entity, ts, body, username) VALUES (?, ?, ?, ?, ?)";
     jdbcTemplate.update(
         sql,
         ps -> {

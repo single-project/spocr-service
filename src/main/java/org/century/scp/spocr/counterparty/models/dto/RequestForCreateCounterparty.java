@@ -12,16 +12,18 @@ import org.century.scp.spocr.base.models.dto.BaseEntityListView;
 import org.century.scp.spocr.legaltype.models.dto.LegalTypeView;
 import org.century.scp.spocr.paymentdetails.models.dto.PaymentDetailsView;
 
-
 @Getter
 @Setter
 @NoArgsConstructor
 public class RequestForCreateCounterparty extends CounterpartyView {
 
   @Builder
-  public RequestForCreateCounterparty(String name,
-      LegalTypeView legalType, LegalRekvView legalRekv,
-      PaymentDetailsView paymentDetails, HashMap suggestion,
+  public RequestForCreateCounterparty(
+      String name,
+      LegalTypeView legalType,
+      LegalRekvView legalRekv,
+      PaymentDetailsView paymentDetails,
+      HashMap suggestion,
       BaseEntityListView parent) {
     super(name, legalType, legalRekv, paymentDetails, suggestion, parent);
   }

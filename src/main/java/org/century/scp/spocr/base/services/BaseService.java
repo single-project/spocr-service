@@ -77,12 +77,13 @@ public abstract class BaseService<T extends BaseEntity> {
     List<String> fields = new ArrayList<>();
     patchNode.fieldNames().forEachRemaining(fields::add);
     List<String> updatedFields = patchEntity.getUpdatedFields();
-    fields.stream().filter(f -> !updatedFields.contains(f))
+    fields.stream()
+        .filter(f -> !updatedFields.contains(f))
         .forEach(((ObjectNode) patchNode)::remove);
     JsonMergePatch mergePatch = JsonMergePatch.fromJson(patchNode);
     node = mergePatch.apply(node);
     return mapper.treeToValue(node, clazz);
   }
 
-  //protected abstract T mergePatch(T current, T patch);
+  // protected abstract T mergePatch(T current, T patch);
 }

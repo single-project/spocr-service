@@ -42,5 +42,4 @@ public class RequestForUpdateShopType extends ShopTypeView {
   public List<String> getUpdatedFields() {
     return this.updatedFields;
   }
-
 }

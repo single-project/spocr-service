@@ -57,10 +57,13 @@ public class Shop extends BaseEntity {
   @Column(name = "active")
   private Boolean active;
 
-
-  public Shop(Long id, String name,
+  public Shop(
+      Long id,
+      String name,
       Counterparty counterparty,
-      List<ShopType> shopTypes, Address address, Boolean active) {
+      List<ShopType> shopTypes,
+      Address address,
+      Boolean active) {
     this.id = id;
     this.name = name;
     this.counterparty = counterparty;

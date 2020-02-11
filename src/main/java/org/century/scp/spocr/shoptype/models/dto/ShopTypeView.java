@@ -15,11 +15,10 @@ public class ShopTypeView extends BaseEntityView {
 
   private ManufacturerView manufacturer;
 
-  public ShopTypeView(Long id, String name, Long version, boolean active,
-      ManufacturerView manufacturer) {
+  public ShopTypeView(
+      Long id, String name, Long version, boolean active, ManufacturerView manufacturer) {
     super(id, version, active);
     this.name = name;
     this.manufacturer = manufacturer;
   }
-
 }

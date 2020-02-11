@@ -32,15 +32,18 @@ public class PaymentDetailsController {
   public ResponseEntity<Page<PaymentDetailsView>> getItems(
       @And({
           @Spec(path = "paymentAccount", params = "q", spec = LikeIgnoreCase.class),
-          @Spec(path = "correspondingAccount", params = "correspondingAccount", spec = Equal.class),
+          @Spec(
+              path = "correspondingAccount",
+              params = "correspondingAccount",
+              spec = Equal.class),
           @Spec(path = "bic", params = "bic", spec = Equal.class),
           @Spec(path = "bank", params = "bank", spec = Equal.class),
           @Spec(path = "active", params = "active", spec = Equal.class)
       })
           Specification<PaymentDetails> detailsSpecification,
       Pageable pageable) {
-    Page<PaymentDetails> page = paymentDetailsService
-        .getBySpecification(detailsSpecification, pageable);
+    Page<PaymentDetails> page =
+        paymentDetailsService.getBySpecification(detailsSpecification, pageable);
     return ResponseEntity.ok(paymentDetailsMapper.map(page));
   }
 
@@ -48,5 +51,4 @@ public class PaymentDetailsController {
   public ResponseEntity<PaymentDetailsView> getItem(@PathVariable(value = "id") long id) {
     return ResponseEntity.ok(paymentDetailsMapper.map(paymentDetailsService.get(id)));
   }
-
 }
