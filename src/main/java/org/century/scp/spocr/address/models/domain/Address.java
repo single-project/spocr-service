@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 import org.century.scp.spocr.base.converters.SuggestionConverter;
 import org.century.scp.spocr.base.models.domain.BaseEntity;
 
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table(name = "addresses")

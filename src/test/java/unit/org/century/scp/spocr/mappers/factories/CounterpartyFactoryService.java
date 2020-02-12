@@ -30,7 +30,7 @@ public class CounterpartyFactoryService {
     PaymentDetails paymentDetails = createPaymentDetails(id);
 
     Counterparty counterparty = new Counterparty();
-    //TODO : fix it
+    // TODO : fix it
     counterparty.setId(id);
     counterparty.setName("name" + id);
     counterparty.setActive(true);
@@ -50,15 +50,15 @@ public class CounterpartyFactoryService {
   public LegalType createLegalType(long counterpartyId) {
     long legalTypeId = counterpartyId * 100;
 
-    return LegalType.builder()
-        .id(legalTypeId)
-        .name("ИП")
-        .active(true)
-        .okpfId("50101")
-        .okpfType("2014")
-        .okfpShortName("ИП")
-        .okfpFullName("Индивидуальный предприниматель")
-        .build();
+    LegalType lt = new LegalType();
+    lt.setId(legalTypeId);
+    lt.setName("ИП");
+    lt.setActive(true);
+    lt.setOkpfId("50101");
+    lt.setOkpfType("2014");
+    lt.setOkfpShortName("ИП");
+    lt.setOkfpFullName("Индивидуальный предприниматель");
+    return lt;
   }
 
   public PaymentDetails createPaymentDetails(long counterpartyId) {

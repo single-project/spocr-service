@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 import org.century.scp.spocr.base.models.domain.BaseEntity;
 import org.century.scp.spocr.manufacturer.models.domain.Manufacturer;
 
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table(name = "shop_types")

@@ -58,26 +58,28 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
     signInAsUser();
 
     // add 3 new legal types
-    LegalType legalType0 = LegalType.builder().name("Физ.лицо").active(true).build();
+    LegalType legalType0 = new LegalType();
+    legalType0.setId((long) 0);
+    legalType0.setName("Физ.лицо");
+    legalType0.setActive(true);
 
-    LegalType legalType1 =
-        LegalType.builder()
-            .name("ИП")
-            .active(true)
-            .okpfType("2014")
-            .okpfId("50102")
-            .okfpShortName("ИП")
-            .okfpFullName("Индивидуальный предприниматель")
-            .build();
-    LegalType legalType2 =
-        LegalType.builder()
-            .name("ООО")
-            .active(true)
-            .okpfType("2014")
-            .okpfId("12300")
-            .okfpShortName("ООО")
-            .okfpFullName("Общество с ограниченной ответственностью")
-            .build();
+    LegalType legalType1 = new LegalType();
+    legalType1.setId((long) 1);
+    legalType1.setName("ИП");
+    legalType1.setActive(true);
+    legalType1.setOkpfId("50101");
+    legalType1.setOkpfType("2014");
+    legalType1.setOkfpShortName("ИП");
+    legalType1.setOkfpFullName("Индивидуальный предприниматель");
+
+    LegalType legalType2 = new LegalType();
+    legalType2.setId((long) 2);
+    legalType2.setName("ООО");
+    legalType2.setActive(true);
+    legalType2.setOkpfType("2014");
+    legalType2.setOkpfId("12300");
+    legalType2.setOkfpShortName("ООО");
+    legalType2.setOkfpFullName("Общество с ограниченной ответственностью");
 
     legalType0 = legalTypeService.create(legalType0);
     legalType1 = legalTypeService.create(legalType1);

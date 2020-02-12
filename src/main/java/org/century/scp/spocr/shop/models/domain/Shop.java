@@ -24,7 +24,7 @@ import org.century.scp.spocr.shoptype.models.domain.ShopType;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table(name = "shops")
