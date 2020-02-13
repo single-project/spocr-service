@@ -6,9 +6,11 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.fge.jsonpatch.JsonPatchException;
 import com.github.fge.jsonpatch.mergepatch.JsonMergePatch;
+import com.google.common.base.CaseFormat;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import org.century.scp.spocr.base.i18.DefaultMessageSource;
 import org.century.scp.spocr.base.models.domain.BaseEntity;
 import org.century.scp.spocr.base.repositories.BaseRepository;
 import org.century.scp.spocr.exceptions.SpocrEntityNotFoundException;
@@ -23,15 +25,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 public abstract class BaseService<T extends BaseEntity> {
 
-  public BaseRepository<T> entityRepository;
+  protected BaseRepository<T> entityRepository;
+  private DefaultMessageSource messageSource;
 
-  public BaseService(BaseRepository<T> entityRepository) {
+  public BaseService(DefaultMessageSource messageSource, BaseRepository<T> entityRepository) {
+    this.messageSource = messageSource;
     this.entityRepository = entityRepository;
   }
-
-  public abstract Class<T> getEntityClass();
-
-  public abstract String getEntityName();
 
   @PreAuthorize("hasAuthority('CREATE_PRIVILEGE')")
   public T create(T object) {
@@ -52,16 +52,15 @@ public abstract class BaseService<T extends BaseEntity> {
     return entityRepository.save(assembly);
   }
 
-  public T assemble(T entity) {
-    return entity;
-  }
-
   @NonNull
   @PreAuthorize("hasAuthority('READ_PRIVILEGE')")
   public T get(long id) {
     return entityRepository
         .findById(id)
-        .orElseThrow(() -> new SpocrEntityNotFoundException(id, getEntityName()));
+        .orElseThrow(
+            () ->
+                new SpocrEntityNotFoundException(
+                    id, messageSource.getMessage(getResourceNameKey())));
   }
 
   @PreAuthorize("hasAuthority('READ_PRIVILEGE')")
@@ -99,5 +98,17 @@ public abstract class BaseService<T extends BaseEntity> {
     JsonMergePatch mergePatch = JsonMergePatch.fromJson(patchNode);
     node = mergePatch.apply(node);
     return mapper.treeToValue(node, clazz);
+  }
+
+  public abstract Class<T> getEntityClass();
+
+  private String getResourceNameKey() {
+    String name = getEntityClass().getSimpleName();
+    return String.format("%s.resource.name",
+        CaseFormat.UPPER_CAMEL.converterTo(CaseFormat.LOWER_HYPHEN).convert(name));
+  }
+
+  public T assemble(T entity) {
+    return entity;
   }
 }

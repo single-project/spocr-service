@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
+import org.century.scp.spocr.base.i18.DefaultMessageSource;
 import org.century.scp.spocr.base.services.BaseService;
 import org.century.scp.spocr.shoptype.models.domain.ShopType;
 import org.century.scp.spocr.shoptype.repositories.ShopTypeRepository;
@@ -15,18 +16,14 @@ import org.springframework.stereotype.Service;
 public class ShopTypesServiceImpl extends BaseService<ShopType> {
 
   @Autowired
-  public ShopTypesServiceImpl(ShopTypeRepository shopTypeRepository) {
-    super(shopTypeRepository);
+  public ShopTypesServiceImpl(DefaultMessageSource messageSource,
+      ShopTypeRepository shopTypeRepository) {
+    super(messageSource, shopTypeRepository);
   }
 
   @Override
   public Class<ShopType> getEntityClass() {
     return ShopType.class;
-  }
-
-  @Override
-  public String getEntityName() {
-    return "тип магазина";
   }
 
   public List<ShopType> getAll(List<ShopType> shopTypes) {

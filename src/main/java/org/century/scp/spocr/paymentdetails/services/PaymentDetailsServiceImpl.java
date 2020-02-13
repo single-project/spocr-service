@@ -1,5 +1,6 @@
 package org.century.scp.spocr.paymentdetails.services;
 
+import org.century.scp.spocr.base.i18.DefaultMessageSource;
 import org.century.scp.spocr.base.services.BaseService;
 import org.century.scp.spocr.paymentdetails.models.domain.PaymentDetails;
 import org.century.scp.spocr.paymentdetails.respositories.PaymentDetailsRepository;
@@ -10,8 +11,9 @@ import org.springframework.stereotype.Service;
 public class PaymentDetailsServiceImpl extends BaseService<PaymentDetails> {
 
   @Autowired
-  public PaymentDetailsServiceImpl(PaymentDetailsRepository entityRepository) {
-    super(entityRepository);
+  public PaymentDetailsServiceImpl(DefaultMessageSource messageSource,
+      PaymentDetailsRepository entityRepository) {
+    super(messageSource, entityRepository);
   }
 
   @Override
@@ -19,8 +21,4 @@ public class PaymentDetailsServiceImpl extends BaseService<PaymentDetails> {
     return PaymentDetails.class;
   }
 
-  @Override
-  public String getEntityName() {
-    return "банковские реквизиты";
-  }
 }

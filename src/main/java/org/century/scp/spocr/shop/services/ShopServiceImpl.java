@@ -4,6 +4,7 @@ import com.github.fge.jsonpatch.JsonPatchException;
 import java.io.IOException;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.century.scp.spocr.base.i18.DefaultMessageSource;
 import org.century.scp.spocr.base.services.BaseService;
 import org.century.scp.spocr.counterparty.services.CounterpartyServiceImpl;
 import org.century.scp.spocr.exceptions.SpocrException;
@@ -24,10 +25,11 @@ public class ShopServiceImpl extends BaseService<Shop> {
 
   @Autowired
   public ShopServiceImpl(
+      DefaultMessageSource messageSource,
       ShopRepository shopRepository,
       ShopTypesServiceImpl shopTypesService,
       CounterpartyServiceImpl counterpartyService) {
-    super(shopRepository);
+    super(messageSource, shopRepository);
     this.shopTypesService = shopTypesService;
     this.counterpartyService = counterpartyService;
   }
@@ -76,8 +78,4 @@ public class ShopServiceImpl extends BaseService<Shop> {
     return Shop.class;
   }
 
-  @Override
-  public String getEntityName() {
-    return "магазин";
-  }
 }
