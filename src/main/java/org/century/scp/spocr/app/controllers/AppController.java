@@ -1,6 +1,8 @@
-package org.century.scp.spocr.info.controllers;
+package org.century.scp.spocr.app.controllers;
 
-import org.century.scp.spocr.info.models.dto.SettingsView;
+import lombok.RequiredArgsConstructor;
+import org.century.scp.spocr.app.models.dto.SettingsView;
+import org.century.scp.spocr.app.services.AppServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api")
-public class RootController {
+@RequiredArgsConstructor
+public class AppController {
+
+  private final AppServiceImpl appService;
 
   @GetMapping()
   public String getAllEndpoints() {
@@ -19,11 +24,11 @@ public class RootController {
 
   @GetMapping("/app/settings")
   public ResponseEntity<SettingsView> getAppSettings() {
-    return ResponseEntity.ok(new SettingsView());
+    return ResponseEntity.ok(appService.getSettings());
   }
 
   @GetMapping("/user/settings")
   public ResponseEntity<SettingsView> geUserSettings() {
-    return ResponseEntity.ok(new SettingsView());
+    return ResponseEntity.ok(appService.getSettings());
   }
 }

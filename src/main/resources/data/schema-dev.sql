@@ -169,3 +169,9 @@ CREATE TABLE public.legal_types
     CONSTRAINT legal_types_pkey PRIMARY KEY (id),
     CONSTRAINT legal_types_uidx UNIQUE (name)
 );
+CREATE TABLE public.settings
+(
+    id integer NOT NULL auto_increment,
+    data text,
+    CONSTRAINT settings_pkey PRIMARY KEY (id),
+);
