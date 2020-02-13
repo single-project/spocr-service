@@ -1,0 +1,97 @@
+{
+  "defaultDataType": 1,
+  "availableTables": [
+    {
+      "id": 1,
+      "name": "Магазины",
+      "url": "/shops",
+      "sortField": "name",
+      "sortOrder": "asc",
+      "columns": [
+        {
+          "field": "id",
+          "header": "Код"
+        },
+        {
+          "field": "name",
+          "header": "Имя"
+        },
+        {
+          "field": "counterparty",
+          "header": "Контрагент"
+        },
+        {
+          "field": "active",
+          "header": "Активный"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Контрагенты",
+      "url": "/counterparties",
+      "sortField": "name",
+      "sortOrder": "asc",
+      "columns": [
+        {
+          "field": "id",
+          "header": "Код"
+        },
+        {
+          "field": "name",
+          "header": "Имя"
+        },
+        {
+          "field": "active",
+          "header": "Активный"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Производители",
+      "url": "/manufactures",
+      "sortField": "name",
+      "sortOrder": "asc",
+      "columns": [
+        {
+          "field": "id",
+          "header": "Код"
+        },
+        {
+          "field": "name",
+          "header": "Имя"
+        },
+        {
+          "field": "active",
+          "header": "Активный"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Типы магазинов",
+      "url": "/shoptypes",
+      "sortField": "name",
+      "sortOrder": "asc",
+      "columns": [
+        {
+          "field": "id",
+          "header": "Код"
+        },
+        {
+          "field": "name",
+          "header": "Имя"
+        },
+        {
+          "field": "manufacturer",
+          "header": "Производитель"
+        },
+        {
+          "field": "active",
+          "header": "Активный"
+        }
+      ]
+    }
+  ]
+}
