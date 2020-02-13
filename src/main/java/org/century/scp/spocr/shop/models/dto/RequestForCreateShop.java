@@ -4,10 +4,12 @@ import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
+import lombok.NoArgsConstructor;
 import org.century.scp.spocr.address.models.dto.AddressView;
 import org.century.scp.spocr.counterparty.models.dto.CounterpartyView;
 import org.century.scp.spocr.shoptype.models.dto.ShopTypeView;
 
+@NoArgsConstructor
 public class RequestForCreateShop extends ShopView {
 
   public RequestForCreateShop(
