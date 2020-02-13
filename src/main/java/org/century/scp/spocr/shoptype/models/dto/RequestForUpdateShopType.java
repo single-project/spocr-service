@@ -5,8 +5,14 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.century.scp.spocr.manufacturer.models.dto.ManufacturerView;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class RequestForUpdateShopType extends ShopTypeView {
 
   private List<String> updatedFields;

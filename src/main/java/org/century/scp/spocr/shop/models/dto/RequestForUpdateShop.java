@@ -4,12 +4,15 @@ import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
+import javax.validation.constraints.Size;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.century.scp.spocr.counterparty.models.dto.CounterpartyView;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class RequestForUpdateShop extends ShopView {
 
   private List<String> updatedFields;
@@ -43,5 +46,11 @@ public class RequestForUpdateShop extends ShopView {
   @Override
   public CounterpartyView getCounterparty() {
     return super.getCounterparty();
+  }
+
+  @NotNull
+  @Size(min = 1)
+  public List<String> getUpdatedFields() {
+    return updatedFields;
   }
 }

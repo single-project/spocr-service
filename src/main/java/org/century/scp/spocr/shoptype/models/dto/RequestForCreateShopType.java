@@ -3,8 +3,14 @@ package org.century.scp.spocr.shoptype.models.dto;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.century.scp.spocr.manufacturer.models.dto.ManufacturerView;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class RequestForCreateShopType extends ShopTypeView {
 
   @Null
