@@ -23,4 +23,5 @@ public class ManufacturerServiceImpl extends BaseService<Manufacturer> {
   public String getEntityName() {
     return "производитель";
   }
+
 }

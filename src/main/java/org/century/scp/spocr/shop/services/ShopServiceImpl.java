@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.century.scp.spocr.base.services.BaseService;
+import org.century.scp.spocr.counterparty.services.CounterpartyServiceImpl;
 import org.century.scp.spocr.exceptions.SpocrException;
 import org.century.scp.spocr.shop.models.domain.Shop;
 import org.century.scp.spocr.shop.repositories.ShopRepository;
@@ -19,11 +20,16 @@ import org.springframework.stereotype.Service;
 public class ShopServiceImpl extends BaseService<Shop> {
 
   private ShopTypesServiceImpl shopTypesService;
+  private CounterpartyServiceImpl counterpartyService;
 
   @Autowired
-  public ShopServiceImpl(ShopRepository shopRepository, ShopTypesServiceImpl shopTypesService) {
+  public ShopServiceImpl(
+      ShopRepository shopRepository,
+      ShopTypesServiceImpl shopTypesService,
+      CounterpartyServiceImpl counterpartyService) {
     super(shopRepository);
     this.shopTypesService = shopTypesService;
+    this.counterpartyService = counterpartyService;
   }
 
   public Shop addShopType(Long id, ShopType shopType) {
@@ -48,6 +54,21 @@ public class ShopServiceImpl extends BaseService<Shop> {
       shop.setShopTypes(shopTypesService.getAll(shopTypes));
     }
     return entityRepository.save(shop);
+  }
+
+  @Override
+  public Shop assemble(Shop entity) {
+    // counterparty
+    if (entity.getCounterparty() != null) {
+      entity.setCounterparty(counterpartyService.get(entity.getCounterparty().getId()));
+    }
+
+    // shop types
+    if (entity.linkedWithShopTypes()) {
+      List<ShopType> shopTypes = shopTypesService.getAll(entity.getShopTypes());
+      entity.setShopTypes(shopTypes);
+    }
+    return entity;
   }
 
   @Override

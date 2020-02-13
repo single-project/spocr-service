@@ -21,4 +21,5 @@ public class AddressServiceImpl extends BaseService<Address> {
   public String getEntityName() {
     return "адрес";
   }
+
 }

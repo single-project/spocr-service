@@ -120,12 +120,12 @@ public class CounterpartyFactoryService {
 
   public PaymentDetailsView createPaymentDetailsView() {
     int randomInt = new Random().nextInt(9);
-    return PaymentDetailsView.builder()
-        .bic("bic" + randomInt)
-        .bank("bank" + randomInt)
-        .paymentAccount("paymentAccount" + randomInt)
-        .correspondingAccount("correspondingAccount" + randomInt)
-        .build();
+    PaymentDetailsView view = new PaymentDetailsView();
+    view.setBic("bic" + randomInt);
+    view.setBank("bank" + randomInt);
+    view.setPaymentAccount("paymentAccount" + randomInt);
+    view.setCorrespondingAccount("correspondingAccount" + randomInt);
+    return view;
   }
 
   public HashMap createSuggestion() {

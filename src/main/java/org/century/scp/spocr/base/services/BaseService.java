@@ -35,7 +35,8 @@ public abstract class BaseService<T extends BaseEntity> {
 
   @PreAuthorize("hasAuthority('CREATE_PRIVILEGE')")
   public T create(T object) {
-    return entityRepository.save(object);
+    T assembly = assemble(object);
+    return entityRepository.save(assembly);
   }
 
   @Transactional(isolation = Isolation.READ_COMMITTED)
@@ -47,7 +48,12 @@ public abstract class BaseService<T extends BaseEntity> {
     } catch (IOException | JsonPatchException e) {
       throw new SpocrException(e);
     }
-    return entityRepository.save(current);
+    T assembly = assemble(current);
+    return entityRepository.save(assembly);
+  }
+
+  public T assemble(T entity) {
+    return entity;
   }
 
   @NonNull
@@ -68,6 +74,16 @@ public abstract class BaseService<T extends BaseEntity> {
     return entityRepository.saveAll(objects);
   }
 
+  @NonNull
+  @PreAuthorize("hasAuthority('CREATE_PRIVILEGE')")
+  public T createOrRefresh(@NonNull T object) {
+    if (object.getId() == null) {
+      return create(object);
+    } else {
+      return get(object.getId());
+    }
+  }
+
   protected T mergePatch(T currentEntity, T patchEntity, Class<T> clazz)
       throws IOException, JsonPatchException {
     ObjectMapper mapper = new ObjectMapper();
@@ -84,6 +100,4 @@ public abstract class BaseService<T extends BaseEntity> {
     node = mergePatch.apply(node);
     return mapper.treeToValue(node, clazz);
   }
-
-  // protected abstract T mergePatch(T current, T patch);
 }

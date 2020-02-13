@@ -49,8 +49,8 @@ public class Shop extends BaseEntity {
       inverseJoinColumns = @JoinColumn(name = "shop_types_id"))
   private List<ShopType> shopTypes;
 
-  @Cascade({CascadeType.PERSIST, CascadeType.MERGE})
-  @OneToOne(fetch = FetchType.EAGER)
+  @Cascade({CascadeType.ALL})
+  @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true)
   @JoinColumn(name = "address_id", referencedColumnName = "id")
   private Address address;
 

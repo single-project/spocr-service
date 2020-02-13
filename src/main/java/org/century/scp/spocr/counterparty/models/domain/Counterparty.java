@@ -73,8 +73,8 @@ public class Counterparty extends BaseEntity {
   @Column(name = "okonh")
   private String okonh;
 
-  @Cascade({CascadeType.PERSIST, CascadeType.MERGE})
-  @OneToOne(fetch = FetchType.EAGER)
+  @Cascade({CascadeType.ALL})
+  @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true)
   @JoinColumn(name = "counterparty_payment_details_id", referencedColumnName = "id")
   private PaymentDetails paymentDetails;
 

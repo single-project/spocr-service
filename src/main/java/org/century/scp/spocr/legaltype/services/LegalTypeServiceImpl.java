@@ -23,4 +23,5 @@ public class LegalTypeServiceImpl extends BaseService<LegalType> {
   public String getEntityName() {
     return "организационно-правоая форма";
   }
+
 }

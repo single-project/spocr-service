@@ -1,12 +1,10 @@
 package org.century.scp.spocr.shop.controllers;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
-import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.services.CounterpartyServiceImpl;
 import org.century.scp.spocr.shop.mappers.ShopMapper;
 import org.century.scp.spocr.shop.models.domain.Shop;
@@ -54,7 +52,7 @@ public class ShopController {
   public ResponseEntity<ShopView> addItem(@Validated @RequestBody RequestForCreateShop shop) {
     // ******** start *********
     // TODO: вынести все в сервис
-    Counterparty counterparty = counterpartyService.get(shop.getCounterparty().getId());
+    /*Counterparty counterparty = counterpartyService.get(shop.getCounterparty().getId());
     Shop s = shopMapper.map(shop);
     s.setCounterparty(counterparty);
 
@@ -66,9 +64,9 @@ public class ShopController {
     if (s.linkedWithShopTypes()) {
       List<ShopType> shopTypes = shopTypesService.getAll(s.getShopTypes());
       s.setShopTypes(shopTypes);
-    }
+    }*/
     // ******** end *********
-    return ResponseEntity.ok(shopMapper.map(shopService.create(s)));
+    return ResponseEntity.ok(shopMapper.map(shopService.create(shopMapper.map(shop))));
   }
 
   @PatchMapping("/{id}")

@@ -34,8 +34,8 @@ public class CounterpartyMapperTest {
 
   @Test
   public void correctMapNullShortNameToName() {
-    RequestForCreateCounterparty view = counterpartyFactoryService
-        .createCounterpartyRequestForCreate();
+    RequestForCreateCounterparty view =
+        counterpartyFactoryService.createCounterpartyRequestForCreate();
     view.getLegalRekv().setShortName(null);
     Counterparty counterparty = counterpartyMapper.map(view);
     assertEquals(view.getName(), counterparty.getName());
@@ -44,8 +44,8 @@ public class CounterpartyMapperTest {
   @Test
   public void correctMapViewToEntityWithParentId() {
     long parentId = 100;
-    RequestForCreateCounterparty view = counterpartyFactoryService
-        .createCounterpartyRequestForCreate();
+    RequestForCreateCounterparty view =
+        counterpartyFactoryService.createCounterpartyRequestForCreate();
     view.setParent(new BaseEntityListView(parentId, "parent"));
     Counterparty counterparty = counterpartyMapper.map(view);
     assertThat(counterparty.getParent().getId(), is(parentId));
@@ -59,12 +59,13 @@ public class CounterpartyMapperTest {
     entity.setParent(counterpartyFactoryService.createCounterparty(parentId));
     CounterpartyView view = counterpartyMapper.map(entity);
     assertThat(view.getParent().getId(), is(parentId));
+    assertThat(view.getPaymentDetails().getId(), is(entity.getPaymentDetails().getId()));
   }
 
   @Test
   public void correctMapyWithLegalRekvViewToCounterparty() {
-    RequestForCreateCounterparty view = counterpartyFactoryService
-        .createCounterpartyRequestForCreate();
+    RequestForCreateCounterparty view =
+        counterpartyFactoryService.createCounterpartyRequestForCreate();
     Counterparty counterparty = counterpartyMapper.map(view);
 
     assertEquals(view.getActive(), counterparty.getActive());
