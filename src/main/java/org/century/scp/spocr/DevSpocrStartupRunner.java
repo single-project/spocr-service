@@ -9,6 +9,10 @@ import org.century.scp.spocr.accesslevel.models.SystemRole;
 import org.century.scp.spocr.accesslevel.models.SystemRule;
 import org.century.scp.spocr.accesslevel.services.AccessLevelServiceImpl;
 import org.century.scp.spocr.address.models.domain.Address;
+import org.century.scp.spocr.classifier.saleschannel.models.domain.SalesChannel;
+import org.century.scp.spocr.classifier.saleschannel.services.SalesChannelServiceImpl;
+import org.century.scp.spocr.classifier.shoptype.models.domain.ShopType;
+import org.century.scp.spocr.classifier.shoptype.services.ShopTypesServiceImpl;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.services.CounterpartyServiceImpl;
 import org.century.scp.spocr.extlink.models.EntityType;
@@ -22,8 +26,6 @@ import org.century.scp.spocr.security.models.domain.SecurityUser;
 import org.century.scp.spocr.security.services.CustomUserDetailsService;
 import org.century.scp.spocr.shop.models.domain.Shop;
 import org.century.scp.spocr.shop.services.ShopServiceImpl;
-import org.century.scp.spocr.shoptype.models.domain.ShopType;
-import org.century.scp.spocr.shoptype.services.ShopTypesServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -52,6 +54,8 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
   private LegalTypeServiceImpl legalTypeService;
   @Autowired
   private PaymentDetailsServiceImpl paymentDetailsService;
+  @Autowired
+  private SalesChannelServiceImpl salesChannelService;
 
   @Override
   public void run(ApplicationArguments args) throws Exception {
@@ -88,14 +92,13 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
     // add 10 new counteragent
     List<Counterparty> counterparties = new ArrayList<>();
     for (int i = 1; i <= 10; i++) {
-      PaymentDetails paymentDetails =
-          PaymentDetails.builder()
-              .active(true)
-              .bic("000")
-              .bank("444")
-              .paymentAccount("111")
-              .correspondingAccount("222")
-              .build();
+      PaymentDetails paymentDetails = new PaymentDetails();
+      paymentDetails.setBic("000");
+      paymentDetails.setBank("444");
+      paymentDetails.setActive(i % 2 == 0);
+      paymentDetails.setVersion((long) 0);
+      paymentDetails.setPaymentAccount("111");
+      paymentDetails.setCorrespondingAccount("222");
 
       Counterparty e = new Counterparty("Контагент" + i);
       e.setLegalType(legalType1);
@@ -105,15 +108,22 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
     counterpartyService.createAll(counterparties);
 
     // add 2 new manufacturer
-    Manufacturer m1 = manufacturerService.create(new Manufacturer("ООО Производитель1"));
-    Manufacturer m2 = manufacturerService.create(new Manufacturer("ООО Производитель2"));
+    Manufacturer m1 = manufacturerService.create(new Manufacturer("ООО Производитель1", true));
+    Manufacturer m2 = manufacturerService.create(new Manufacturer("ООО Производитель2", false));
 
     // add 5 new shop types
-    shopTypesService.create(new ShopType("Супермаркет", m1));
-    shopTypesService.create(new ShopType("Маркет", m1));
-    shopTypesService.create(new ShopType("Магазин", m1));
-    shopTypesService.create(new ShopType("Ларек", m2));
-    shopTypesService.create(new ShopType("Прилавок", m2));
+    shopTypesService.create(new ShopType("Супермаркет", m1, true));
+    shopTypesService.create(new ShopType("Маркет", m1, true));
+    shopTypesService.create(new ShopType("Магазин", m1, false));
+    shopTypesService.create(new ShopType("Ларек", m2, false));
+    shopTypesService.create(new ShopType("Прилавок", m2, true));
+
+    // add 5 new sales channel
+    salesChannelService.create(new SalesChannel("Канал продаж1", m1, true));
+    salesChannelService.create(new SalesChannel("Канал продаж2", m2, true));
+    salesChannelService.create(new SalesChannel("Канал продаж3", m1, false));
+    salesChannelService.create(new SalesChannel("Канал продаж4", m2, true));
+    salesChannelService.create(new SalesChannel("Канал продаж5", m1, false));
 
     // add 100 new shops
     List<Shop> shops = new ArrayList<>();
@@ -122,7 +132,8 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
           new Shop(
               "Магазин" + i,
               counterpartyService.get(new Random().nextInt(9) + 1),
-              shopTypesService.get(new Random().nextInt(5) + 1));
+              shopTypesService.get(new Random().nextInt(5) + 1),
+              salesChannelService.get(new Random().nextInt(5) + 1));
       Address address = new Address("address" + i);
       LinkedHashMap<Object, Object> suggestion = new LinkedHashMap<>();
       suggestion.put(i, "s" + i);
@@ -130,6 +141,7 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
       address.setSuggestion(suggestion);
       // address = addressService.create(address);
       shop.setAddress(address);
+      shop.setActive(i % 2 == 0);
       shops.add(shop);
     }
     shopService.createAll(shops);

@@ -11,6 +11,4 @@ public class SettingsView {
   private int defaultDataType;
 
   private List<TableConfig> availableTables;
-
-
 }

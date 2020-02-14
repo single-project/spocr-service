@@ -33,5 +33,4 @@ public class RequestForUpdateLegalType extends LegalTypeView {
   public Boolean getActive() {
     return super.getActive();
   }
-
 }

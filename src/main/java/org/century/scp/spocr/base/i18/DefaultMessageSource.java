@@ -14,5 +14,4 @@ public class DefaultMessageSource extends ReloadableResourceBundleMessageSource 
     Locale locale = LocaleContextHolder.getLocale();
     return getMessage(key, null, locale);
   }
-
 }

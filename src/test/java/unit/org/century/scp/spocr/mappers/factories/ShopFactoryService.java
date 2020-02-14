@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Random;
 import org.century.scp.spocr.address.models.domain.Address;
 import org.century.scp.spocr.address.models.dto.AddressView;
+import org.century.scp.spocr.classifier.models.dto.ClassifierView;
+import org.century.scp.spocr.classifier.shoptype.models.domain.ShopType;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.models.dto.CounterpartyView;
 import org.century.scp.spocr.shop.models.domain.Shop;
 import org.century.scp.spocr.shop.models.dto.RequestForCreateShop;
-import org.century.scp.spocr.shoptype.models.domain.ShopType;
-import org.century.scp.spocr.shoptype.models.dto.ShopTypeView;
 
 public class ShopFactoryService {
 
@@ -35,9 +35,10 @@ public class ShopFactoryService {
   }
 
   public RequestForCreateShop createShopRequestForCreate(
-      List<ShopTypeView> shopTypeViews, CounterpartyView counterparty, AddressView address) {
+      List<ClassifierView> shopTypeViews, CounterpartyView counterparty, AddressView address) {
     int randomInt = new Random().nextInt(9);
-    return new RequestForCreateShop("shop" + randomInt, true, shopTypeViews, counterparty, address);
+    return new RequestForCreateShop("shop" + randomInt, true, address, shopTypeViews, null,
+        counterparty);
   }
 
   public AddressView createAddressView() {

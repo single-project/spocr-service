@@ -9,7 +9,9 @@ import com.github.fge.jsonpatch.mergepatch.JsonMergePatch;
 import com.google.common.base.CaseFormat;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.century.scp.spocr.base.i18.DefaultMessageSource;
 import org.century.scp.spocr.base.models.domain.BaseEntity;
 import org.century.scp.spocr.base.repositories.BaseRepository;
@@ -33,6 +35,7 @@ public abstract class BaseService<T extends BaseEntity> {
     this.entityRepository = entityRepository;
   }
 
+  @Transactional
   @PreAuthorize("hasAuthority('CREATE_PRIVILEGE')")
   public T create(T object) {
     T assembly = assemble(object);
@@ -49,28 +52,35 @@ public abstract class BaseService<T extends BaseEntity> {
       throw new SpocrException(e);
     }
     T assembly = assemble(current);
-    return entityRepository.save(assembly);
+    T t = entityRepository.save(assembly);
+    return initialize(t);
   }
 
+  @Transactional
   @NonNull
   @PreAuthorize("hasAuthority('READ_PRIVILEGE')")
   public T get(long id) {
-    return entityRepository
+    T t = entityRepository
         .findById(id)
         .orElseThrow(
             () ->
                 new SpocrEntityNotFoundException(
                     id, messageSource.getMessage(getResourceNameKey())));
+    return initialize(t);
   }
 
+  @Transactional
   @PreAuthorize("hasAuthority('READ_PRIVILEGE')")
   public Page<T> getBySpecification(Specification<T> specification, Pageable pageable) {
-    return entityRepository.findAll(specification, pageable);
+    Page<T> page = entityRepository.findAll(specification, pageable);
+    page.getContent().forEach(this::initialize);
+    return page;
   }
 
+  @Transactional
   @PreAuthorize("hasAuthority('CREATE_PRIVILEGE')")
-  public List<T> createAll(List<T> objects) {
-    return entityRepository.saveAll(objects);
+  public void createAll(List<T> objects) {
+    entityRepository.saveAll(objects);
   }
 
   @NonNull
@@ -81,6 +91,10 @@ public abstract class BaseService<T extends BaseEntity> {
     } else {
       return get(object.getId());
     }
+  }
+
+  public T initialize(T t) {
+    return t;
   }
 
   protected T mergePatch(T currentEntity, T patchEntity, Class<T> clazz)
@@ -102,9 +116,19 @@ public abstract class BaseService<T extends BaseEntity> {
 
   public abstract Class<T> getEntityClass();
 
+  public List<T> getAll(List<T> objects) {
+    List<Long> ids = getIds(objects);
+    return entityRepository.findAllById(ids);
+  }
+
+  private List<Long> getIds(Collection<T> objects) {
+    return objects.stream().map(T::getId).collect(Collectors.toList());
+  }
+
   private String getResourceNameKey() {
     String name = getEntityClass().getSimpleName();
-    return String.format("%s.resource.name",
+    return String.format(
+        "%s.resource.name",
         CaseFormat.UPPER_CAMEL.converterTo(CaseFormat.LOWER_HYPHEN).convert(name));
   }
 

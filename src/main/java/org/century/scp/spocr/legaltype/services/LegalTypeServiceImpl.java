@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 public class LegalTypeServiceImpl extends BaseService<LegalType> {
 
   @Autowired
-  public LegalTypeServiceImpl(DefaultMessageSource messageSource,
-      LegalTypeRepository entityRepository) {
+  public LegalTypeServiceImpl(
+      DefaultMessageSource messageSource, LegalTypeRepository entityRepository) {
     super(messageSource, entityRepository);
   }
 
@@ -20,5 +20,4 @@ public class LegalTypeServiceImpl extends BaseService<LegalType> {
   public Class<LegalType> getEntityClass() {
     return LegalType.class;
   }
-
 }

@@ -7,6 +7,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 import org.century.scp.spocr.address.models.dto.AddressView;
+import org.century.scp.spocr.classifier.models.dto.ClassifierView;
+import org.century.scp.spocr.classifier.shoptype.models.domain.ShopType;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.models.dto.CounterpartyView;
 import org.century.scp.spocr.manufacturer.models.domain.Manufacturer;
@@ -15,8 +17,6 @@ import org.century.scp.spocr.shop.mappers.ShopMapper;
 import org.century.scp.spocr.shop.models.domain.Shop;
 import org.century.scp.spocr.shop.models.dto.RequestForCreateShop;
 import org.century.scp.spocr.shop.models.dto.ShopView;
-import org.century.scp.spocr.shoptype.models.domain.ShopType;
-import org.century.scp.spocr.shoptype.models.dto.ShopTypeView;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,7 +92,7 @@ public class ShopMapperTest {
         manufacturerFactoryService.createManufacturerView(manufacturerId);
 
     int size = 2;
-    List<ShopTypeView> shopTypeViews =
+    List<ClassifierView> shopTypeViews =
         manufacturerFactoryService.createShopTypeViews(manufacturerView, size);
     long counterpartyId = 100;
     CounterpartyView counterpartyView =

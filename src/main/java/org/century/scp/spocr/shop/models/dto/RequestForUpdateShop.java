@@ -3,7 +3,7 @@ package org.century.scp.spocr.shop.models.dto;
 import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,13 +17,15 @@ public class RequestForUpdateShop extends ShopView {
 
   private List<String> updatedFields;
 
-  @Null
+  @NotNull
+  @Positive
   @Override
   public Long getId() {
     return super.getId();
   }
 
-  @Null
+  @NotNull
+  @Positive
   @Override
   public Long getVersion() {
     return super.getVersion();

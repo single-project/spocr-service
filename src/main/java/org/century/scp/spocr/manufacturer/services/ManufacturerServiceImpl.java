@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ManufacturerServiceImpl extends BaseService<Manufacturer> {
 
-  public ManufacturerServiceImpl(DefaultMessageSource messageSource,
-      ManufacturerRepository manufacturerRepository) {
+  public ManufacturerServiceImpl(
+      DefaultMessageSource messageSource, ManufacturerRepository manufacturerRepository) {
     super(messageSource, manufacturerRepository);
   }
 
@@ -20,5 +20,4 @@ public class ManufacturerServiceImpl extends BaseService<Manufacturer> {
   public Class<Manufacturer> getEntityClass() {
     return Manufacturer.class;
   }
-
 }

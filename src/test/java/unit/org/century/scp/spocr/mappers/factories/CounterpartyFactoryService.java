@@ -63,59 +63,59 @@ public class CounterpartyFactoryService {
 
   public PaymentDetails createPaymentDetails(long counterpartyId) {
     long paymentDetailsId = counterpartyId * 10;
-    return PaymentDetails.builder()
-        .id(paymentDetailsId)
-        .bic("bic")
-        .bank("bank")
-        .active(true)
-        .version((long) 0)
-        .paymentAccount("paymentAccount")
-        .correspondingAccount("correspondingAccount")
-        .build();
+    PaymentDetails paymentDetails = new PaymentDetails();
+    paymentDetails.setId(paymentDetailsId);
+    paymentDetails.setBic("bic");
+    paymentDetails.setBank("bank");
+    paymentDetails.setActive(true);
+    paymentDetails.setVersion((long) 0);
+    paymentDetails.setPaymentAccount("paymentAccount");
+    paymentDetails.setCorrespondingAccount("correspondingAccount");
+    return paymentDetails;
   }
 
   public RequestForCreateCounterparty createCounterpartyRequestForCreate() {
     int randomInt = new Random().nextInt(9);
-    return RequestForCreateCounterparty.builder()
-        .name("name" + randomInt)
-        .legalType(createLegalTypeView())
-        .legalRekv(createLegalRekvView())
-        .paymentDetails(createPaymentDetailsView())
-        .suggestion(createSuggestion())
-        .build();
+    RequestForCreateCounterparty createCounterparty = new RequestForCreateCounterparty();
+    createCounterparty.setName("name" + randomInt);
+    createCounterparty.setLegalType(createLegalTypeView());
+    createCounterparty.setLegalRekv(createLegalRekvView());
+    createCounterparty.setPaymentDetails(createPaymentDetailsView());
+    createCounterparty.setSuggestion(createSuggestion());
+    return createCounterparty;
   }
 
   public RequestForUpdateCounterparty createCounterpartyRequestForUpdate(long counterpartyId) {
     List<String> updatedFields = Arrays.asList("name", "suggestion");
-    return RequestForUpdateCounterparty.builder()
-        .id(counterpartyId)
-        .name("name" + counterpartyId)
-        .version((long) 0)
-        .active(true)
-        .legalType(createLegalTypeView())
-        .legalRekv(createLegalRekvView())
-        .paymentDetails(createPaymentDetailsView())
-        .suggestion(createSuggestion())
-        .updatedFields(updatedFields)
-        .build();
+    RequestForUpdateCounterparty requestForUpdateCounterparty = new RequestForUpdateCounterparty();
+    requestForUpdateCounterparty.setId(counterpartyId);
+    requestForUpdateCounterparty.setName("name" + counterpartyId);
+    requestForUpdateCounterparty.setVersion((long) 0);
+    requestForUpdateCounterparty.setActive(true);
+    requestForUpdateCounterparty.setLegalType(createLegalTypeView());
+    requestForUpdateCounterparty.setLegalRekv(createLegalRekvView());
+    requestForUpdateCounterparty.setPaymentDetails(createPaymentDetailsView());
+    requestForUpdateCounterparty.setSuggestion(createSuggestion());
+    requestForUpdateCounterparty.setUpdatedFields(updatedFields);
+    return requestForUpdateCounterparty;
   }
 
   public LegalTypeView createLegalTypeView() {
-    return LegalTypeView.builder().name("ИП").active(true).build();
+    return new LegalTypeView("ИП");
   }
 
   public LegalRekvView createLegalRekvView() {
     int randomInt = new Random().nextInt(9);
-    return LegalRekvView.builder()
-        .shortName("shortname" + randomInt)
-        .fullName("fullname" + randomInt)
-        .inn("11122233" + randomInt)
-        .kpp("222333444" + randomInt)
-        .ogrn("ogrn" + randomInt)
-        .ogrnDate("0" + randomInt + ".01.2014")
-        .okonh("okonh" + randomInt)
-        .okpo("okpo" + randomInt)
-        .build();
+    LegalRekvView legalRekvView = new LegalRekvView();
+    legalRekvView.setShortName("shortname" + randomInt);
+    legalRekvView.setFullName("fullname" + randomInt);
+    legalRekvView.setInn("11122233" + randomInt);
+    legalRekvView.setKpp("222333444" + randomInt);
+    legalRekvView.setOgrn("ogrn" + randomInt);
+    legalRekvView.setOgrnDate("0" + randomInt + ".01.2014");
+    legalRekvView.setOkonh("okonh" + randomInt);
+    legalRekvView.setOkpo("okpo" + randomInt);
+    return legalRekvView;
   }
 
   public PaymentDetailsView createPaymentDetailsView() {

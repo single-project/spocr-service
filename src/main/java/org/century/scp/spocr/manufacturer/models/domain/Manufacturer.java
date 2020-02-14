@@ -35,6 +35,11 @@ public class Manufacturer extends BaseEntity {
     this.active = true;
   }
 
+  public Manufacturer(String name, boolean active) {
+    this.name = name;
+    this.active = active;
+  }
+
   public Manufacturer(Long id, String name, Boolean active, Long version) {
     super(version);
     this.id = id;

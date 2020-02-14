@@ -8,21 +8,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.century.scp.spocr.address.models.dto.AddressView;
+import org.century.scp.spocr.classifier.models.dto.ClassifierView;
 import org.century.scp.spocr.counterparty.models.dto.CounterpartyView;
-import org.century.scp.spocr.shoptype.models.dto.ShopTypeView;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class RequestForCreateShop extends ShopView {
 
-  public RequestForCreateShop(
-      String name,
-      boolean active,
-      List<ShopTypeView> shopTypes,
-      CounterpartyView counterparty,
-      AddressView address) {
-    super(name, active, address, shopTypes, counterparty);
+  public RequestForCreateShop(String name, boolean active,
+      AddressView address,
+      List<ClassifierView> shopTypes,
+      List<ClassifierView> salesChannels,
+      CounterpartyView counterparty) {
+    super(name, active, address, shopTypes, salesChannels, counterparty);
   }
 
   @Null

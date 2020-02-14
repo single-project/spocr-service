@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class AddressServiceImpl extends BaseService<Address> {
 
-  public AddressServiceImpl(DefaultMessageSource messageSource,
-      AddressRepository addressRepository) {
+  public AddressServiceImpl(
+      DefaultMessageSource messageSource, AddressRepository addressRepository) {
     super(messageSource, addressRepository);
   }
 
@@ -18,5 +18,4 @@ public class AddressServiceImpl extends BaseService<Address> {
   public Class<Address> getEntityClass() {
     return Address.class;
   }
-
 }

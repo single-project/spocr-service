@@ -141,7 +141,7 @@ CREATE TABLE public.addresses
     longitude double,
     comment character varying(500),
     suggestion text,
-    active boolean NOT NULL DEFAULT true,
+    active boolean,
     version integer NOT NULL DEFAULT 0,
     CONSTRAINT addresses_pkey PRIMARY KEY (id)
 );
@@ -174,4 +174,21 @@ CREATE TABLE public.settings
     id integer NOT NULL auto_increment,
     data text,
     CONSTRAINT settings_pkey PRIMARY KEY (id),
+);
+CREATE TABLE public.sales_channel
+(
+    id integer NOT NULL auto_increment,
+    name character varying(100) NOT NULL,
+    active boolean NOT NULL DEFAULT true,
+    manufactures_id integer NOT NULL,
+    version integer NOT NULL DEFAULT 0,
+    CONSTRAINT sales_channel_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.shop_to_sales_channel
+(
+    id integer NOT NULL auto_increment,
+    shop_id integer NOT NULL,
+    sales_channel_id integer NOT NULL,
+    CONSTRAINT shop_to_sales_channel_pkey PRIMARY KEY (id),
+    CONSTRAINT shop_to_sales_channel_id_uidx UNIQUE (shop_id, sales_channel_id)
 );

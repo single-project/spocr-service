@@ -43,7 +43,7 @@ public class CounterpartyController {
 
   @PatchMapping("/{id}")
   public ResponseEntity<CounterpartyView> updateItem(
-      @PathVariable Long id, @RequestBody RequestForUpdateCounterparty patch) {
+      @PathVariable Long id, @Validated @RequestBody RequestForUpdateCounterparty patch) {
     Counterparty patchedEntity = attachCounterpartyParent(patch);
     return ResponseEntity.ok(counterpartyMapper.map(counterpartyService.update(id, patchedEntity)));
   }

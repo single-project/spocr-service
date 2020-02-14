@@ -2,10 +2,10 @@ package unit.org.century.scp.spocr.mappers.factories;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.century.scp.spocr.classifier.models.dto.ClassifierView;
+import org.century.scp.spocr.classifier.shoptype.models.domain.ShopType;
 import org.century.scp.spocr.manufacturer.models.domain.Manufacturer;
 import org.century.scp.spocr.manufacturer.models.dto.ManufacturerView;
-import org.century.scp.spocr.shoptype.models.domain.ShopType;
-import org.century.scp.spocr.shoptype.models.dto.ShopTypeView;
 
 public class ManufacturerFactoryService {
 
@@ -27,10 +27,10 @@ public class ManufacturerFactoryService {
     return new ManufacturerView(manufacturerId, "manufacturer" + manufacturerId, (long) 0, true);
   }
 
-  public List<ShopTypeView> createShopTypeViews(ManufacturerView manufacturer, int size) {
-    List<ShopTypeView> shopTypes = new ArrayList<>();
+  public List<ClassifierView> createShopTypeViews(ManufacturerView manufacturer, int size) {
+    List<ClassifierView> shopTypes = new ArrayList<>();
     for (long i = 1; i <= size; i++) {
-      ShopTypeView shopType = new ShopTypeView(i, "shopType" + i, (long) 0, true, manufacturer);
+      ClassifierView shopType = new ClassifierView(i, "shopType" + i, (long) 0, true, manufacturer);
       shopTypes.add(shopType);
     }
 

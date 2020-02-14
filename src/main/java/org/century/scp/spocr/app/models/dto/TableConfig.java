@@ -23,5 +23,4 @@ public class TableConfig {
   public void addColumn(FieldConfig fieldConfig) {
     columns.add(fieldConfig);
   }
-
 }
