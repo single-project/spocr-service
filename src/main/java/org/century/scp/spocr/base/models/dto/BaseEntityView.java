@@ -1,12 +1,14 @@
 package org.century.scp.spocr.base.models.dto;
 
 import java.io.Serializable;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+@EqualsAndHashCode
 @Getter
 @Setter
-public abstract class BaseEntityView implements Serializable {
+public abstract class BaseEntityView implements Serializable, DTO {
 
   private Long id;
   private Long version;

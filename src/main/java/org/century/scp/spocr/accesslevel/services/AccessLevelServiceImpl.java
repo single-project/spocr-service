@@ -61,12 +61,12 @@ public class AccessLevelServiceImpl {
   private SystemRule getRule(long id) {
     return ruleRepository
         .findById(id)
-        .orElseThrow(() -> new SpocrEntityNotFoundException(id, "правило"));
+        .orElseThrow(() -> new SpocrEntityNotFoundException(SystemRole.class, id));
   }
 
   private SystemRole getRole(long id) {
     return roleRepository
         .findById(id)
-        .orElseThrow(() -> new SpocrEntityNotFoundException(id, "роль"));
+        .orElseThrow(() -> new SpocrEntityNotFoundException(SystemRole.class, id));
   }
 }

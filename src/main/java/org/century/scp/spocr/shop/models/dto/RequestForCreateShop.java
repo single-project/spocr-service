@@ -1,6 +1,6 @@
 package org.century.scp.spocr.shop.models.dto;
 
-import java.util.List;
+import java.util.Set;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
@@ -18,8 +18,8 @@ public class RequestForCreateShop extends ShopView {
 
   public RequestForCreateShop(String name, boolean active,
       AddressView address,
-      List<ClassifierView> shopTypes,
-      List<ClassifierView> salesChannels,
+      Set<ClassifierView> shopTypes,
+      Set<ClassifierView> salesChannels,
       CounterpartyView counterparty) {
     super(name, active, address, shopTypes, salesChannels, counterparty);
   }

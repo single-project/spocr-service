@@ -141,8 +141,6 @@ CREATE TABLE public.addresses
     longitude double,
     comment character varying(500),
     suggestion text,
-    active boolean,
-    version integer NOT NULL DEFAULT 0,
     CONSTRAINT addresses_pkey PRIMARY KEY (id)
 );
 CREATE TABLE public.counterparty_payment_details

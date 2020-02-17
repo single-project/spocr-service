@@ -12,14 +12,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.century.scp.spocr.base.converters.SuggestionConverter;
-import org.century.scp.spocr.base.models.domain.BaseEntity;
 
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @Data
 @Entity
 @Table(name = "addresses")
 @NoArgsConstructor
-public class Address extends BaseEntity {
+public class Address {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,12 +40,8 @@ public class Address extends BaseEntity {
   @Convert(converter = SuggestionConverter.class)
   private LinkedHashMap suggestion;
 
-  @Column(name = "active")
-  private Boolean active;
-
   public Address(String address) {
     this.address = address;
-    this.active = true;
   }
 
   public Address(
@@ -55,6 +50,5 @@ public class Address extends BaseEntity {
     this.address = address;
     this.comment = comment;
     this.suggestion = suggestion;
-    this.active = active;
   }
 }

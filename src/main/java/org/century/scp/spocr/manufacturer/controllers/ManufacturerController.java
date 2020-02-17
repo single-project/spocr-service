@@ -5,12 +5,11 @@ import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
-import org.century.scp.spocr.manufacturer.mappers.ManufacturerMapper;
 import org.century.scp.spocr.manufacturer.models.domain.Manufacturer;
 import org.century.scp.spocr.manufacturer.models.dto.ManufacturerView;
 import org.century.scp.spocr.manufacturer.models.dto.RequestForCreateManufacturer;
 import org.century.scp.spocr.manufacturer.models.dto.RequestForUpdateManufacturer;
-import org.century.scp.spocr.manufacturer.services.ManufacturerServiceImpl;
+import org.century.scp.spocr.manufacturer.services.ManufacturerServiceFacade;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -31,26 +30,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ManufacturerController {
 
-  private final ManufacturerMapper manufacturerMapper;
-  private final ManufacturerServiceImpl manufacturerService;
+  private final ManufacturerServiceFacade manufacturerService;
 
   @PostMapping
   public ResponseEntity<ManufacturerView> addItem(
       @Validated @RequestBody RequestForCreateManufacturer manufacturer) {
-    return ResponseEntity.ok(
-        manufacturerMapper.map((manufacturerService.create(manufacturerMapper.map(manufacturer)))));
+    return ResponseEntity.ok(manufacturerService.create(manufacturer));
   }
 
   @PatchMapping("/{id}")
   public ResponseEntity<ManufacturerView> updateItem(
       @PathVariable Long id, @RequestBody RequestForUpdateManufacturer patch) {
-    return ResponseEntity.ok(
-        manufacturerMapper.map(manufacturerService.update(id, manufacturerMapper.map(patch))));
+    return ResponseEntity.ok(manufacturerService.update(id, patch, patch.getUpdatedFields()));
   }
 
   @GetMapping("/{id}")
   public ResponseEntity<ManufacturerView> getItem(@PathVariable(value = "id") long id) {
-    return ResponseEntity.ok(manufacturerMapper.map(manufacturerService.get(id)));
+    return ResponseEntity.ok(manufacturerService.get(id));
   }
 
   @GetMapping
@@ -63,9 +59,6 @@ public class ManufacturerController {
           })
           Specification<Manufacturer> manufacturerSpecification,
       Pageable pageable) {
-    Page<Manufacturer> page =
-        manufacturerService.getBySpecification(manufacturerSpecification, pageable);
-
-    return ResponseEntity.ok(manufacturerMapper.map(page));
+    return ResponseEntity.ok(manufacturerService.get(manufacturerSpecification, pageable));
   }
 }

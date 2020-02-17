@@ -8,9 +8,8 @@ import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.century.scp.spocr.classifier.models.dto.ClassifierView;
 import org.century.scp.spocr.classifier.models.dto.RequestForCreateClassifier;
 import org.century.scp.spocr.classifier.models.dto.RequestForUpdateClassifier;
-import org.century.scp.spocr.classifier.saleschannel.mappers.SalesChannelMapper;
 import org.century.scp.spocr.classifier.saleschannel.models.domain.SalesChannel;
-import org.century.scp.spocr.classifier.saleschannel.services.SalesChannelServiceImpl;
+import org.century.scp.spocr.classifier.saleschannel.services.SalesChannelServiceFacade;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -31,27 +30,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class SalesChannelController {
 
-  private final SalesChannelMapper salesChannelMapper;
-  private final SalesChannelServiceImpl salesChannelService;
+  private final SalesChannelServiceFacade salesChannelService;
 
   @PostMapping
   public ResponseEntity<ClassifierView> addItem(
       @Validated @RequestBody RequestForCreateClassifier salesChannel) {
-    SalesChannel sc = salesChannelMapper.map(salesChannel);
-    return ResponseEntity.ok(salesChannelMapper.map(salesChannelService.create(sc)));
+    return ResponseEntity.ok(salesChannelService.create(salesChannel));
   }
 
   @PatchMapping("/{id}")
   public ResponseEntity<ClassifierView> updateItem(
       @PathVariable Long id, @RequestBody RequestForUpdateClassifier patch) {
-    return ResponseEntity.ok(
-        salesChannelMapper.map(
-            salesChannelService.update(id, salesChannelMapper.map(patch))));
+    return ResponseEntity.ok(salesChannelService.update(id, patch, patch.getUpdatedFields()));
   }
 
   @GetMapping("/{id}")
   public ResponseEntity<ClassifierView> getItem(@PathVariable(value = "id") long id) {
-    return ResponseEntity.ok(salesChannelMapper.map(salesChannelService.get(id)));
+    return ResponseEntity.ok(salesChannelService.get(id));
   }
 
   @GetMapping
@@ -65,8 +60,6 @@ public class SalesChannelController {
       })
           Specification<SalesChannel> salesChannelSpecification,
       Pageable pageable) {
-    Page<SalesChannel> page = salesChannelService
-        .getBySpecification(salesChannelSpecification, pageable);
-    return ResponseEntity.ok(salesChannelMapper.map(page));
+    return ResponseEntity.ok(salesChannelService.get(salesChannelSpecification, pageable));
   }
 }

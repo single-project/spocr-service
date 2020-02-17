@@ -5,8 +5,6 @@ import org.century.scp.spocr.classifier.saleschannel.mappers.SalesChannelMapper;
 import org.century.scp.spocr.classifier.shoptype.mappers.ShopTypeMapper;
 import org.century.scp.spocr.counterparty.mappers.CounterpartyMapper;
 import org.century.scp.spocr.shop.models.domain.Shop;
-import org.century.scp.spocr.shop.models.dto.RequestForCreateShop;
-import org.century.scp.spocr.shop.models.dto.RequestForUpdateShop;
 import org.century.scp.spocr.shop.models.dto.ShopView;
 import org.mapstruct.Mapper;
 import org.springframework.data.domain.Page;
@@ -22,9 +20,7 @@ public interface ShopMapper {
 
   ShopView map(Shop entity);
 
-  Shop map(RequestForCreateShop view);
-
-  Shop map(RequestForUpdateShop view);
+  Shop map(ShopView view);
 
   default Page<ShopView> map(Page<Shop> page) {
     return page.map(this::map);

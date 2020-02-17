@@ -1,6 +1,6 @@
 package org.century.scp.spocr.shop.models.dto;
 
-import java.util.List;
+import java.util.Set;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,16 +16,16 @@ public class ShopView extends BaseEntityView {
 
   private String name;
   private AddressView address;
-  private List<ClassifierView> shopTypes;
-  private List<ClassifierView> salesChannels;
+  private Set<ClassifierView> shopTypes;
+  private Set<ClassifierView> salesChannels;
   private CounterpartyView counterparty;
 
   public ShopView(
       String name,
       boolean active,
       AddressView address,
-      List<ClassifierView> shopTypes,
-      List<ClassifierView> salesChannels,
+      Set<ClassifierView> shopTypes,
+      Set<ClassifierView> salesChannels,
       CounterpartyView counterparty) {
     super(active);
     this.name = name;

@@ -1,8 +1,6 @@
 package org.century.scp.spocr;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Random;
 import lombok.extern.slf4j.Slf4j;
 import org.century.scp.spocr.accesslevel.models.SystemRole;
@@ -10,22 +8,22 @@ import org.century.scp.spocr.accesslevel.models.SystemRule;
 import org.century.scp.spocr.accesslevel.services.AccessLevelServiceImpl;
 import org.century.scp.spocr.address.models.domain.Address;
 import org.century.scp.spocr.classifier.saleschannel.models.domain.SalesChannel;
-import org.century.scp.spocr.classifier.saleschannel.services.SalesChannelServiceImpl;
+import org.century.scp.spocr.classifier.saleschannel.services.SalesChannelService;
 import org.century.scp.spocr.classifier.shoptype.models.domain.ShopType;
-import org.century.scp.spocr.classifier.shoptype.services.ShopTypesServiceImpl;
+import org.century.scp.spocr.classifier.shoptype.services.ShopTypesService;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
-import org.century.scp.spocr.counterparty.services.CounterpartyServiceImpl;
+import org.century.scp.spocr.counterparty.services.CounterpartyService;
 import org.century.scp.spocr.extlink.models.EntityType;
 import org.century.scp.spocr.legaltype.models.domain.LegalType;
-import org.century.scp.spocr.legaltype.services.LegalTypeServiceImpl;
+import org.century.scp.spocr.legaltype.services.LegalTypeService;
 import org.century.scp.spocr.manufacturer.models.domain.Manufacturer;
-import org.century.scp.spocr.manufacturer.services.ManufacturerServiceImpl;
+import org.century.scp.spocr.manufacturer.services.ManufacturerService;
 import org.century.scp.spocr.paymentdetails.models.domain.PaymentDetails;
-import org.century.scp.spocr.paymentdetails.services.PaymentDetailsServiceImpl;
+import org.century.scp.spocr.paymentdetails.services.PaymentDetailsService;
 import org.century.scp.spocr.security.models.domain.SecurityUser;
 import org.century.scp.spocr.security.services.CustomUserDetailsService;
 import org.century.scp.spocr.shop.models.domain.Shop;
-import org.century.scp.spocr.shop.services.ShopServiceImpl;
+import org.century.scp.spocr.shop.services.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -36,28 +34,34 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Component
 @Profile({"dev", "prod"})
 public class DevSpocrStartupRunner implements ApplicationRunner {
 
-  @Autowired private CounterpartyServiceImpl counterpartyService;
-  @Autowired private ManufacturerServiceImpl manufacturerService;
-  @Autowired private ShopTypesServiceImpl shopTypesService;
-  @Autowired private ShopServiceImpl shopService;
+  @Autowired
+  private CounterpartyService counterpartyService;
+  @Autowired
+  private ManufacturerService manufacturerService;
+  @Autowired
+  private ShopTypesService shopTypesService;
+  @Autowired
+  private ShopService shopService;
   @Autowired private AccessLevelServiceImpl accessLevelService;
   @Autowired private CustomUserDetailsService userDetailsService;
   @Autowired private AuthenticationManager authenticationManager;
   @Autowired private CustomUserDetailsService users;
   @Autowired
-  private LegalTypeServiceImpl legalTypeService;
+  private LegalTypeService legalTypeService;
   @Autowired
-  private PaymentDetailsServiceImpl paymentDetailsService;
+  private PaymentDetailsService paymentDetailsService;
   @Autowired
-  private SalesChannelServiceImpl salesChannelService;
+  private SalesChannelService salesChannelService;
 
   @Override
+  @Transactional
   public void run(ApplicationArguments args) throws Exception {
     signInAsUser();
 
@@ -90,7 +94,6 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
     legalType2 = legalTypeService.create(legalType2);
 
     // add 10 new counteragent
-    List<Counterparty> counterparties = new ArrayList<>();
     for (int i = 1; i <= 10; i++) {
       PaymentDetails paymentDetails = new PaymentDetails();
       paymentDetails.setBic("000");
@@ -103,9 +106,8 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
       Counterparty e = new Counterparty("Контагент" + i);
       e.setLegalType(legalType1);
       e.setPaymentDetails(paymentDetails);
-      counterparties.add(e);
+      counterpartyService.create(e);
     }
-    counterpartyService.createAll(counterparties);
 
     // add 2 new manufacturer
     Manufacturer m1 = manufacturerService.create(new Manufacturer("ООО Производитель1", true));
@@ -126,7 +128,6 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
     salesChannelService.create(new SalesChannel("Канал продаж5", m1, false));
 
     // add 100 new shops
-    List<Shop> shops = new ArrayList<>();
     for (int i = 1; i <= 100; i++) {
       Shop shop =
           new Shop(
@@ -139,12 +140,11 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
       suggestion.put(i, "s" + i);
       suggestion.put("s" + i, i);
       address.setSuggestion(suggestion);
-      // address = addressService.create(address);
       shop.setAddress(address);
       shop.setActive(i % 2 == 0);
-      shops.add(shop);
+      shopService.create(shop);
     }
-    shopService.createAll(shops);
+
   }
 
   public void signInAsUser() {

@@ -1,22 +1,22 @@
 package org.century.scp.spocr.exceptions.handlers;
 
 import lombok.extern.slf4j.Slf4j;
+import org.century.scp.spocr.base.i18.DefaultMessageSource;
 import org.century.scp.spocr.exceptions.SpocrConstraintViolationException;
-import org.century.scp.spocr.exceptions.SpocrException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class SporConstraintViolationExceptionHandler<E extends SpocrException>
-    extends AbstractExceptionHandler<E> {
+public class SporConstraintViolationExceptionHandler extends
+    AbstractSpocrExceptionHandler<SpocrConstraintViolationException> {
 
-  public SporConstraintViolationExceptionHandler() {
-    super(SpocrConstraintViolationException.class);
+  public SporConstraintViolationExceptionHandler(DefaultMessageSource messageSource) {
+    super(SpocrConstraintViolationException.class, messageSource);
   }
 
   @Override
-  public HttpStatus getStatus(E ex) {
+  public HttpStatus getStatus(SpocrConstraintViolationException ex) {
     return HttpStatus.CONFLICT;
   }
 }

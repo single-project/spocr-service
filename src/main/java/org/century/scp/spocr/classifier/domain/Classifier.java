@@ -1,5 +1,6 @@
 package org.century.scp.spocr.classifier.domain;
 
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -9,12 +10,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.century.scp.spocr.base.models.domain.BaseEntity;
 import org.century.scp.spocr.manufacturer.models.domain.Manufacturer;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
 @MappedSuperclass
 @NoArgsConstructor
@@ -55,7 +54,36 @@ public class Classifier extends BaseEntity {
   }
 
   @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    if (!super.equals(o)) {
+      return false;
+    }
+    Classifier that = (Classifier) o;
+    try {
+      return getId().equals(that.getId());
+    } catch (Throwable e) {
+      throw new NullPointerException();
+    }
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), getId());
+  }
+
+  @Override
   public String toString() {
-    return "ShopType{" + "id=" + id + ", name='" + name + '\'' + ", active=" + active + '}';
+    return "Classifier{" +
+        "id=" + id +
+        ", name='" + name + '\'' +
+        ", manufacturer=" + manufacturer.getName() +
+        ", active=" + active +
+        '}';
   }
 }

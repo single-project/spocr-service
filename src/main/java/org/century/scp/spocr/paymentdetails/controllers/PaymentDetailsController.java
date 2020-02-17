@@ -5,10 +5,9 @@ import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
-import org.century.scp.spocr.paymentdetails.mappers.PaymentDetailsMapper;
 import org.century.scp.spocr.paymentdetails.models.domain.PaymentDetails;
 import org.century.scp.spocr.paymentdetails.models.dto.PaymentDetailsView;
-import org.century.scp.spocr.paymentdetails.services.PaymentDetailsServiceImpl;
+import org.century.scp.spocr.paymentdetails.services.PaymentDetailsServiceFacade;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -25,13 +24,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class PaymentDetailsController {
 
-  private PaymentDetailsMapper paymentDetailsMapper;
-  private PaymentDetailsServiceImpl paymentDetailsService;
+  private final PaymentDetailsServiceFacade paymentDetailsService;
 
   @GetMapping
   public ResponseEntity<Page<PaymentDetailsView>> getItems(
       @And({
           @Spec(path = "paymentAccount", params = "q", spec = LikeIgnoreCase.class),
+          @Spec(path = "paymentAccount", params = "paymentAccount", spec = Equal.class),
           @Spec(
               path = "correspondingAccount",
               params = "correspondingAccount",
@@ -42,13 +41,11 @@ public class PaymentDetailsController {
       })
           Specification<PaymentDetails> detailsSpecification,
       Pageable pageable) {
-    Page<PaymentDetails> page =
-        paymentDetailsService.getBySpecification(detailsSpecification, pageable);
-    return ResponseEntity.ok(paymentDetailsMapper.map(page));
+    return ResponseEntity.ok(paymentDetailsService.get(detailsSpecification, pageable));
   }
 
   @GetMapping("/{id}")
   public ResponseEntity<PaymentDetailsView> getItem(@PathVariable(value = "id") long id) {
-    return ResponseEntity.ok(paymentDetailsMapper.map(paymentDetailsService.get(id)));
+    return ResponseEntity.ok(paymentDetailsService.get(id));
   }
 }

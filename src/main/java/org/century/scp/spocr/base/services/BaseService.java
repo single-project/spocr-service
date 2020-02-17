@@ -1,20 +1,13 @@
 package org.century.scp.spocr.base.services;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.github.fge.jsonpatch.JsonPatchException;
-import com.github.fge.jsonpatch.mergepatch.JsonMergePatch;
-import com.google.common.base.CaseFormat;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
-import org.century.scp.spocr.base.i18.DefaultMessageSource;
-import org.century.scp.spocr.base.models.domain.BaseEntity;
+import javax.persistence.EntityManager;
+import lombok.RequiredArgsConstructor;
+import org.century.scp.spocr.base.models.domain.DomainEntity;
 import org.century.scp.spocr.base.repositories.BaseRepository;
+import org.century.scp.spocr.base.utils.CustomBeanUtils;
 import org.century.scp.spocr.exceptions.SpocrEntityNotFoundException;
 import org.century.scp.spocr.exceptions.SpocrException;
 import org.springframework.data.domain.Page;
@@ -22,117 +15,58 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.lang.NonNull;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Transactional;
 
-public abstract class BaseService<T extends BaseEntity> {
+@RequiredArgsConstructor
+public abstract class BaseService<T extends DomainEntity> implements ServiceI<T> {
 
-  protected BaseRepository<T> entityRepository;
-  private DefaultMessageSource messageSource;
+  protected final BaseRepository<T> repository;
+  private final Class<T> entityClass;
+  private final EntityManager entityManager;
 
-  public BaseService(DefaultMessageSource messageSource, BaseRepository<T> entityRepository) {
-    this.messageSource = messageSource;
-    this.entityRepository = entityRepository;
-  }
-
-  @Transactional
-  @PreAuthorize("hasAuthority('CREATE_PRIVILEGE')")
-  public T create(T object) {
-    T assembly = assemble(object);
-    return entityRepository.save(assembly);
-  }
-
-  @Transactional(isolation = Isolation.READ_COMMITTED)
-  @PreAuthorize("hasAuthority('UPDATE_PRIVILEGE')")
-  public T update(Long id, T patch) {
-    T current = get(id);
-    try {
-      current = mergePatch(current, patch, getEntityClass());
-    } catch (IOException | JsonPatchException e) {
-      throw new SpocrException(e);
-    }
-    T assembly = assemble(current);
-    T t = entityRepository.save(assembly);
-    return initialize(t);
-  }
-
-  @Transactional
   @NonNull
+  @Override
   @PreAuthorize("hasAuthority('READ_PRIVILEGE')")
   public T get(long id) {
-    T t = entityRepository
+    return repository
         .findById(id)
-        .orElseThrow(
-            () ->
-                new SpocrEntityNotFoundException(
-                    id, messageSource.getMessage(getResourceNameKey())));
-    return initialize(t);
-  }
-
-  @Transactional
-  @PreAuthorize("hasAuthority('READ_PRIVILEGE')")
-  public Page<T> getBySpecification(Specification<T> specification, Pageable pageable) {
-    Page<T> page = entityRepository.findAll(specification, pageable);
-    page.getContent().forEach(this::initialize);
-    return page;
-  }
-
-  @Transactional
-  @PreAuthorize("hasAuthority('CREATE_PRIVILEGE')")
-  public void createAll(List<T> objects) {
-    entityRepository.saveAll(objects);
+        .orElseThrow(() -> new SpocrEntityNotFoundException(entityClass, id));
   }
 
   @NonNull
+  @Override
+  @PreAuthorize("hasAuthority('READ_PRIVILEGE')")
+  public Page<T> getBySpecification(Specification<T> specification, Pageable pageable) {
+    return repository.findAll(specification, pageable);
+  }
+
+  @NonNull
+  @Override
   @PreAuthorize("hasAuthority('CREATE_PRIVILEGE')")
-  public T createOrRefresh(@NonNull T object) {
-    if (object.getId() == null) {
-      return create(object);
-    } else {
-      return get(object.getId());
+  public T create(T entity) {
+    refresh(entity);
+    return repository.save(entity);
+  }
+
+  @NonNull
+  @Override
+  @PreAuthorize("hasAuthority('UPDATE_PRIVILEGE')")
+  public T update(Long id, T patch, List<String> properties) {
+    if (!id.equals(patch.getId())) {
+      throw new SpocrException("incorrect-entity-id.exception", id, patch.getId());
     }
+    T current = get(id);
+    CustomBeanUtils.copyProperties(patch, current, properties);
+    refresh(current);
+    return repository.save(current);
   }
 
-  public T initialize(T t) {
-    return t;
+  public abstract void refresh(T entity);
+
+  public <K extends DomainEntity> K getReference(K entity, Class<K> cl) {
+    return entityManager.find(cl, entity.getId());
   }
 
-  protected T mergePatch(T currentEntity, T patchEntity, Class<T> clazz)
-      throws IOException, JsonPatchException {
-    ObjectMapper mapper = new ObjectMapper();
-    mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-    JsonNode node = mapper.convertValue(currentEntity, JsonNode.class);
-    JsonNode patchNode = mapper.convertValue(patchEntity, JsonNode.class);
-    List<String> fields = new ArrayList<>();
-    patchNode.fieldNames().forEachRemaining(fields::add);
-    List<String> updatedFields = patchEntity.getUpdatedFields();
-    fields.stream()
-        .filter(f -> !updatedFields.contains(f))
-        .forEach(((ObjectNode) patchNode)::remove);
-    JsonMergePatch mergePatch = JsonMergePatch.fromJson(patchNode);
-    node = mergePatch.apply(node);
-    return mapper.treeToValue(node, clazz);
-  }
-
-  public abstract Class<T> getEntityClass();
-
-  public List<T> getAll(List<T> objects) {
-    List<Long> ids = getIds(objects);
-    return entityRepository.findAllById(ids);
-  }
-
-  private List<Long> getIds(Collection<T> objects) {
-    return objects.stream().map(T::getId).collect(Collectors.toList());
-  }
-
-  private String getResourceNameKey() {
-    String name = getEntityClass().getSimpleName();
-    return String.format(
-        "%s.resource.name",
-        CaseFormat.UPPER_CAMEL.converterTo(CaseFormat.LOWER_HYPHEN).convert(name));
-  }
-
-  public T assemble(T entity) {
-    return entity;
+  public <K extends DomainEntity> Set<K> getReferences(Set<K> objects, Class<K> cl) {
+    return objects.stream().map(e -> getReference(e, cl)).collect(Collectors.toSet());
   }
 }

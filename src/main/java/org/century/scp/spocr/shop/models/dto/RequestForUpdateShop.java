@@ -4,6 +4,7 @@ import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,7 +26,7 @@ public class RequestForUpdateShop extends ShopView {
   }
 
   @NotNull
-  @Positive
+  @PositiveOrZero
   @Override
   public Long getVersion() {
     return super.getVersion();

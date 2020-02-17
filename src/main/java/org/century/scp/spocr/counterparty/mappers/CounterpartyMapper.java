@@ -5,7 +5,7 @@ import org.century.scp.spocr.base.utils.Strings;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.models.dto.CounterpartyView;
 import org.century.scp.spocr.counterparty.models.dto.RequestForUpdateCounterparty;
-import org.century.scp.spocr.counterparty.services.CounterpartyServiceImpl;
+import org.century.scp.spocr.counterparty.services.CounterpartyService;
 import org.century.scp.spocr.legaltype.mappers.LegalTypeMapper;
 import org.century.scp.spocr.paymentdetails.mappers.PaymentDetailsMapper;
 import org.mapstruct.AfterMapping;
@@ -20,7 +20,7 @@ import org.springframework.data.domain.Page;
 public abstract class CounterpartyMapper {
 
   @Autowired
-  private CounterpartyServiceImpl service;
+  private CounterpartyService service;
 
   @Named("setParentFromContext")
   public Counterparty getParentFromContext(BaseEntityListView parent) {
