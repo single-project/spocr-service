@@ -1,4 +1,4 @@
-package org.century.scp.spocr.classifier.saleschannel.models.domain;
+package org.century.scp.spocr.classifier.specialization.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -11,22 +11,20 @@ import org.century.scp.spocr.manufacturer.models.domain.Manufacturer;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-@Table(name = "sales_channels")
+@Table(name = "shop_specializations")
 @NoArgsConstructor
-public class SalesChannel extends Classifier {
+public class ShopSpecialization extends Classifier {
 
-  public SalesChannel(Long id, String name, boolean active, long version,
+  public ShopSpecialization(Long id, String name, boolean active, long version,
       Manufacturer manufacturer) {
     super(id, name, active, version, manufacturer);
   }
 
-  public SalesChannel(String name,
-      Manufacturer manufacturer) {
+  public ShopSpecialization(String name, Manufacturer manufacturer) {
     super(name, manufacturer);
   }
 
-  public SalesChannel(String name,
-      Manufacturer manufacturer, boolean active) {
+  public ShopSpecialization(String name, Manufacturer manufacturer, boolean active) {
     super(name, manufacturer, active);
   }
 }

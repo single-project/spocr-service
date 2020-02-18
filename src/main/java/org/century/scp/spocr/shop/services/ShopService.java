@@ -6,7 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.century.scp.spocr.base.repositories.BaseRepository;
 import org.century.scp.spocr.base.services.BaseService;
 import org.century.scp.spocr.classifier.saleschannel.models.domain.SalesChannel;
+import org.century.scp.spocr.classifier.shopdepart.domain.ShopDepart;
 import org.century.scp.spocr.classifier.shoptype.models.domain.ShopType;
+import org.century.scp.spocr.classifier.specialization.domain.ShopSpecialization;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.shop.models.domain.Shop;
 import org.springframework.stereotype.Service;
@@ -32,9 +34,22 @@ public class ShopService extends BaseService<Shop> {
     }
 
     // sales channels
-    if (shop.linkedWithSalesChannel()) {
+    if (shop.linkedWithSalesChannels()) {
       Set<SalesChannel> salesChannels = getReferences(shop.getSalesChannels(), SalesChannel.class);
       shop.setSalesChannels(salesChannels);
+    }
+
+    // shop departs
+    if (shop.linkedWithShopDeparts()) {
+      Set<ShopDepart> shopDeparts = getReferences(shop.getShopDeparts(), ShopDepart.class);
+      shop.setShopDeparts(shopDeparts);
+    }
+
+    // shop specializations
+    if (shop.linkedWithShopSpecializations()) {
+      Set<ShopSpecialization> shopSpecializations = getReferences(shop.getShopSpecializations(),
+          ShopSpecialization.class);
+      shop.setShopSpecializations(shopSpecializations);
     }
   }
 }

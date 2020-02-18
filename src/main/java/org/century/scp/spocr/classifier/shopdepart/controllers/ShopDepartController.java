@@ -1,4 +1,4 @@
-package org.century.scp.spocr.classifier.shoptype.controllers;
+package org.century.scp.spocr.classifier.shopdepart.controllers;
 
 import lombok.RequiredArgsConstructor;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
@@ -8,8 +8,8 @@ import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.century.scp.spocr.classifier.models.dto.ClassifierView;
 import org.century.scp.spocr.classifier.models.dto.RequestForCreateClassifier;
 import org.century.scp.spocr.classifier.models.dto.RequestForUpdateClassifier;
-import org.century.scp.spocr.classifier.shoptype.models.domain.ShopType;
-import org.century.scp.spocr.classifier.shoptype.services.ShopTypeServiceFacade;
+import org.century.scp.spocr.classifier.shopdepart.domain.ShopDepart;
+import org.century.scp.spocr.classifier.shopdepart.services.ShopDepartServiceFacade;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -26,33 +26,33 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/shoptypes")
+@RequestMapping("/api/shopdeparts")
 @RequiredArgsConstructor
-public class ShopTypesController {
+public class ShopDepartController {
 
-  private final ShopTypeServiceFacade shopTypeService;
+  private final ShopDepartServiceFacade shopDepartService;
 
   @PostMapping
   public ResponseEntity<ClassifierView> addItem(
       @Validated @RequestBody RequestForCreateClassifier shopType) {
-    return ResponseEntity.ok(shopTypeService.create(shopType));
+    return ResponseEntity.ok(shopDepartService.create(shopType));
   }
 
   @PatchMapping("/{id}")
   public ResponseEntity<ClassifierView> updateItem(
       @PathVariable Long id, @RequestBody RequestForUpdateClassifier patch) {
-    return ResponseEntity.ok(shopTypeService.update(id, patch, patch.getUpdatedFields()));
+    return ResponseEntity.ok(shopDepartService.update(id, patch, patch.getUpdatedFields()));
   }
 
   @GetMapping("/{id}")
   public ResponseEntity<ClassifierView> getItem(@PathVariable(value = "id") long id) {
-    return ResponseEntity.ok(shopTypeService.get(id));
+    return ResponseEntity.ok(shopDepartService.get(id));
   }
 
   @GetMapping
   public ResponseEntity<Page<ClassifierView>> getItems(
       @And({
-            @Spec(path = "name", params = "q", spec = LikeIgnoreCase.class),
+          @Spec(path = "name", params = "q", spec = LikeIgnoreCase.class),
           @Spec(path = "id", params = "id", spec = Equal.class),
           @Spec(path = "name", params = "name", spec = LikeIgnoreCase.class),
           @Spec(path = "manufacturer.id", params = "manufacturer.id", spec = Equal.class),
@@ -60,10 +60,10 @@ public class ShopTypesController {
               path = "manufacturer.name",
               params = "manufacturer.name",
               spec = LikeIgnoreCase.class),
-            @Spec(path = "active", params = "active", spec = Equal.class)
-          })
-          Specification<ShopType> shopTypeSpecification,
+          @Spec(path = "active", params = "active", spec = Equal.class)
+      })
+          Specification<ShopDepart> shopDepartSpecification,
       Pageable pageable) {
-    return ResponseEntity.ok(shopTypeService.get(shopTypeSpecification, pageable));
+    return ResponseEntity.ok(shopDepartService.get(shopDepartSpecification, pageable));
   }
 }

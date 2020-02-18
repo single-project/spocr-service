@@ -19,9 +19,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 @RequiredArgsConstructor
 public abstract class BaseService<T extends DomainEntity> implements ServiceI<T> {
 
-  protected final BaseRepository<T> repository;
   private final Class<T> entityClass;
   private final EntityManager entityManager;
+  protected final BaseRepository<T> repository;
 
   @NonNull
   @Override

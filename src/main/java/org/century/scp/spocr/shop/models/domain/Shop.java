@@ -21,10 +21,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.century.scp.spocr.address.models.domain.Address;
-import org.century.scp.spocr.base.annotations.OnCreateUpdatedAttach;
 import org.century.scp.spocr.base.models.domain.BaseEntity;
 import org.century.scp.spocr.classifier.saleschannel.models.domain.SalesChannel;
+import org.century.scp.spocr.classifier.shopdepart.domain.ShopDepart;
 import org.century.scp.spocr.classifier.shoptype.models.domain.ShopType;
+import org.century.scp.spocr.classifier.specialization.domain.ShopSpecialization;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -49,7 +50,6 @@ public class Shop extends BaseEntity {
 
   @ManyToOne(fetch = FetchType.EAGER, optional = false)
   @JoinColumn(name = "counterparty_id", nullable = false)
-  @OnCreateUpdatedAttach
   private Counterparty counterparty;
 
   @ManyToMany(fetch = FetchType.EAGER)
@@ -57,16 +57,28 @@ public class Shop extends BaseEntity {
       name = "shop_to_shop_types",
       joinColumns = @JoinColumn(name = "shop_id"),
       inverseJoinColumns = @JoinColumn(name = "shop_types_id"))
-  @OnCreateUpdatedAttach
   private Set<ShopType> shopTypes;
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
-      name = "shop_to_sales_channel",
+      name = "shop_to_sales_channels",
       joinColumns = @JoinColumn(name = "shop_id"),
-      inverseJoinColumns = @JoinColumn(name = "sales_channel_id"))
-  @OnCreateUpdatedAttach
+      inverseJoinColumns = @JoinColumn(name = "sales_channels_id"))
   private Set<SalesChannel> salesChannels;
+
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(
+      name = "shop_to_shop_departs",
+      joinColumns = @JoinColumn(name = "shop_id"),
+      inverseJoinColumns = @JoinColumn(name = "shop_departs_id"))
+  private Set<ShopDepart> shopDeparts;
+
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(
+      name = "shop_to_shop_specializations",
+      joinColumns = @JoinColumn(name = "shop_id"),
+      inverseJoinColumns = @JoinColumn(name = "shop_specializations_id"))
+  private Set<ShopSpecialization> shopSpecializations;
 
   @Cascade({CascadeType.PERSIST, CascadeType.MERGE})
   @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true)
@@ -134,8 +146,16 @@ public class Shop extends BaseEntity {
     return shopTypes != null && shopTypes.size() > 0;
   }
 
-  public boolean linkedWithSalesChannel() {
+  public boolean linkedWithSalesChannels() {
     return salesChannels != null && salesChannels.size() > 0;
+  }
+
+  public boolean linkedWithShopDeparts() {
+    return shopDeparts != null && shopDeparts.size() > 0;
+  }
+
+  public boolean linkedWithShopSpecializations() {
+    return shopSpecializations != null && shopSpecializations.size() > 0;
   }
 
   public void setShopTypes(

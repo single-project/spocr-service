@@ -173,20 +173,54 @@ CREATE TABLE public.settings
     data text,
     CONSTRAINT settings_pkey PRIMARY KEY (id),
 );
-CREATE TABLE public.sales_channel
+CREATE TABLE public.sales_channels
 (
     id integer NOT NULL auto_increment,
     name character varying(100) NOT NULL,
     active boolean NOT NULL DEFAULT true,
     manufactures_id integer NOT NULL,
     version integer NOT NULL DEFAULT 0,
-    CONSTRAINT sales_channel_pkey PRIMARY KEY (id)
+    CONSTRAINT sales_channels_pkey PRIMARY KEY (id)
 );
-CREATE TABLE public.shop_to_sales_channel
+CREATE TABLE public.shop_to_sales_channels
 (
     id integer NOT NULL auto_increment,
     shop_id integer NOT NULL,
-    sales_channel_id integer NOT NULL,
+    sales_channels_id integer NOT NULL,
     CONSTRAINT shop_to_sales_channel_pkey PRIMARY KEY (id),
-    CONSTRAINT shop_to_sales_channel_id_uidx UNIQUE (shop_id, sales_channel_id)
+    CONSTRAINT shop_to_sales_channel_uidx UNIQUE (shop_id, sales_channels_id)
+);
+CREATE TABLE public.shop_departs
+(
+    id integer NOT NULL auto_increment,
+    name character varying(100) NOT NULL,
+    active boolean NOT NULL DEFAULT true,
+    manufactures_id integer NOT NULL,
+    version integer NOT NULL DEFAULT 0,
+    CONSTRAINT shop_departs_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.shop_to_shop_departs
+(
+    id integer NOT NULL auto_increment,
+    shop_id integer NOT NULL,
+    shop_departs_id integer NOT NULL,
+    CONSTRAINT shop_to_shop_departs_pkey PRIMARY KEY (id),
+    CONSTRAINT shop_to_shop_departs_uidx UNIQUE (shop_id, shop_departs_id)
+);
+CREATE TABLE public.shop_specializations
+(
+    id integer NOT NULL auto_increment,
+    name character varying(100) NOT NULL,
+    active boolean NOT NULL DEFAULT true,
+    manufactures_id integer NOT NULL,
+    version integer NOT NULL DEFAULT 0,
+    CONSTRAINT shop_specializations_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.shop_to_shop_specializations
+(
+    id integer NOT NULL auto_increment,
+    shop_id integer NOT NULL,
+    shop_specializations_id integer NOT NULL,
+    CONSTRAINT shop_to_shop_specializations_pkey PRIMARY KEY (id),
+    CONSTRAINT shop_to_shop_specializations_uidx UNIQUE (shop_id, shop_specializations_id)
 );
