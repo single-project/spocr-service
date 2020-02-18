@@ -92,6 +92,81 @@
           "header": "Активный"
         }
       ]
+    },
+    {
+      "id": 5,
+      "name": "Отделы магазина",
+      "url": "/shopdeparts",
+      "sortField": "name",
+      "sortOrder": "asc",
+      "columns": [
+        {
+          "field": "id",
+          "header": "Код"
+        },
+        {
+          "field": "name",
+          "header": "Имя"
+        },
+        {
+          "field": "manufacturer",
+          "header": "Производитель"
+        },
+        {
+          "field": "active",
+          "header": "Активный"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Каналы продаж",
+      "url": "/saleschanels",
+      "sortField": "name",
+      "sortOrder": "asc",
+      "columns": [
+        {
+          "field": "id",
+          "header": "Код"
+        },
+        {
+          "field": "name",
+          "header": "Имя"
+        },
+        {
+          "field": "manufacturer",
+          "header": "Производитель"
+        },
+        {
+          "field": "active",
+          "header": "Активный"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Специализация магазинов",
+      "url": "/shopspecializations",
+      "sortField": "name",
+      "sortOrder": "asc",
+      "columns": [
+        {
+          "field": "id",
+          "header": "Код"
+        },
+        {
+          "field": "name",
+          "header": "Имя"
+        },
+        {
+          "field": "manufacturer",
+          "header": "Производитель"
+        },
+        {
+          "field": "active",
+          "header": "Активный"
+        }
+      ]
     }
   ]
 }
