@@ -1,6 +1,7 @@
 package org.century.scp.spocr.counterparty.models.dto;
 
 import java.util.HashMap;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,7 @@ public class CounterpartyView extends BaseEntityView {
   private PaymentDetailsView paymentDetails;
   private HashMap suggestion;
   private BaseEntityListView parent;
+  private Set<BaseEntityListView> statuses;
 
   public CounterpartyView(String name) {
     this.name = name;

@@ -1,6 +1,8 @@
 package org.century.scp.spocr.counterparty.models.domain;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -9,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -18,6 +22,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.century.scp.spocr.base.converters.SuggestionConverter;
 import org.century.scp.spocr.base.models.domain.BaseEntity;
+import org.century.scp.spocr.counterparty.status.models.domain.CounterpartyStatus;
 import org.century.scp.spocr.legaltype.models.domain.LegalType;
 import org.century.scp.spocr.paymentdetails.models.domain.PaymentDetails;
 import org.hibernate.annotations.Cascade;
@@ -34,6 +39,13 @@ public class Counterparty extends BaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(
+      name = "counterparty_to_counterparty_statuses",
+      joinColumns = @JoinColumn(name = "counterparty_id"),
+      inverseJoinColumns = @JoinColumn(name = "counterparty_statuses_id"))
+  private Set<CounterpartyStatus> statuses;
 
   @Column(name = "name")
   private String name;
@@ -88,5 +100,17 @@ public class Counterparty extends BaseEntity {
   public Counterparty(String name) {
     this.name = name;
     this.active = true;
+  }
+
+  public boolean linkedWithStatuses() {
+    return statuses != null && statuses.size() > 0;
+  }
+
+  public void addStatus(CounterpartyStatus status) {
+    if (statuses == null) {
+      statuses = new HashSet<>();
+    }
+
+    statuses.add(status);
   }
 }

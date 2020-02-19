@@ -19,6 +19,10 @@ public class ShopView extends BaseEntityView {
   private Set<ClassifierView> shopTypes;
   private Set<ClassifierView> salesChannels;
   private CounterpartyView counterparty;
+  private String gln;
+  private Float area;
+  private String comment;
+  private String signboard;
 
   public ShopView(
       String name,

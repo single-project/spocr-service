@@ -48,6 +48,18 @@ public class Shop extends BaseEntity {
   @Column(name = "name")
   private String name;
 
+  @Column(name = "gln")
+  private String gln;
+
+  @Column(name = "area")
+  private Float area;
+
+  @Column(name = "comment")
+  private String comment;
+
+  @Column(name = "signboard")
+  private String signboard;
+
   @ManyToOne(fetch = FetchType.EAGER, optional = false)
   @JoinColumn(name = "counterparty_id", nullable = false)
   private Counterparty counterparty;

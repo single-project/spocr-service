@@ -60,6 +60,10 @@ CREATE TABLE public.shops
 (
     id integer NOT NULL auto_increment,
     name character varying(100) NOT NULL,
+    gln character varying(40),
+    signboard character varying(50),
+    area double,
+    comment character varying(1000),
     counterparty_id integer NOT NULL,
     address_id integer,
     active boolean NOT NULL DEFAULT true,
@@ -223,4 +227,19 @@ CREATE TABLE public.shop_to_shop_specializations
     shop_specializations_id integer NOT NULL,
     CONSTRAINT shop_to_shop_specializations_pkey PRIMARY KEY (id),
     CONSTRAINT shop_to_shop_specializations_uidx UNIQUE (shop_id, shop_specializations_id)
+);
+CREATE TABLE public.counterparty_statuses
+(
+    id integer NOT NULL auto_increment,
+    name character varying(100) NOT NULL,
+    CONSTRAINT counterparty_statuses_pkey PRIMARY KEY (id),
+    CONSTRAINT counterparty_statuses_uidx UNIQUE (name)
+);
+CREATE TABLE public.counterparty_to_counterparty_statuses
+(
+    id integer NOT NULL auto_increment,
+    counterparty_id integer NOT NULL,
+    counterparty_statuses_id integer NOT NULL,
+    CONSTRAINT counterparty_to_counterparty_statuses_pkey PRIMARY KEY (id),
+    CONSTRAINT counterparty_to_counterparty_statuses_uidx UNIQUE (counterparty_id, counterparty_statuses_id)
 );

@@ -5,7 +5,6 @@ import static org.springframework.security.core.context.SecurityContextHolder.ge
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.persistence.PostUpdate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.century.scp.spocr.base.mappers.MapperI;
@@ -62,16 +61,13 @@ public class BaseServiceFacade<T extends DomainEntity, K extends DTO>
   }
 
   private void afterPersist(T entity) {
-    log.debug("PostPersist body {}", entity.toString());
     Map<String, Object> body = new HashMap<>();
     body.put("id", entity.getId());
     eventRepository.insert(
         EventEnum.CREATED.name(), entity.getClass().getName(), body, getCurrentUserLogin());
   }
 
-  @PostUpdate
   private void afterUpdate(T entity, List<String> properties) {
-    log.debug("PostUpdate body {}", entity.toString());
     Map<String, Object> body = new HashMap<>();
     body.put("id", entity.getId());
     body.put("fields", properties);

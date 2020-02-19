@@ -13,13 +13,14 @@ import org.century.scp.spocr.classifier.shoptype.models.domain.ShopType;
 import org.century.scp.spocr.classifier.shoptype.services.ShopTypesService;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.services.CounterpartyService;
+import org.century.scp.spocr.counterparty.status.models.domain.CounterpartyStatus;
+import org.century.scp.spocr.counterparty.status.services.CounterpartyStatusService;
 import org.century.scp.spocr.extlink.models.EntityType;
 import org.century.scp.spocr.legaltype.models.domain.LegalType;
 import org.century.scp.spocr.legaltype.services.LegalTypeService;
 import org.century.scp.spocr.manufacturer.models.domain.Manufacturer;
 import org.century.scp.spocr.manufacturer.services.ManufacturerService;
 import org.century.scp.spocr.paymentdetails.models.domain.PaymentDetails;
-import org.century.scp.spocr.paymentdetails.services.PaymentDetailsService;
 import org.century.scp.spocr.security.models.domain.SecurityUser;
 import org.century.scp.spocr.security.services.CustomUserDetailsService;
 import org.century.scp.spocr.shop.models.domain.Shop;
@@ -56,7 +57,7 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
   @Autowired
   private LegalTypeService legalTypeService;
   @Autowired
-  private PaymentDetailsService paymentDetailsService;
+  private CounterpartyStatusService counterpartyStatusService;
   @Autowired
   private SalesChannelService salesChannelService;
 
@@ -64,6 +65,12 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
   @Transactional
   public void run(ApplicationArguments args) throws Exception {
     signInAsUser();
+
+    // add 2 new counterparty status
+    CounterpartyStatus status1 = new CounterpartyStatus("Клиент");
+    CounterpartyStatus status2 = new CounterpartyStatus("Поставщик");
+    status1 = counterpartyStatusService.create(status1);
+    status2 = counterpartyStatusService.create(status2);
 
     // add 3 new legal types
     LegalType legalType0 = new LegalType();
@@ -106,6 +113,7 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
       Counterparty e = new Counterparty("Контагент" + i);
       e.setLegalType(legalType1);
       e.setPaymentDetails(paymentDetails);
+      e.addStatus(status1);
       counterpartyService.create(e);
     }
 
@@ -144,7 +152,6 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
       shop.setActive(i % 2 == 0);
       shopService.create(shop);
     }
-
   }
 
   public void signInAsUser() {

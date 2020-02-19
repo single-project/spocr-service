@@ -1,10 +1,12 @@
 package org.century.scp.spocr.counterparty.services;
 
+import java.util.Set;
 import javax.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.century.scp.spocr.base.repositories.BaseRepository;
 import org.century.scp.spocr.base.services.BaseService;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
+import org.century.scp.spocr.counterparty.status.models.domain.CounterpartyStatus;
 import org.century.scp.spocr.legaltype.models.domain.LegalType;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +19,19 @@ public class CounterpartyService extends BaseService<Counterparty> {
   }
 
   @Override
-  public void refresh(Counterparty entity) {
-    if (entity.getParent() != null) {
-      entity.setParent(getReference(entity.getParent(), Counterparty.class));
+  public void refresh(Counterparty counterparty) {
+    if (counterparty.getParent() != null) {
+      counterparty.setParent(getReference(counterparty.getParent(), Counterparty.class));
     }
 
-    if (entity.getLegalType() != null) {
-      entity.setLegalType(getReference(entity.getLegalType(), LegalType.class));
+    if (counterparty.getLegalType() != null) {
+      counterparty.setLegalType(getReference(counterparty.getLegalType(), LegalType.class));
+    }
+
+    if (counterparty.linkedWithStatuses()) {
+      Set<CounterpartyStatus> statuses = getReferences(counterparty.getStatuses(),
+          CounterpartyStatus.class);
+      counterparty.setStatuses(statuses);
     }
   }
 }

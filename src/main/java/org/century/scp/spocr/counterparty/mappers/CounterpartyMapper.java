@@ -1,34 +1,19 @@
 package org.century.scp.spocr.counterparty.mappers;
 
-import org.century.scp.spocr.base.models.dto.BaseEntityListView;
-import org.century.scp.spocr.base.utils.Strings;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.models.dto.CounterpartyView;
 import org.century.scp.spocr.counterparty.models.dto.RequestForUpdateCounterparty;
-import org.century.scp.spocr.counterparty.services.CounterpartyService;
+import org.century.scp.spocr.counterparty.status.mappers.CounterpartyStatusMapper;
 import org.century.scp.spocr.legaltype.mappers.LegalTypeMapper;
 import org.century.scp.spocr.paymentdetails.mappers.PaymentDetailsMapper;
-import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.Named;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 
-@Mapper(uses = {PaymentDetailsMapper.class, LegalTypeMapper.class})
+@Mapper(uses = {PaymentDetailsMapper.class, LegalTypeMapper.class, CounterpartyStatusMapper.class})
 public abstract class CounterpartyMapper {
 
-  @Autowired
-  private CounterpartyService service;
-
-  @Named("setParentFromContext")
-  public Counterparty getParentFromContext(BaseEntityListView parent) {
-    return parent != null && parent.getId() != null ? service.get(parent.getId()) : null;
-  }
-
-  @Mapping(target = "parent", qualifiedByName = "setParentFromContext")
-  @Mapping(target = "name", source = "legalRekv.shortName")
+  @Mapping(target = "shortName", source = "legalRekv.shortName")
   @Mapping(target = "fullName", source = "legalRekv.fullName")
   @Mapping(target = "inn", source = "legalRekv.inn")
   @Mapping(target = "kpp", source = "legalRekv.kpp")
@@ -39,8 +24,7 @@ public abstract class CounterpartyMapper {
   @Mapping(target = "okonh", source = "legalRekv.okonh")
   public abstract Counterparty map(CounterpartyView req);
 
-  @Mapping(target = "parent", qualifiedByName = "setParentFromContext")
-  @Mapping(target = "name", source = "legalRekv.shortName")
+  @Mapping(target = "shortName", source = "legalRekv.shortName")
   @Mapping(target = "fullName", source = "legalRekv.fullName")
   @Mapping(target = "inn", source = "legalRekv.inn")
   @Mapping(target = "kpp", source = "legalRekv.kpp")
@@ -61,14 +45,6 @@ public abstract class CounterpartyMapper {
   @Mapping(target = "legalRekv.okpo", source = "okpo")
   @Mapping(target = "legalRekv.okonh", source = "okonh")
   public abstract CounterpartyView map(Counterparty entity);
-
-  @AfterMapping
-  protected void afterMappingSetNameIfIsNull(
-      @MappingTarget Counterparty target, CounterpartyView source) {
-    if (Strings.isNullOrEmpty(target.getName())) {
-      target.setName(source.getName());
-    }
-  }
 
   public Page<CounterpartyView> map(Page<Counterparty> page) {
     return page.map(this::map);
