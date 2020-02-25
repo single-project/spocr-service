@@ -243,3 +243,29 @@ CREATE TABLE public.counterparty_to_counterparty_statuses
     CONSTRAINT counterparty_to_counterparty_statuses_pkey PRIMARY KEY (id),
     CONSTRAINT counterparty_to_counterparty_statuses_uidx UNIQUE (counterparty_id, counterparty_statuses_id)
 );
+CREATE TABLE public.contracts
+(
+    id integer NOT NULL auto_increment,
+    counterparty_1_id integer NOT NULL,
+    counterparty_2_id integer NOT NULL,
+    contract_number character varying(25) NOT NULL,
+    name character varying(300) NOT NULL,
+    comment character varying(1000),
+    start_date date NOT NULL,
+    end_date date NOT NULL,
+    active boolean NOT NULL DEFAULT true,
+    version integer NOT NULL DEFAULT 0,
+    CONSTRAINT ccontracts_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.sub_contracts
+(
+    id integer NOT NULL auto_increment,
+    contract_id integer NOT NULL,
+    sub_contract_number integer NOT NULL,
+    name character varying(300) NOT NULL,
+    comment character varying(1000),
+    sub_contract_date date NOT NULL,
+    active boolean NOT NULL DEFAULT true,
+    version integer NOT NULL DEFAULT 0,
+    CONSTRAINT sub_contracts_pkey PRIMARY KEY (id)
+);

@@ -1,4 +1,7 @@
 {
+  "daDataConfiguration": {
+    "apiKey": "23c98edeae3d036484034a201a493bb418139a7c"
+  },
   "defaultDataType": 1,
   "availableTables": [
     {
@@ -161,6 +164,47 @@
         {
           "field": "manufacturer",
           "header": "Производитель"
+        },
+        {
+          "field": "active",
+          "header": "Активный"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Договоры",
+      "url": "/contracts",
+      "sortField": "name",
+      "sortOrder": "asc",
+      "columns": [
+        {
+          "field": "id",
+          "header": "Код"
+        },
+        {
+          "field": "name",
+          "header": "Описание"
+        },
+        {
+          "field": "counterparty1",
+          "header": "Контрагент 1"
+        },
+        {
+          "field": "counterparty2",
+          "header": "Контрагент 2"
+        },
+        {
+          "field": "contractNumber",
+          "header": "№ Договора"
+        },
+        {
+          "field": "startDate",
+          "header": "Дата начала"
+        },
+        {
+          "field": "endDate",
+          "header": "Дата окончания"
         },
         {
           "field": "active",

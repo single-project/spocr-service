@@ -13,8 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedAttributeNode;
-import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Data;
@@ -35,9 +33,6 @@ import org.springframework.lang.NonNull;
 @Data
 @Entity
 @Table(name = "shops")
-@NamedEntityGraph(
-    name = "Shop.withClassifier",
-    attributeNodes = {@NamedAttributeNode("shopTypes"), @NamedAttributeNode("salesChannels")})
 @NoArgsConstructor
 public class Shop extends BaseEntity {
 

@@ -1,5 +1,8 @@
 package org.century.scp.spocr;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Random;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +14,8 @@ import org.century.scp.spocr.classifier.saleschannel.models.domain.SalesChannel;
 import org.century.scp.spocr.classifier.saleschannel.services.SalesChannelService;
 import org.century.scp.spocr.classifier.shoptype.models.domain.ShopType;
 import org.century.scp.spocr.classifier.shoptype.services.ShopTypesService;
+import org.century.scp.spocr.contract.models.domain.Contract;
+import org.century.scp.spocr.contract.services.ContractService;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.services.CounterpartyService;
 import org.century.scp.spocr.counterparty.status.models.domain.CounterpartyStatus;
@@ -60,6 +65,8 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
   private CounterpartyStatusService counterpartyStatusService;
   @Autowired
   private SalesChannelService salesChannelService;
+  @Autowired
+  private ContractService contractService;
 
   @Override
   @Transactional
@@ -116,6 +123,17 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
       e.addStatus(status1);
       counterpartyService.create(e);
     }
+
+    // add 1 new contract and 2 subcontracts
+    Contract contract = new Contract();
+    contract.setName("Продажа товаров");
+    contract.setCounterparty1(counterpartyService.get(1));
+    contract.setCounterparty2(counterpartyService.get(2));
+    contract.setActive(true);
+    contract.setContractNumber("123AA");
+    contract.setStartDate(new Date());
+    contract.setEndDate(Date.from(new Date().toInstant().plus(1, DAYS)));
+    contractService.create(contract);
 
     // add 2 new manufacturer
     Manufacturer m1 = manufacturerService.create(new Manufacturer("ООО Производитель1", true));

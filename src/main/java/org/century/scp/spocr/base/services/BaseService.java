@@ -69,4 +69,8 @@ public abstract class BaseService<T extends DomainEntity> implements ServiceI<T>
   public <K extends DomainEntity> Set<K> getReferences(Set<K> objects, Class<K> cl) {
     return objects.stream().map(e -> getReference(e, cl)).collect(Collectors.toSet());
   }
+
+  public <K extends DomainEntity> List<K> getReferences(List<K> objects, Class<K> cl) {
+    return objects.stream().map(e -> getReference(e, cl)).collect(Collectors.toList());
+  }
 }
