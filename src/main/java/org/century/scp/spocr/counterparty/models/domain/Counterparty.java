@@ -20,11 +20,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.century.scp.spocr.base.converters.SuggestionConverter;
+import org.century.scp.spocr.base.converters.LinkedHashMapConverter;
 import org.century.scp.spocr.base.models.domain.BaseEntity;
 import org.century.scp.spocr.counterparty.status.models.domain.CounterpartyStatus;
-import org.century.scp.spocr.legaltype.models.domain.LegalType;
+import org.century.scp.spocr.enumeration.models.domain.Enumeration;
 import org.century.scp.spocr.paymentdetails.models.domain.PaymentDetails;
+import org.century.scp.spocr.person.models.domain.Person;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
@@ -56,7 +57,7 @@ public class Counterparty extends BaseEntity {
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "legal_type_id")
-  private LegalType legalType;
+  private Enumeration legalType;
 
   @Column(name = "short_name")
   private String shortName;
@@ -93,9 +94,17 @@ public class Counterparty extends BaseEntity {
   @Column(name = "active")
   private Boolean active;
 
+
+  @Cascade({CascadeType.PERSIST, CascadeType.MERGE})
+  @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true)
+  @JoinColumn(name = "counterparty_person_id", referencedColumnName = "id")
+  private Person person;
+
+
   @Column(name = "suggestion")
-  @Convert(converter = SuggestionConverter.class)
+  @Convert(converter = LinkedHashMapConverter.class)
   private LinkedHashMap suggestion;
+
 
   public Counterparty(String name) {
     this.name = name;

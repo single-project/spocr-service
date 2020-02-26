@@ -4,13 +4,18 @@ import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.models.dto.CounterpartyView;
 import org.century.scp.spocr.counterparty.models.dto.RequestForUpdateCounterparty;
 import org.century.scp.spocr.counterparty.status.mappers.CounterpartyStatusMapper;
-import org.century.scp.spocr.legaltype.mappers.LegalTypeMapper;
+import org.century.scp.spocr.enumeration.mappers.EnumerationMapper;
 import org.century.scp.spocr.paymentdetails.mappers.PaymentDetailsMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.data.domain.Page;
 
-@Mapper(uses = {PaymentDetailsMapper.class, LegalTypeMapper.class, CounterpartyStatusMapper.class})
+@Mapper(
+    uses = {
+        EnumerationMapper.class,
+        PaymentDetailsMapper.class,
+        CounterpartyStatusMapper.class
+    })
 public abstract class CounterpartyMapper {
 
   @Mapping(target = "shortName", source = "legalRekv.shortName")

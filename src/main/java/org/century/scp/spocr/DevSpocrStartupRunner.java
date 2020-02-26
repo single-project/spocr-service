@@ -20,12 +20,14 @@ import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.services.CounterpartyService;
 import org.century.scp.spocr.counterparty.status.models.domain.CounterpartyStatus;
 import org.century.scp.spocr.counterparty.status.services.CounterpartyStatusService;
+import org.century.scp.spocr.enumeration.models.domain.Enumeration;
+import org.century.scp.spocr.enumeration.services.EnumerationService;
 import org.century.scp.spocr.extlink.models.EntityType;
-import org.century.scp.spocr.legaltype.models.domain.LegalType;
-import org.century.scp.spocr.legaltype.services.LegalTypeService;
 import org.century.scp.spocr.manufacturer.models.domain.Manufacturer;
 import org.century.scp.spocr.manufacturer.services.ManufacturerService;
 import org.century.scp.spocr.paymentdetails.models.domain.PaymentDetails;
+import org.century.scp.spocr.person.models.domain.Person;
+import org.century.scp.spocr.person.services.PersonService;
 import org.century.scp.spocr.security.models.domain.SecurityUser;
 import org.century.scp.spocr.security.services.CustomUserDetailsService;
 import org.century.scp.spocr.shop.models.domain.Shop;
@@ -60,18 +62,77 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
   @Autowired private AuthenticationManager authenticationManager;
   @Autowired private CustomUserDetailsService users;
   @Autowired
-  private LegalTypeService legalTypeService;
-  @Autowired
   private CounterpartyStatusService counterpartyStatusService;
   @Autowired
   private SalesChannelService salesChannelService;
   @Autowired
   private ContractService contractService;
+  @Autowired
+  private PersonService personService;
+  @Autowired
+  private EnumerationService enumerationService;
 
   @Override
   @Transactional
   public void run(ApplicationArguments args) throws Exception {
     signInAsUser();
+
+    // add  enumerations
+
+    // legal types
+    Enumeration enumLegalTypePhys = new Enumeration();
+    enumLegalTypePhys.setIdent("LEGAL_TYPE");
+    enumLegalTypePhys.setValue("PHYS-PERS");
+    enumLegalTypePhys.setDescriptionKey("enumeration.legal-type.physical-person.description");
+    enumerationService.create(enumLegalTypePhys);
+
+    Enumeration enumLegalTypeSoleTrader = new Enumeration();
+    enumLegalTypeSoleTrader.setIdent("LEGAL_TYPE");
+    enumLegalTypeSoleTrader.setValue("INDIVIDUAL");
+    enumLegalTypeSoleTrader.setDescriptionKey("enumeration.legal-type.sole-trader.description");
+    enumerationService.create(enumLegalTypeSoleTrader);
+
+    Enumeration enumLegalTypeLimCo = new Enumeration();
+    enumLegalTypeLimCo.setIdent("LEGAL_TYPE");
+    enumLegalTypeLimCo.setValue("LIMITED-CO");
+    enumLegalTypeLimCo.setDescriptionKey("enumeration.legal-type.limited-co.description");
+    enumerationService.create(enumLegalTypeLimCo);
+
+    // citizenship
+    Enumeration enumCitizenRU = new Enumeration();
+    enumCitizenRU.setIdent("CITIZENSHIP");
+    enumCitizenRU.setValue("RU");
+    enumCitizenRU.setDescriptionKey("enumeration.citizenship.ru.description");
+    enumerationService.create(enumCitizenRU);
+
+    // gender
+    Enumeration enumGenderMale = new Enumeration();
+    enumGenderMale.setIdent("GENDER");
+    enumGenderMale.setValue("MALE");
+    enumGenderMale.setDescriptionKey("enumeration.gender.male.description");
+    enumerationService.create(enumGenderMale);
+
+    Enumeration enumGenderFemale = new Enumeration();
+    enumGenderFemale.setIdent("GENDER");
+    enumGenderFemale.setValue("FEMALE");
+    enumGenderFemale.setDescriptionKey("enumeration.gender.female.description");
+    enumerationService.create(enumGenderFemale);
+
+    // doc type
+    Enumeration enumDocTypePass = new Enumeration();
+    enumDocTypePass.setIdent("DOC_TYPE");
+    enumDocTypePass.setValue("PASSPORT_RF");
+    enumDocTypePass.setDescriptionKey("enumeration.doc-type.passport-rf.description");
+    enumerationService.create(enumDocTypePass);
+
+    // add 2 new persons
+    Person person = new Person();
+    person.setActive(true);
+    person.setBirthDate(new Date());
+    person.setCitizenship(enumCitizenRU);
+    person.setGender(enumGenderMale);
+    person.setDocType(enumDocTypePass);
+    personService.create(person);
 
     // add 2 new counterparty status
     CounterpartyStatus status1 = new CounterpartyStatus("Клиент");
@@ -79,33 +140,6 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
     status1 = counterpartyStatusService.create(status1);
     status2 = counterpartyStatusService.create(status2);
 
-    // add 3 new legal types
-    LegalType legalType0 = new LegalType();
-    legalType0.setId((long) 0);
-    legalType0.setName("Физ.лицо");
-    legalType0.setActive(true);
-
-    LegalType legalType1 = new LegalType();
-    legalType1.setId((long) 1);
-    legalType1.setName("ИП");
-    legalType1.setActive(true);
-    legalType1.setOkpfId("50101");
-    legalType1.setOkpfType("2014");
-    legalType1.setOkfpShortName("ИП");
-    legalType1.setOkfpFullName("Индивидуальный предприниматель");
-
-    LegalType legalType2 = new LegalType();
-    legalType2.setId((long) 2);
-    legalType2.setName("ООО");
-    legalType2.setActive(true);
-    legalType2.setOkpfType("2014");
-    legalType2.setOkpfId("12300");
-    legalType2.setOkfpShortName("ООО");
-    legalType2.setOkfpFullName("Общество с ограниченной ответственностью");
-
-    legalType0 = legalTypeService.create(legalType0);
-    legalType1 = legalTypeService.create(legalType1);
-    legalType2 = legalTypeService.create(legalType2);
 
     // add 10 new counteragent
     for (int i = 1; i <= 10; i++) {
@@ -118,7 +152,7 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
       paymentDetails.setCorrespondingAccount("222");
 
       Counterparty e = new Counterparty("Контагент" + i);
-      e.setLegalType(legalType1);
+      e.setLegalType(enumLegalTypeLimCo);
       e.setPaymentDetails(paymentDetails);
       e.addStatus(status1);
       counterpartyService.create(e);

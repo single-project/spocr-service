@@ -7,7 +7,7 @@ import java.util.LinkedHashMap;
 import javax.persistence.AttributeConverter;
 import org.century.scp.spocr.exceptions.SpocrException;
 
-public class SuggestionConverter implements AttributeConverter<LinkedHashMap, String> {
+public class LinkedHashMapConverter implements AttributeConverter<LinkedHashMap, String> {
 
   @Override
   public String convertToDatabaseColumn(LinkedHashMap data) {

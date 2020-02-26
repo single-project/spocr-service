@@ -40,6 +40,7 @@ CREATE TABLE public.counterparties
     okpo character varying(40),
     okonh character varying(100),
     counterparty_payment_details_id integer,
+    counterparty_person_id integer,
     suggestion text,
     parent_id integer,
     active boolean NOT NULL DEFAULT true,
@@ -268,4 +269,32 @@ CREATE TABLE public.sub_contracts
     active boolean NOT NULL DEFAULT true,
     version integer NOT NULL DEFAULT 0,
     CONSTRAINT sub_contracts_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.persons
+(
+    id integer NOT NULL auto_increment,
+    last_name character varying(75),
+    first_name character varying(75),
+    patronymic character varying(75),
+    birth_date date,
+    birth_place character varying(200),
+    doc_type_id integer,
+    doc_series_number character varying(75),
+    inn character varying(25),
+    citizenship_id integer,
+    gender_id integer,
+    email character varying(75),
+    phones text,
+    version integer NOT NULL DEFAULT 0,
+    active boolean NOT NULL DEFAULT true,
+    CONSTRAINT persons_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.enumerations
+(
+    id integer NOT NULL auto_increment,
+    ident character varying(75) NOT NULL,
+    value character varying(75) NOT NULL,
+    description_key character varying(100) NOT NULL,
+    properties text,
+    CONSTRAINT enumerations_pkey PRIMARY KEY (id)
 );

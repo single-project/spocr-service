@@ -11,7 +11,7 @@ import javax.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.century.scp.spocr.base.converters.SuggestionConverter;
+import org.century.scp.spocr.base.converters.LinkedHashMapConverter;
 
 @EqualsAndHashCode
 @Data
@@ -37,7 +37,7 @@ public class Address {
   private String comment;
 
   @Column(name = "suggestion")
-  @Convert(converter = SuggestionConverter.class)
+  @Convert(converter = LinkedHashMapConverter.class)
   private LinkedHashMap suggestion;
 
   public Address(String address) {

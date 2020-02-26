@@ -1,6 +1,7 @@
-package org.century.scp.spocr.legaltype.models.dto;
+package org.century.scp.spocr.person.models.dto;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,15 +9,15 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class RequestForUpdateLegalType extends LegalTypeView {
+public class RequestForCreatePerson extends PersonView {
 
-  @NotNull
+  @Null
   @Override
   public Long getId() {
     return super.getId();
   }
 
-  @NotNull
+  @Null
   @Override
   public Long getVersion() {
     return super.getVersion();
@@ -24,13 +25,9 @@ public class RequestForUpdateLegalType extends LegalTypeView {
 
   @NotNull
   @Override
-  public String getName() {
-    return super.getName();
-  }
-
-  @NotNull
-  @Override
   public Boolean getActive() {
     return super.getActive();
   }
+
+
 }
