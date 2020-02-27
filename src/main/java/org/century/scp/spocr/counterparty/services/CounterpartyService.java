@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.century.scp.spocr.base.repositories.BaseRepository;
 import org.century.scp.spocr.base.services.BaseService;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
-import org.century.scp.spocr.counterparty.status.models.domain.CounterpartyStatus;
 import org.century.scp.spocr.enumeration.models.domain.Enumeration;
 import org.springframework.stereotype.Service;
 
@@ -29,8 +28,8 @@ public class CounterpartyService extends BaseService<Counterparty> {
     }
 
     if (counterparty.linkedWithStatuses()) {
-      Set<CounterpartyStatus> statuses = getReferences(counterparty.getStatuses(),
-          CounterpartyStatus.class);
+      Set<Enumeration> statuses = getReferences(counterparty.getStatuses(),
+          Enumeration.class);
       counterparty.setStatuses(statuses);
     }
 

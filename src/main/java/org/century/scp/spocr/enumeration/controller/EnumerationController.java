@@ -10,6 +10,7 @@ import org.century.scp.spocr.enumeration.services.EnumerationServiceFacade;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,7 +35,7 @@ public class EnumerationController {
   public ResponseEntity<Page<EnumerationView>> getItems(
       @And({@Spec(path = "ident", params = "ident", spec = LikeIgnoreCase.class)})
           Specification<Enumeration> enumerationSpecification,
-      Pageable pageable) {
+      @PageableDefault(sort = "ident") Pageable pageable) {
     return ResponseEntity.ok(enumerationService.get(enumerationSpecification, pageable));
   }
 }

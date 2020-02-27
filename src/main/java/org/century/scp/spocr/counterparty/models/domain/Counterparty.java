@@ -22,7 +22,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.century.scp.spocr.base.converters.LinkedHashMapConverter;
 import org.century.scp.spocr.base.models.domain.BaseEntity;
-import org.century.scp.spocr.counterparty.status.models.domain.CounterpartyStatus;
 import org.century.scp.spocr.enumeration.models.domain.Enumeration;
 import org.century.scp.spocr.paymentdetails.models.domain.PaymentDetails;
 import org.century.scp.spocr.person.models.domain.Person;
@@ -45,8 +44,8 @@ public class Counterparty extends BaseEntity {
   @JoinTable(
       name = "counterparty_to_counterparty_statuses",
       joinColumns = @JoinColumn(name = "counterparty_id"),
-      inverseJoinColumns = @JoinColumn(name = "counterparty_statuses_id"))
-  private Set<CounterpartyStatus> statuses;
+      inverseJoinColumns = @JoinColumn(name = "enumerations_id"))
+  private Set<Enumeration> statuses;
 
   @Column(name = "name")
   private String name;
@@ -98,7 +97,7 @@ public class Counterparty extends BaseEntity {
   @Cascade({CascadeType.PERSIST, CascadeType.MERGE})
   @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true)
   @JoinColumn(name = "counterparty_person_id", referencedColumnName = "id")
-  private Person person;
+  private Person personRekv;
 
 
   @Column(name = "suggestion")
@@ -115,7 +114,7 @@ public class Counterparty extends BaseEntity {
     return statuses != null && statuses.size() > 0;
   }
 
-  public void addStatus(CounterpartyStatus status) {
+  public void addStatus(Enumeration status) {
     if (statuses == null) {
       statuses = new HashSet<>();
     }

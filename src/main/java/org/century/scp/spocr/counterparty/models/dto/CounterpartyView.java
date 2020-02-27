@@ -10,6 +10,7 @@ import org.century.scp.spocr.base.models.dto.BaseEntityListView;
 import org.century.scp.spocr.base.models.dto.BaseEntityView;
 import org.century.scp.spocr.enumeration.models.dto.EnumerationView;
 import org.century.scp.spocr.paymentdetails.models.dto.PaymentDetailsView;
+import org.century.scp.spocr.person.models.dto.PersonView;
 
 @Getter
 @Setter
@@ -23,7 +24,8 @@ public class CounterpartyView extends BaseEntityView {
   private PaymentDetailsView paymentDetails;
   private HashMap suggestion;
   private BaseEntityListView parent;
-  private Set<BaseEntityListView> statuses;
+  private Set<EnumerationView> statuses;
+  private PersonView personRekv;
 
   public CounterpartyView(String name) {
     this.name = name;

@@ -18,8 +18,6 @@ import org.century.scp.spocr.contract.models.domain.Contract;
 import org.century.scp.spocr.contract.services.ContractService;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.services.CounterpartyService;
-import org.century.scp.spocr.counterparty.status.models.domain.CounterpartyStatus;
-import org.century.scp.spocr.counterparty.status.services.CounterpartyStatusService;
 import org.century.scp.spocr.enumeration.models.domain.Enumeration;
 import org.century.scp.spocr.enumeration.services.EnumerationService;
 import org.century.scp.spocr.extlink.models.EntityType;
@@ -62,8 +60,6 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
   @Autowired private AuthenticationManager authenticationManager;
   @Autowired private CustomUserDetailsService users;
   @Autowired
-  private CounterpartyStatusService counterpartyStatusService;
-  @Autowired
   private SalesChannelService salesChannelService;
   @Autowired
   private ContractService contractService;
@@ -79,23 +75,48 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
 
     // add  enumerations
 
+    // add 2 new cp statuses
+    Enumeration enumCpStatusClient = new Enumeration();
+    enumCpStatusClient.setIdent("CP-STATUS");
+    enumCpStatusClient.setValue("CLIENT");
+    enumCpStatusClient.setDescriptionKey("enumeration.cp-status.client.description");
+    enumerationService.create(enumCpStatusClient);
+
+    Enumeration enumCpStatusProvider = new Enumeration();
+    enumCpStatusProvider.setIdent("CP-STATUS");
+    enumCpStatusProvider.setValue("PROVIDER");
+    enumCpStatusProvider.setDescriptionKey("enumeration.cp-status.provider.description");
+    enumerationService.create(enumCpStatusProvider);
+
     // legal types
     Enumeration enumLegalTypePhys = new Enumeration();
-    enumLegalTypePhys.setIdent("LEGAL_TYPE");
+    enumLegalTypePhys.setIdent("LEGAL-TYPE");
     enumLegalTypePhys.setValue("PHYS-PERS");
     enumLegalTypePhys.setDescriptionKey("enumeration.legal-type.physical-person.description");
     enumerationService.create(enumLegalTypePhys);
 
     Enumeration enumLegalTypeSoleTrader = new Enumeration();
-    enumLegalTypeSoleTrader.setIdent("LEGAL_TYPE");
+    enumLegalTypeSoleTrader.setIdent("LEGAL-TYPE");
     enumLegalTypeSoleTrader.setValue("INDIVIDUAL");
-    enumLegalTypeSoleTrader.setDescriptionKey("enumeration.legal-type.sole-trader.description");
+    enumLegalTypeSoleTrader.setDescriptionKey("enumeration.legal-type.individual.description");
+    LinkedHashMap<String, String> properties = new LinkedHashMap<>();
+    properties.put("opfShort", "ИП");
+    properties.put("opfFull", "Индивидуальный предприниматель");
+    properties.put("opfCode", "50101");
+    properties.put("opfType", "2014");
+    enumLegalTypeSoleTrader.setProperties(properties);
     enumerationService.create(enumLegalTypeSoleTrader);
 
     Enumeration enumLegalTypeLimCo = new Enumeration();
-    enumLegalTypeLimCo.setIdent("LEGAL_TYPE");
+    enumLegalTypeLimCo.setIdent("LEGAL-TYPE");
     enumLegalTypeLimCo.setValue("LIMITED-CO");
     enumLegalTypeLimCo.setDescriptionKey("enumeration.legal-type.limited-co.description");
+    properties = new LinkedHashMap<>();
+    properties.put("opfShort", "ООО");
+    properties.put("opfFull", "Общество с ограниченной ответственностью");
+    properties.put("opfCode", "12300");
+    properties.put("opfType", "2014");
+    enumLegalTypeLimCo.setProperties(properties);
     enumerationService.create(enumLegalTypeLimCo);
 
     // citizenship
@@ -120,25 +141,21 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
 
     // doc type
     Enumeration enumDocTypePass = new Enumeration();
-    enumDocTypePass.setIdent("DOC_TYPE");
+    enumDocTypePass.setIdent("DOC-TYPE");
     enumDocTypePass.setValue("PASSPORT_RF");
     enumDocTypePass.setDescriptionKey("enumeration.doc-type.passport-rf.description");
     enumerationService.create(enumDocTypePass);
 
-    // add 2 new persons
+    // add 1 new person
     Person person = new Person();
+    person.setLastName("Уик");
+    person.setLastName("Джон");
     person.setActive(true);
     person.setBirthDate(new Date());
     person.setCitizenship(enumCitizenRU);
     person.setGender(enumGenderMale);
     person.setDocType(enumDocTypePass);
     personService.create(person);
-
-    // add 2 new counterparty status
-    CounterpartyStatus status1 = new CounterpartyStatus("Клиент");
-    CounterpartyStatus status2 = new CounterpartyStatus("Поставщик");
-    status1 = counterpartyStatusService.create(status1);
-    status2 = counterpartyStatusService.create(status2);
 
 
     // add 10 new counteragent
@@ -154,7 +171,8 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
       Counterparty e = new Counterparty("Контагент" + i);
       e.setLegalType(enumLegalTypeLimCo);
       e.setPaymentDetails(paymentDetails);
-      e.addStatus(status1);
+      e.addStatus(enumCpStatusClient);
+      e.setPersonRekv(person);
       counterpartyService.create(e);
     }
 

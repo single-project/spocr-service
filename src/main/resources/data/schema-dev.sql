@@ -240,9 +240,9 @@ CREATE TABLE public.counterparty_to_counterparty_statuses
 (
     id integer NOT NULL auto_increment,
     counterparty_id integer NOT NULL,
-    counterparty_statuses_id integer NOT NULL,
+    enumerations_id integer NOT NULL,
     CONSTRAINT counterparty_to_counterparty_statuses_pkey PRIMARY KEY (id),
-    CONSTRAINT counterparty_to_counterparty_statuses_uidx UNIQUE (counterparty_id, counterparty_statuses_id)
+    CONSTRAINT counterparty_to_counterparty_statuses_uidx UNIQUE (counterparty_id, enumerations_id)
 );
 CREATE TABLE public.contracts
 (
