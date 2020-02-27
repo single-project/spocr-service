@@ -1,4 +1,14 @@
 {
+  "newLegalTypes": [
+    {
+      "id": 1,
+      "name": "Реквизит Физ.лица"
+    },
+    {
+      "id": 2,
+      "name": "Реквизит Организации/ИП"
+    }
+  ],
   "daDataConfiguration": {
     "apiKey": "23c98edeae3d036484034a201a493bb418139a7c"
   },
