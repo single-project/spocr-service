@@ -55,7 +55,9 @@ public class CounterpartyController {
             @Spec(path = "name", params = "q", spec = LikeIgnoreCase.class),
           @Spec(path = "id", params = "id", spec = Equal.class),
           @Spec(path = "name", params = "name", spec = LikeIgnoreCase.class),
-            @Spec(path = "active", params = "active", spec = Equal.class)
+          @Spec(path = "active", params = "active", spec = Equal.class),
+          @Spec(path = "owner.id", params = "owner.id", spec = Equal.class),
+          @Spec(path = "owner.name", params = "owner.name", spec = Equal.class),
           })
           Specification<Counterparty> counterpartySpecification,
       Pageable pageable) {

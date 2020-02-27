@@ -23,6 +23,7 @@ import lombok.NoArgsConstructor;
 import org.century.scp.spocr.base.converters.LinkedHashMapConverter;
 import org.century.scp.spocr.base.models.domain.BaseEntity;
 import org.century.scp.spocr.enumeration.models.domain.Enumeration;
+import org.century.scp.spocr.owner.models.domain.Owner;
 import org.century.scp.spocr.paymentdetails.models.domain.PaymentDetails;
 import org.century.scp.spocr.person.models.domain.Person;
 import org.hibernate.annotations.Cascade;
@@ -39,6 +40,10 @@ public class Counterparty extends BaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "owner_id")
+  private Owner owner;
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(

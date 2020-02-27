@@ -7,6 +7,7 @@ import org.century.scp.spocr.base.repositories.BaseRepository;
 import org.century.scp.spocr.base.services.BaseService;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.enumeration.models.domain.Enumeration;
+import org.century.scp.spocr.owner.models.domain.Owner;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -28,10 +29,12 @@ public class CounterpartyService extends BaseService<Counterparty> {
     }
 
     if (counterparty.linkedWithStatuses()) {
-      Set<Enumeration> statuses = getReferences(counterparty.getStatuses(),
-          Enumeration.class);
+      Set<Enumeration> statuses = getReferences(counterparty.getStatuses(), Enumeration.class);
       counterparty.setStatuses(statuses);
     }
 
+    if (counterparty.getOwner() != null) {
+      counterparty.setOwner(getReference(counterparty.getOwner(), Owner.class));
+    }
   }
 }

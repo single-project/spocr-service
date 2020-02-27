@@ -221,6 +221,27 @@
           "header": "Активный"
         }
       ]
+    },
+    {
+      "id": 8,
+      "name": "Хозяева сети",
+      "url": "/owners",
+      "sortField": "name",
+      "sortOrder": "asc",
+      "columns": [
+        {
+          "field": "id",
+          "header": "Код"
+        },
+        {
+          "field": "name",
+          "header": "Наименование"
+        },
+        {
+          "field": "active",
+          "header": "Активный"
+        }
+      ]
     }
   ]
 }

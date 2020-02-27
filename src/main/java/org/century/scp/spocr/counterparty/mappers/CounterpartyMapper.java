@@ -4,6 +4,7 @@ import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.models.dto.CounterpartyView;
 import org.century.scp.spocr.counterparty.models.dto.RequestForUpdateCounterparty;
 import org.century.scp.spocr.enumeration.mappers.EnumerationMapper;
+import org.century.scp.spocr.owner.mappers.OwnerMapper;
 import org.century.scp.spocr.paymentdetails.mappers.PaymentDetailsMapper;
 import org.century.scp.spocr.person.mappers.PersonMapper;
 import org.mapstruct.Mapper;
@@ -14,7 +15,8 @@ import org.springframework.data.domain.Page;
     uses = {
         EnumerationMapper.class,
         PaymentDetailsMapper.class,
-        PersonMapper.class
+        PersonMapper.class,
+        OwnerMapper.class
     })
 public abstract class CounterpartyMapper {
 

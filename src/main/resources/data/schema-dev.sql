@@ -28,6 +28,7 @@ VALUES(2, 'reader', '96e79218965eb72c92a549dd5a330112', true, 200);
 CREATE TABLE public.counterparties
 (
     id integer NOT NULL auto_increment,
+    owner_id integer,
     name character varying(300) NOT NULL,
     legal_type_id integer,
     short_name  character varying(300),
@@ -77,7 +78,8 @@ CREATE TABLE public.manufactures
     name character varying(100) NOT NULL,
     active boolean NOT NULL DEFAULT true,
     version integer NOT NULL DEFAULT 0,
-    CONSTRAINT manufactures_pkey PRIMARY KEY (id)
+    CONSTRAINT manufactures_pkey PRIMARY KEY (id),
+    CONSTRAINT manufactures_name_uidx UNIQUE (name)
 );
 CREATE TABLE public.shop_types
 (
@@ -256,7 +258,7 @@ CREATE TABLE public.contracts
     end_date date NOT NULL,
     active boolean NOT NULL DEFAULT true,
     version integer NOT NULL DEFAULT 0,
-    CONSTRAINT ccontracts_pkey PRIMARY KEY (id)
+    CONSTRAINT contracts_pkey PRIMARY KEY (id)
 );
 CREATE TABLE public.sub_contracts
 (
@@ -297,4 +299,13 @@ CREATE TABLE public.enumerations
     description_key character varying(100) NOT NULL,
     properties text,
     CONSTRAINT enumerations_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.owners
+(
+    id integer NOT NULL auto_increment,
+    name character varying(100) NOT NULL,
+    active boolean NOT NULL DEFAULT true,
+    version integer NOT NULL DEFAULT 0,
+    CONSTRAINT owners_pkey PRIMARY KEY (id),
+    CONSTRAINT owners_name_uidx UNIQUE (name)
 );

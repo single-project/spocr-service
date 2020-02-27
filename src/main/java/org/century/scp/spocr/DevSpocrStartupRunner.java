@@ -23,6 +23,8 @@ import org.century.scp.spocr.enumeration.services.EnumerationService;
 import org.century.scp.spocr.extlink.models.EntityType;
 import org.century.scp.spocr.manufacturer.models.domain.Manufacturer;
 import org.century.scp.spocr.manufacturer.services.ManufacturerService;
+import org.century.scp.spocr.owner.models.domain.Owner;
+import org.century.scp.spocr.owner.services.OwnerService;
 import org.century.scp.spocr.paymentdetails.models.domain.PaymentDetails;
 import org.century.scp.spocr.person.models.domain.Person;
 import org.century.scp.spocr.person.services.PersonService;
@@ -67,13 +69,19 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
   private PersonService personService;
   @Autowired
   private EnumerationService enumerationService;
+  @Autowired
+  private OwnerService ownerService;
 
   @Override
   @Transactional
   public void run(ApplicationArguments args) throws Exception {
     signInAsUser();
 
-    // add  enumerations
+    // add  owner
+    Owner owner = new Owner();
+    owner.setName("Владелец");
+    owner.setActive(true);
+    owner = ownerService.create(owner);
 
     // add 2 new cp statuses
     Enumeration enumCpStatusClient = new Enumeration();
@@ -173,6 +181,7 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
       e.setPaymentDetails(paymentDetails);
       e.addStatus(enumCpStatusClient);
       e.setPersonRekv(person);
+      e.setOwner(owner);
       counterpartyService.create(e);
     }
 
