@@ -88,7 +88,8 @@ CREATE TABLE public.shop_types
     active boolean NOT NULL DEFAULT true,
     manufactures_id integer NOT NULL,
     version integer NOT NULL DEFAULT 0,
-    CONSTRAINT shop_types_pkey PRIMARY KEY (id)
+    CONSTRAINT shop_types_pkey PRIMARY KEY (id),
+    CONSTRAINT shop_types_uidx UNIQUE (name, manufactures_id)
 );
 CREATE TABLE public.shop_to_shop_types
 (
@@ -187,7 +188,8 @@ CREATE TABLE public.sales_channels
     active boolean NOT NULL DEFAULT true,
     manufactures_id integer NOT NULL,
     version integer NOT NULL DEFAULT 0,
-    CONSTRAINT sales_channels_pkey PRIMARY KEY (id)
+    CONSTRAINT sales_channels_pkey PRIMARY KEY (id),
+    CONSTRAINT sales_channels_uidx UNIQUE (name, manufactures_id)
 );
 CREATE TABLE public.shop_to_sales_channels
 (
@@ -204,7 +206,8 @@ CREATE TABLE public.shop_departs
     active boolean NOT NULL DEFAULT true,
     manufactures_id integer NOT NULL,
     version integer NOT NULL DEFAULT 0,
-    CONSTRAINT shop_departs_pkey PRIMARY KEY (id)
+    CONSTRAINT shop_departs_pkey PRIMARY KEY (id),
+    CONSTRAINT shop_departs_uidx UNIQUE (name, manufactures_id)
 );
 CREATE TABLE public.shop_to_shop_departs
 (
@@ -221,7 +224,8 @@ CREATE TABLE public.shop_specializations
     active boolean NOT NULL DEFAULT true,
     manufactures_id integer NOT NULL,
     version integer NOT NULL DEFAULT 0,
-    CONSTRAINT shop_specializations_pkey PRIMARY KEY (id)
+    CONSTRAINT shop_specializations_pkey PRIMARY KEY (id),
+    CONSTRAINT shop_specializations_uidx UNIQUE (name, manufactures_id)
 );
 CREATE TABLE public.shop_to_shop_specializations
 (
