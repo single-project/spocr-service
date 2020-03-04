@@ -1,5 +1,6 @@
 package org.century.scp.spocr.counterparty.mappers;
 
+import org.century.scp.spocr.contact.mappers.ContactMapper;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.models.dto.CounterpartyView;
 import org.century.scp.spocr.counterparty.models.dto.RequestForUpdateCounterparty;
@@ -16,7 +17,8 @@ import org.springframework.data.domain.Page;
         EnumerationMapper.class,
         PaymentDetailsMapper.class,
         PersonMapper.class,
-        OwnerMapper.class
+        OwnerMapper.class,
+        ContactMapper.class
     })
 public abstract class CounterpartyMapper {
 

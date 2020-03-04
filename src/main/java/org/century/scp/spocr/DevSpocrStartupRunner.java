@@ -227,6 +227,7 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
       e.setOwner(owner);
       e.addPaymentType(enumPaymentTypeCashless);
       e.setNoVat(true);
+      e.addContact(c1);
       counterpartyService.create(e);
     }
 
@@ -288,6 +289,7 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
       address.setSuggestion(suggestion);
       shop.setAddress(address);
       shop.setActive(i % 2 == 0);
+      shop.addContact(c2);
       shopService.create(shop);
     }
   }

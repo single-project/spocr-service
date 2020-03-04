@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.century.scp.spocr.address.models.dto.AddressView;
 import org.century.scp.spocr.base.models.dto.BaseEntityView;
 import org.century.scp.spocr.classifier.models.dto.ClassifierView;
+import org.century.scp.spocr.contact.models.dto.ContactView;
 import org.century.scp.spocr.counterparty.models.dto.CounterpartyView;
 
 @Getter
@@ -23,6 +24,7 @@ public class ShopView extends BaseEntityView {
   private Float area;
   private String comment;
   private String signboard;
+  private Set<ContactView> contacts;
 
   public ShopView(
       String name,

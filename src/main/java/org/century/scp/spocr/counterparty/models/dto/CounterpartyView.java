@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.century.scp.spocr.base.models.dto.BaseEntityListView;
 import org.century.scp.spocr.base.models.dto.BaseEntityView;
+import org.century.scp.spocr.contact.models.dto.ContactView;
 import org.century.scp.spocr.enumeration.models.dto.EnumerationView;
 import org.century.scp.spocr.owner.models.dto.OwnerView;
 import org.century.scp.spocr.paymentdetails.models.dto.PaymentDetailsView;
@@ -31,6 +32,7 @@ public class CounterpartyView extends BaseEntityView {
   private OwnerView owner;
   private String comment;
   private Boolean noVat;
+  private Set<ContactView> contacts;
 
   public CounterpartyView(String name) {
     this.name = name;

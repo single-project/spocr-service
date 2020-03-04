@@ -24,6 +24,7 @@ import org.century.scp.spocr.classifier.saleschannel.models.domain.SalesChannel;
 import org.century.scp.spocr.classifier.shopdepart.domain.ShopDepart;
 import org.century.scp.spocr.classifier.shoptype.models.domain.ShopType;
 import org.century.scp.spocr.classifier.specialization.domain.ShopSpecialization;
+import org.century.scp.spocr.contact.models.domain.Contact;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -86,6 +87,13 @@ public class Shop extends BaseEntity {
       joinColumns = @JoinColumn(name = "shop_id"),
       inverseJoinColumns = @JoinColumn(name = "shop_specializations_id"))
   private Set<ShopSpecialization> shopSpecializations;
+
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(
+      name = "shop_contacts",
+      joinColumns = @JoinColumn(name = "shop_id"),
+      inverseJoinColumns = @JoinColumn(name = "contacts_id"))
+  private Set<Contact> contacts;
 
   @Cascade({CascadeType.PERSIST, CascadeType.MERGE})
   @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true)
@@ -173,5 +181,17 @@ public class Shop extends BaseEntity {
   public void setSalesChannels(
       Set<SalesChannel> salesChannels) {
     this.salesChannels = salesChannels;
+  }
+
+  public boolean linkedWithContacts() {
+    return contacts != null && contacts.size() > 0;
+  }
+
+  public void addContact(Contact contact) {
+    if (contacts == null) {
+      contacts = new HashSet<>();
+    }
+
+    contacts.add(contact);
   }
 }

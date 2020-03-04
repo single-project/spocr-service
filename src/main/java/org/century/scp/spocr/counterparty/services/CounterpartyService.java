@@ -5,6 +5,7 @@ import javax.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.century.scp.spocr.base.repositories.BaseRepository;
 import org.century.scp.spocr.base.services.BaseService;
+import org.century.scp.spocr.contact.models.domain.Contact;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.enumeration.models.domain.Enumeration;
 import org.century.scp.spocr.owner.models.domain.Owner;
@@ -41,6 +42,10 @@ public class CounterpartyService extends BaseService<Counterparty> {
 
     if (counterparty.getOwner() != null) {
       counterparty.setOwner(getReference(counterparty.getOwner(), Owner.class));
+    }
+
+    if (counterparty.linkedWithContacts()) {
+      counterparty.setContacts(getReferences(counterparty.getContacts(), Contact.class));
     }
   }
 }

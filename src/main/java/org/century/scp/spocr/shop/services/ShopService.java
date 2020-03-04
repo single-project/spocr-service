@@ -9,6 +9,7 @@ import org.century.scp.spocr.classifier.saleschannel.models.domain.SalesChannel;
 import org.century.scp.spocr.classifier.shopdepart.domain.ShopDepart;
 import org.century.scp.spocr.classifier.shoptype.models.domain.ShopType;
 import org.century.scp.spocr.classifier.specialization.domain.ShopSpecialization;
+import org.century.scp.spocr.contact.models.domain.Contact;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.shop.models.domain.Shop;
 import org.springframework.stereotype.Service;
@@ -50,6 +51,11 @@ public class ShopService extends BaseService<Shop> {
       Set<ShopSpecialization> shopSpecializations = getReferences(shop.getShopSpecializations(),
           ShopSpecialization.class);
       shop.setShopSpecializations(shopSpecializations);
+    }
+
+    // contacts
+    if (shop.linkedWithContacts()) {
+      shop.setContacts(getReferences(shop.getContacts(), Contact.class));
     }
   }
 }
