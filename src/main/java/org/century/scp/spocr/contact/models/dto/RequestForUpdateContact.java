@@ -1,19 +1,18 @@
-package org.century.scp.spocr.classifier.models.dto;
+package org.century.scp.spocr.contact.models.dto;
 
 import java.util.List;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.century.scp.spocr.manufacturer.models.dto.ManufacturerView;
+import org.century.scp.spocr.person.models.dto.PersonView;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class RequestForUpdateClassifier extends ClassifierView {
+public class RequestForUpdateContact extends ContactView {
 
   private List<String> updatedFields;
 
@@ -37,16 +36,15 @@ public class RequestForUpdateClassifier extends ClassifierView {
   }
 
   @NotNull
-  @NotEmpty
   @Override
-  public String getName() {
-    return super.getName();
+  public ContactRoleView getRole() {
+    return super.getRole();
   }
 
   @NotNull
   @Override
-  public ManufacturerView getManufacturer() {
-    return super.getManufacturer();
+  public PersonView getPerson() {
+    return super.getPerson();
   }
 
   @NotNull

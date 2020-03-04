@@ -12,8 +12,16 @@ import org.century.scp.spocr.accesslevel.services.AccessLevelServiceImpl;
 import org.century.scp.spocr.address.models.domain.Address;
 import org.century.scp.spocr.classifier.saleschannel.models.domain.SalesChannel;
 import org.century.scp.spocr.classifier.saleschannel.services.SalesChannelService;
+import org.century.scp.spocr.classifier.shopdepart.domain.ShopDepart;
+import org.century.scp.spocr.classifier.shopdepart.services.ShopDepartService;
 import org.century.scp.spocr.classifier.shoptype.models.domain.ShopType;
 import org.century.scp.spocr.classifier.shoptype.services.ShopTypesService;
+import org.century.scp.spocr.classifier.specialization.domain.ShopSpecialization;
+import org.century.scp.spocr.classifier.specialization.services.ShopSpecializationtService;
+import org.century.scp.spocr.contact.models.domain.Contact;
+import org.century.scp.spocr.contact.models.domain.ContactRole;
+import org.century.scp.spocr.contact.services.ContactRoleService;
+import org.century.scp.spocr.contact.services.ContactService;
 import org.century.scp.spocr.contract.models.domain.Contract;
 import org.century.scp.spocr.contract.services.ContractService;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
@@ -53,16 +61,14 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
   private CounterpartyService counterpartyService;
   @Autowired
   private ManufacturerService manufacturerService;
-  @Autowired
-  private ShopTypesService shopTypesService;
+
   @Autowired
   private ShopService shopService;
   @Autowired private AccessLevelServiceImpl accessLevelService;
   @Autowired private CustomUserDetailsService userDetailsService;
   @Autowired private AuthenticationManager authenticationManager;
   @Autowired private CustomUserDetailsService users;
-  @Autowired
-  private SalesChannelService salesChannelService;
+
   @Autowired
   private ContractService contractService;
   @Autowired
@@ -71,11 +77,35 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
   private EnumerationService enumerationService;
   @Autowired
   private OwnerService ownerService;
+  @Autowired
+  private ShopTypesService shopTypesService;
+  @Autowired
+  private SalesChannelService salesChannelService;
+  @Autowired
+  private ShopSpecializationtService shopSpecializationtService;
+  @Autowired
+  private ShopDepartService shopDepartService;
+  @Autowired
+  private ContactRoleService contactRoleService;
+  @Autowired
+  private ContactService contactService;
 
   @Override
   @Transactional
   public void run(ApplicationArguments args) throws Exception {
     signInAsUser();
+
+    // add 3 new roles
+    ContactRole role1 = contactRoleService.create(new ContactRole("Менеджер", true));
+    ContactRole role2 = contactRoleService.create(new ContactRole("Кладовщик", true));
+    ContactRole role3 = contactRoleService.create(new ContactRole("Директор", false));
+
+    // add 2 new contacts
+    Person person1 = personService.create(new Person("Петров", "Иван", "Сидорович"));
+    Person person2 = personService.create(new Person("Сидоров", "Петр", "Иванов"));
+    contactService.create(new Contact(role1, person1));
+    contactService.create(new Contact(role2, person2));
+    contactService.create(new Contact(role3, person2));
 
     // add  owner
     Owner owner = new Owner();
@@ -178,7 +208,6 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
     person.setDocType(enumDocTypePass);
     personService.create(person);
 
-
     // add 10 new counteragent
     for (int i = 1; i <= 10; i++) {
       PaymentDetails paymentDetails = new PaymentDetails();
@@ -228,6 +257,20 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
     salesChannelService.create(new SalesChannel("Канал продаж3", m1, false));
     salesChannelService.create(new SalesChannel("Канал продаж4", m2, true));
     salesChannelService.create(new SalesChannel("Канал продаж5", m1, false));
+
+    // add 5 new shop specializations
+    shopSpecializationtService.create(new ShopSpecialization("Специализация 1", m1, true));
+    shopSpecializationtService.create(new ShopSpecialization("Специализация 2", m2, false));
+    shopSpecializationtService.create(new ShopSpecialization("Специализация 3", m1, true));
+    shopSpecializationtService.create(new ShopSpecialization("Специализация 4", m1, false));
+    shopSpecializationtService.create(new ShopSpecialization("Специализация 5", m2, true));
+
+    // add 5 new shop departs
+    shopDepartService.create(new ShopDepart("Отдел магазин 1", m2, true));
+    shopDepartService.create(new ShopDepart("Отдел магазин 2", m1, false));
+    shopDepartService.create(new ShopDepart("Отдел магазин 3", m1, true));
+    shopDepartService.create(new ShopDepart("Отдел магазин 4", m1, true));
+    shopDepartService.create(new ShopDepart("Отдел магазин 5", m2, true));
 
     // add 100 new shops
     for (int i = 1; i <= 100; i++) {

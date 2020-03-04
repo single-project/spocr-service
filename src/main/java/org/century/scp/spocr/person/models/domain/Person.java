@@ -69,4 +69,10 @@ public class Person extends BaseEntity {
   @Column(name = "active")
   private Boolean active;
 
+  public Person(String lastName, String firstName, String patronymic) {
+    this.lastName = lastName;
+    this.firstName = firstName;
+    this.patronymic = patronymic;
+    this.active = true;
+  }
 }

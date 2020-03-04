@@ -323,3 +323,23 @@ CREATE TABLE public.owners
     CONSTRAINT owners_pkey PRIMARY KEY (id),
     CONSTRAINT owners_name_uidx UNIQUE (name)
 );
+CREATE TABLE public.contact_roles
+(
+    id integer NOT NULL auto_increment,
+    name character varying(100) NOT NULL,
+    active boolean NOT NULL DEFAULT true,
+    version integer NOT NULL DEFAULT 0,
+    CONSTRAINT contact_roles_pkey PRIMARY KEY (id),
+    CONSTRAINT contact_roles_uidx UNIQUE (name)
+);
+CREATE TABLE public.contacts
+(
+    id integer NOT NULL auto_increment,
+    contact_role_id integer NOT NULL,
+    person_id integer NOT NULL,
+    comment character varying(1000),
+    active boolean NOT NULL DEFAULT true,
+    version integer NOT NULL DEFAULT 0,
+    CONSTRAINT contacts_pkey PRIMARY KEY (id),
+    CONSTRAINT contacts_uidx UNIQUE (contact_role_id, person_id)
+);
