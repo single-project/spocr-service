@@ -96,6 +96,19 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
     enumCpStatusProvider.setDescriptionKey("enumeration.cp-status.provider.description");
     enumerationService.create(enumCpStatusProvider);
 
+    // add 2 new payment types
+    Enumeration enumPaymentTypeCash = new Enumeration();
+    enumPaymentTypeCash.setIdent("PAYMENT-TYPE");
+    enumPaymentTypeCash.setValue("CASH");
+    enumPaymentTypeCash.setDescriptionKey("enumeration.payment-type.cash.description");
+    enumerationService.create(enumPaymentTypeCash);
+
+    Enumeration enumPaymentTypeCashless = new Enumeration();
+    enumPaymentTypeCashless.setIdent("PAYMENT-TYPE");
+    enumPaymentTypeCashless.setValue("CASHLESS");
+    enumPaymentTypeCashless.setDescriptionKey("enumeration.payment-type.cashless.description");
+    enumerationService.create(enumPaymentTypeCashless);
+
     // legal types
     Enumeration enumLegalTypePhys = new Enumeration();
     enumLegalTypePhys.setIdent("LEGAL-TYPE");
@@ -182,6 +195,8 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
       e.addStatus(enumCpStatusClient);
       e.setPersonRekv(person);
       e.setOwner(owner);
+      e.addPaymentType(enumPaymentTypeCashless);
+      e.setNoVat(true);
       counterpartyService.create(e);
     }
 

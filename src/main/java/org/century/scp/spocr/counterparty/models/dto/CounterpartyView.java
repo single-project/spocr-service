@@ -26,8 +26,11 @@ public class CounterpartyView extends BaseEntityView {
   private HashMap suggestion;
   private BaseEntityListView parent;
   private Set<EnumerationView> statuses;
+  private Set<EnumerationView> paymentTypes;
   private PersonView personRekv;
   private OwnerView owner;
+  private String comment;
+  private Boolean noVat;
 
   public CounterpartyView(String name) {
     this.name = name;

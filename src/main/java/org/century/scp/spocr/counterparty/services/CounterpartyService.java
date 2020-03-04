@@ -33,6 +33,12 @@ public class CounterpartyService extends BaseService<Counterparty> {
       counterparty.setStatuses(statuses);
     }
 
+    if (counterparty.linkedWithPaymentTypes()) {
+      Set<Enumeration> paymentTypes = getReferences(counterparty.getPaymentTypes(),
+          Enumeration.class);
+      counterparty.setPaymentTypes(paymentTypes);
+    }
+
     if (counterparty.getOwner() != null) {
       counterparty.setOwner(getReference(counterparty.getOwner(), Owner.class));
     }

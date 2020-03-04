@@ -44,6 +44,8 @@ CREATE TABLE public.counterparties
     counterparty_person_id integer,
     suggestion text,
     parent_id integer,
+    comment character varying(1000),
+    no_vat boolean,
     active boolean NOT NULL DEFAULT true,
     version integer NOT NULL DEFAULT 0,
     CONSTRAINT counterparties_pkey PRIMARY KEY (id)
@@ -147,7 +149,7 @@ CREATE TABLE public.addresses
     address character varying(100) NOT NULL,
     latitude double,
     longitude double,
-    comment character varying(500),
+    comment character varying(1000),
     suggestion text,
     CONSTRAINT addresses_pkey PRIMARY KEY (id)
 );
@@ -249,6 +251,14 @@ CREATE TABLE public.counterparty_to_counterparty_statuses
     enumerations_id integer NOT NULL,
     CONSTRAINT counterparty_to_counterparty_statuses_pkey PRIMARY KEY (id),
     CONSTRAINT counterparty_to_counterparty_statuses_uidx UNIQUE (counterparty_id, enumerations_id)
+);
+CREATE TABLE public.counterparty_to_payment_types
+(
+    id integer NOT NULL auto_increment,
+    counterparty_id integer NOT NULL,
+    enumerations_id integer NOT NULL,
+    CONSTRAINT counterparty_to_payment_types_pkey PRIMARY KEY (id),
+    CONSTRAINT counterparty_to_payment_types_uidx UNIQUE (counterparty_id, enumerations_id)
 );
 CREATE TABLE public.contracts
 (

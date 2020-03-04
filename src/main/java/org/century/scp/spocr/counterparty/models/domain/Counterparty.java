@@ -52,6 +52,13 @@ public class Counterparty extends BaseEntity {
       inverseJoinColumns = @JoinColumn(name = "enumerations_id"))
   private Set<Enumeration> statuses;
 
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(
+      name = "counterparty_to_payment_types",
+      joinColumns = @JoinColumn(name = "counterparty_id"),
+      inverseJoinColumns = @JoinColumn(name = "enumerations_id"))
+  private Set<Enumeration> paymentTypes;
+
   @Column(name = "name")
   private String name;
 
@@ -95,20 +102,23 @@ public class Counterparty extends BaseEntity {
   @JoinColumn(name = "counterparty_payment_details_id", referencedColumnName = "id")
   private PaymentDetails paymentDetails;
 
+  @Column(name = "no_vat")
+  private Boolean noVat;
+
   @Column(name = "active")
   private Boolean active;
-
 
   @Cascade({CascadeType.PERSIST, CascadeType.MERGE})
   @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true)
   @JoinColumn(name = "counterparty_person_id", referencedColumnName = "id")
   private Person personRekv;
 
-
   @Column(name = "suggestion")
   @Convert(converter = LinkedHashMapConverter.class)
   private LinkedHashMap suggestion;
 
+  @Column
+  private String comment;
 
   public Counterparty(String name) {
     this.name = name;
@@ -125,5 +135,17 @@ public class Counterparty extends BaseEntity {
     }
 
     statuses.add(status);
+  }
+
+  public boolean linkedWithPaymentTypes() {
+    return paymentTypes != null && paymentTypes.size() > 0;
+  }
+
+  public void addPaymentType(Enumeration paymentType) {
+    if (paymentTypes == null) {
+      paymentTypes = new HashSet<>();
+    }
+
+    paymentTypes.add(paymentType);
   }
 }
