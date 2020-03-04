@@ -343,3 +343,27 @@ CREATE TABLE public.contacts
     CONSTRAINT contacts_pkey PRIMARY KEY (id),
     CONSTRAINT contacts_uidx UNIQUE (contact_role_id, person_id)
 );
+CREATE TABLE public.owner_contacts
+(
+    id integer NOT NULL auto_increment,
+    owner_id integer NOT NULL,
+    contacts_id integer NOT NULL,
+    CONSTRAINT owner_contacts_pkey PRIMARY KEY (id),
+    CONSTRAINT owner_contacts_uidx UNIQUE (owner_id, contacts_id)
+);
+CREATE TABLE public.counterparty_contacts
+(
+    id integer NOT NULL auto_increment,
+    counterparty_id integer NOT NULL,
+    contacts_id integer NOT NULL,
+    CONSTRAINT counterparty_contacts_pkey PRIMARY KEY (id),
+    CONSTRAINT counterparty_contacts_uidx UNIQUE (counterparty_id, contacts_id)
+);
+CREATE TABLE public.shop_contacts
+(
+    id integer NOT NULL auto_increment,
+    shop_id integer NOT NULL,
+    contacts_id integer NOT NULL,
+    CONSTRAINT shop_contacts_pkey PRIMARY KEY (id),
+    CONSTRAINT shop_contacts_uidx UNIQUE (shop_id, contacts_id)
+);

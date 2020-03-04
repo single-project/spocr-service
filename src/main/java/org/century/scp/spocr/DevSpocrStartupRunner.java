@@ -103,14 +103,15 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
     // add 2 new contacts
     Person person1 = personService.create(new Person("Петров", "Иван", "Сидорович"));
     Person person2 = personService.create(new Person("Сидоров", "Петр", "Иванов"));
-    contactService.create(new Contact(role1, person1));
-    contactService.create(new Contact(role2, person2));
-    contactService.create(new Contact(role3, person2));
+    Contact c1 = contactService.create(new Contact(role1, person1));
+    Contact c2 = contactService.create(new Contact(role2, person2));
+    Contact c3 = contactService.create(new Contact(role3, person2));
 
     // add  owner
     Owner owner = new Owner();
     owner.setName("Владелец");
     owner.setActive(true);
+    owner.addContact(c1);
     owner = ownerService.create(owner);
 
     // add 2 new cp statuses

@@ -13,6 +13,7 @@ import org.century.scp.spocr.contact.services.ContactServiceFacade;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -61,7 +62,7 @@ public class ContactController {
           @Spec(path = "role.name", params = "role.name", spec = LikeIgnoreCase.class)
       })
           Specification<Contact> contactSpecification,
-      Pageable pageable) {
+      @PageableDefault(sort = "person.lastName") Pageable pageable) {
     return ResponseEntity.ok(contactService.get(contactSpecification, pageable));
   }
 }
