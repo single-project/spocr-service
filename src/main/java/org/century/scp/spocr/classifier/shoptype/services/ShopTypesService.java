@@ -18,7 +18,7 @@ public class ShopTypesService extends BaseService<ShopType> {
 
   @Override
   public void refresh(ShopType entity) {
-    if (entity.getManufacturer() != null) {
+    if (entity.getManufacturer() != null && entity.getManufacturer().getId() != null) {
       entity.setManufacturer(getReference(entity.getManufacturer(), Manufacturer.class));
     }
   }

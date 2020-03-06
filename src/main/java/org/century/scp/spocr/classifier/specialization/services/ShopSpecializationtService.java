@@ -12,14 +12,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class ShopSpecializationtService extends BaseService<ShopSpecialization> {
 
-  public ShopSpecializationtService(EntityManager entityManager,
-      BaseRepository<ShopSpecialization> repository) {
+  public ShopSpecializationtService(
+      EntityManager entityManager, BaseRepository<ShopSpecialization> repository) {
     super(ShopSpecialization.class, entityManager, repository);
   }
 
   @Override
   public void refresh(ShopSpecialization entity) {
-    if (entity.getManufacturer() != null) {
+    if (entity.getManufacturer() != null && entity.getManufacturer().getId() != null) {
       entity.setManufacturer(getReference(entity.getManufacturer(), Manufacturer.class));
     }
   }

@@ -19,7 +19,7 @@ public class SalesChannelService extends BaseService<SalesChannel> {
 
   @Override
   public void refresh(SalesChannel entity) {
-    if (entity.getManufacturer() != null) {
+    if (entity.getManufacturer() != null && entity.getManufacturer().getId() != null) {
       entity.setManufacturer(getReference(entity.getManufacturer(), Manufacturer.class));
     }
   }

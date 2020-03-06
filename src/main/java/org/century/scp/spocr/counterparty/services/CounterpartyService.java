@@ -21,11 +21,11 @@ public class CounterpartyService extends BaseService<Counterparty> {
 
   @Override
   public void refresh(Counterparty counterparty) {
-    if (counterparty.getParent() != null) {
+    if (counterparty.getParent() != null && counterparty.getParent().getId() != null) {
       counterparty.setParent(getReference(counterparty.getParent(), Counterparty.class));
     }
 
-    if (counterparty.getLegalType() != null) {
+    if (counterparty.getLegalType() != null && counterparty.getLegalType().getId() != null) {
       counterparty.setLegalType(getReference(counterparty.getLegalType(), Enumeration.class));
     }
 
@@ -35,12 +35,12 @@ public class CounterpartyService extends BaseService<Counterparty> {
     }
 
     if (counterparty.linkedWithPaymentTypes()) {
-      Set<Enumeration> paymentTypes = getReferences(counterparty.getPaymentTypes(),
-          Enumeration.class);
+      Set<Enumeration> paymentTypes =
+          getReferences(counterparty.getPaymentTypes(), Enumeration.class);
       counterparty.setPaymentTypes(paymentTypes);
     }
 
-    if (counterparty.getOwner() != null) {
+    if (counterparty.getOwner() != null && counterparty.getOwner().getId() != null) {
       counterparty.setOwner(getReference(counterparty.getOwner(), Owner.class));
     }
 

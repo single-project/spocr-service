@@ -18,7 +18,7 @@ public class ShopDepartService extends BaseService<ShopDepart> {
 
   @Override
   public void refresh(ShopDepart entity) {
-    if (entity.getManufacturer() != null) {
+    if (entity.getManufacturer() != null && entity.getManufacturer().getId() != null) {
       entity.setManufacturer(getReference(entity.getManufacturer(), Manufacturer.class));
     }
   }

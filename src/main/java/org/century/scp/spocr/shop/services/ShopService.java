@@ -24,7 +24,7 @@ public class ShopService extends BaseService<Shop> {
 
   public void refresh(Shop shop) {
     // counterparty
-    if (shop.getCounterparty() != null) {
+    if (shop.getCounterparty() != null && shop.getCounterparty().getId() != null) {
       shop.setCounterparty(getReference(shop.getCounterparty(), Counterparty.class));
     }
 
