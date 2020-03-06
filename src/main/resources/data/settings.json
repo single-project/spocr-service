@@ -134,7 +134,7 @@
     {
       "id": 6,
       "name": "Каналы продаж",
-      "url": "/saleschanels",
+      "url": "/saleschannels",
       "sortField": "name",
       "sortOrder": "asc",
       "columns": [
