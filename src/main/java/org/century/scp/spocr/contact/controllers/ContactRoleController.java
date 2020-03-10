@@ -33,16 +33,17 @@ public class ContactRoleController {
   private final ContactRoleServiceFacade contactRoleService;
 
   @PostMapping
-  public ResponseEntity<ContactRoleView> addItem(
+  public ResponseEntity<Long> addItem(
       @Validated @RequestBody RequestForCreateContactRole contactRole) {
     return ResponseEntity.ok(contactRoleService.create(contactRole));
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<ContactRoleView> updateItem(
+  public ResponseEntity updateItem(
       @PathVariable(value = "id") long id,
       @Validated @RequestBody RequestForUpdateContactRole patch) {
-    return ResponseEntity.ok(contactRoleService.update(id, patch, patch.getUpdatedFields()));
+    contactRoleService.update(id, patch, patch.getUpdatedFields());
+    return ResponseEntity.ok().build();
   }
 
   @GetMapping("/{id}")
@@ -63,3 +64,4 @@ public class ContactRoleController {
     return ResponseEntity.ok(contactRoleService.get(contactRoleSpecification, pageable));
   }
 }
+

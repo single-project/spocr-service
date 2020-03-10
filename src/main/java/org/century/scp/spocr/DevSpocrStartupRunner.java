@@ -202,20 +202,19 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
     Person person = new Person();
     person.setLastName("Уик");
     person.setLastName("Джон");
-    person.setActive(true);
     person.setBirthDate(new Date());
     person.setCitizenship(enumCitizenRU);
     person.setGender(enumGenderMale);
     person.setDocType(enumDocTypePass);
     personService.create(person);
 
+    // add 5 legal types
+
     // add 10 new counteragent
     for (int i = 1; i <= 10; i++) {
       PaymentDetails paymentDetails = new PaymentDetails();
       paymentDetails.setBic("000");
       paymentDetails.setBank("444");
-      paymentDetails.setActive(i % 2 == 0);
-      paymentDetails.setVersion((long) 0);
       paymentDetails.setPaymentAccount("111");
       paymentDetails.setCorrespondingAccount("222");
 

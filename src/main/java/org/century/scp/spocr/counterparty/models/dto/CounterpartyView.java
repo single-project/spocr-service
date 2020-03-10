@@ -1,6 +1,5 @@
 package org.century.scp.spocr.counterparty.models.dto;
 
-import java.util.HashMap;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,7 +23,6 @@ public class CounterpartyView extends BaseEntityView {
   private EnumerationView legalType;
   private LegalRekvView legalRekv;
   private PaymentDetailsView paymentDetails;
-  private HashMap suggestion;
   private BaseEntityListView parent;
   private Set<EnumerationView> statuses;
   private Set<EnumerationView> paymentTypes;
@@ -34,44 +32,12 @@ public class CounterpartyView extends BaseEntityView {
   private Boolean noVat;
   private Set<ContactView> contacts;
 
+  public CounterpartyView(Long id, Long version, Boolean active) {
+    super(id, version, active);
+  }
+
   public CounterpartyView(String name) {
     this.name = name;
   }
 
-  public CounterpartyView(Long id, String name, Long version, boolean active) {
-    super(id, version, active);
-    this.name = name;
-  }
-
-  public CounterpartyView(
-      Long id,
-      Boolean active,
-      Long version,
-      String name,
-      EnumerationView legalType,
-      LegalRekvView legalRekv,
-      PaymentDetailsView paymentDetails,
-      HashMap suggestion) {
-    super(id, version, active);
-    this.name = name;
-    this.legalType = legalType;
-    this.legalRekv = legalRekv;
-    this.paymentDetails = paymentDetails;
-    this.suggestion = suggestion;
-  }
-
-  public CounterpartyView(
-      Boolean active,
-      String name,
-      EnumerationView legalType,
-      LegalRekvView legalRekv,
-      PaymentDetailsView paymentDetails,
-      HashMap suggestion) {
-    super(active);
-    this.name = name;
-    this.legalType = legalType;
-    this.legalRekv = legalRekv;
-    this.paymentDetails = paymentDetails;
-    this.suggestion = suggestion;
-  }
 }

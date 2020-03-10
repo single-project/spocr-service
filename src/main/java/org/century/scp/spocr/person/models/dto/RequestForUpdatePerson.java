@@ -4,7 +4,6 @@ import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
-import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,19 +21,6 @@ public class RequestForUpdatePerson extends PersonView {
   @Override
   public Long getId() {
     return super.getId();
-  }
-
-  @NotNull
-  @PositiveOrZero
-  @Override
-  public Long getVersion() {
-    return super.getVersion();
-  }
-
-  @NotNull
-  @Override
-  public Boolean getActive() {
-    return super.getActive();
   }
 
   @NotNull

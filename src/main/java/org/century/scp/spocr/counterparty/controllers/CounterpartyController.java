@@ -33,15 +33,16 @@ public class CounterpartyController {
   private final CounterpartyServiceFacade counterpartyService;
 
   @PostMapping
-  public ResponseEntity<CounterpartyView> addItem(
+  public ResponseEntity<Long> addItem(
       @Validated @RequestBody RequestForCreateCounterparty counterparty) {
     return ResponseEntity.ok(counterpartyService.create(counterparty));
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<CounterpartyView> updateItem(
+  public ResponseEntity updateItem(
       @PathVariable Long id, @Validated @RequestBody RequestForUpdateCounterparty patch) {
-    return ResponseEntity.ok(counterpartyService.update(id, patch, patch.getUpdatedFields()));
+    counterpartyService.update(id, patch, patch.getUpdatedFields());
+    return ResponseEntity.ok().build();
   }
 
   @GetMapping("/{id}")
@@ -58,6 +59,10 @@ public class CounterpartyController {
           @Spec(path = "active", params = "active", spec = Equal.class),
           @Spec(path = "owner.id", params = "owner.id", spec = Equal.class),
           @Spec(path = "owner.name", params = "owner.name", spec = Equal.class),
+          @Spec(path = "parent.id", params = "parent.id", spec = Equal.class),
+          @Spec(path = "parent.name", params = "parent.name", spec = Equal.class),
+          @Spec(path = "legalRekv.inn", params = "legalRekv.inn", spec = LikeIgnoreCase.class),
+          @Spec(path = "legalRekv.kpp", params = "legalRekv.kpp", spec = LikeIgnoreCase.class),
           })
           Specification<Counterparty> counterpartySpecification,
       Pageable pageable) {

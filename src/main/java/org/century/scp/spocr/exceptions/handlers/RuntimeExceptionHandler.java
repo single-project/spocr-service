@@ -5,10 +5,10 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class RuntimeExceptionHandler extends AbstractExceptionHandler<RuntimeException> {
+public class RuntimeExceptionHandler extends AbstractExceptionHandler<Throwable> {
 
   public RuntimeExceptionHandler() {
-    super(RuntimeException.class);
+    super(Throwable.class);
   }
 
 }

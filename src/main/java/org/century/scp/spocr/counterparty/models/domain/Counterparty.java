@@ -1,10 +1,8 @@
 package org.century.scp.spocr.counterparty.models.domain;
 
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.Set;
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -20,7 +18,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.century.scp.spocr.base.converters.LinkedHashMapConverter;
 import org.century.scp.spocr.base.models.domain.BaseEntity;
 import org.century.scp.spocr.contact.models.domain.Contact;
 import org.century.scp.spocr.enumeration.models.domain.Enumeration;
@@ -41,6 +38,10 @@ public class Counterparty extends BaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "legal_type_id")
+  private Enumeration legalType;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "owner_id")
@@ -67,37 +68,6 @@ public class Counterparty extends BaseEntity {
   @JoinColumn(name = "parent_id")
   private Counterparty parent;
 
-  @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "legal_type_id")
-  private Enumeration legalType;
-
-  @Column(name = "short_name")
-  private String shortName;
-
-  @Column(name = "full_name")
-  private String fullName;
-
-  @Column(name = "inn")
-  private String inn;
-
-  @Column(name = "kpp")
-  private String kpp;
-
-  @Column(name = "ogrn")
-  private String ogrn;
-
-  @Column(name = "ogrn_date")
-  private String ogrnDate;
-
-  @Column(name = "ogrn_authority")
-  private String ogrnAuthority;
-
-  @Column(name = "okpo")
-  private String okpo;
-
-  @Column(name = "okonh")
-  private String okonh;
-
   @Cascade({CascadeType.PERSIST, CascadeType.MERGE})
   @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true)
   @JoinColumn(name = "counterparty_payment_details_id", referencedColumnName = "id")
@@ -121,9 +91,10 @@ public class Counterparty extends BaseEntity {
   @JoinColumn(name = "counterparty_person_id", referencedColumnName = "id")
   private Person personRekv;
 
-  @Column(name = "suggestion")
-  @Convert(converter = LinkedHashMapConverter.class)
-  private LinkedHashMap suggestion;
+  @Cascade({CascadeType.PERSIST, CascadeType.MERGE})
+  @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true)
+  @JoinColumn(name = "counterparty_legal_rekv_id", referencedColumnName = "id")
+  private LegalRekv legalRekv;
 
   @Column
   private String comment;

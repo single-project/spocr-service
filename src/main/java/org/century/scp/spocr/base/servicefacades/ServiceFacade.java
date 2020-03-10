@@ -17,10 +17,10 @@ public interface ServiceFacade<T extends DomainEntity, K extends DTO> {
   Page<K> get(Specification<T> specification, Pageable pageable);
 
   @Transactional
-  K create(K request);
+  Long create(K request);
 
   @Transactional
-  K update(Long id, K request, List<String> properties);
+  void update(Long id, K request, List<String> properties);
 
 
 }

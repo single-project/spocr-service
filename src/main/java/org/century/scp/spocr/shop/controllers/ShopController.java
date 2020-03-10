@@ -33,14 +33,15 @@ public class ShopController {
   private final ShopServiceFacade shopService;
 
   @PostMapping
-  public ResponseEntity<ShopView> addItem(@Validated @RequestBody RequestForCreateShop shop) {
+  public ResponseEntity<Long> addItem(@Validated @RequestBody RequestForCreateShop shop) {
     return ResponseEntity.ok(shopService.create(shop));
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<ShopView> updateItem(
+  public ResponseEntity updateItem(
       @PathVariable Long id, @Validated @RequestBody RequestForUpdateShop patch) {
-    return ResponseEntity.ok(shopService.update(id, patch, patch.getUpdatedFields()));
+    shopService.update(id, patch, patch.getUpdatedFields());
+    return ResponseEntity.ok().build();
   }
 
   @GetMapping("/{id}")

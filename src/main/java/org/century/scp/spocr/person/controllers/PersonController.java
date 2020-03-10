@@ -34,14 +34,15 @@ public class PersonController {
   private final PersonServiceFacade personService;
 
   @PostMapping
-  public ResponseEntity<PersonView> addItem(@Validated @RequestBody RequestForCreatePerson person) {
+  public ResponseEntity<Long> addItem(@Validated @RequestBody RequestForCreatePerson person) {
     return ResponseEntity.ok(personService.create(person));
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<PersonView> updateItem(
+  public ResponseEntity updateItem(
       @PathVariable Long id, @Validated @RequestBody RequestForUpdatePerson patch) {
-    return ResponseEntity.ok(personService.update(id, patch, patch.getUpdatedFields()));
+    personService.update(id, patch, patch.getUpdatedFields());
+    return ResponseEntity.ok().build();
   }
 
   @GetMapping("/{id}")

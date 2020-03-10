@@ -28,24 +28,15 @@ VALUES(2, 'reader', '96e79218965eb72c92a549dd5a330112', true, 200);
 CREATE TABLE public.counterparties
 (
     id integer NOT NULL auto_increment,
-    owner_id integer,
     name character varying(300) NOT NULL,
-    legal_type_id integer,
-    short_name  character varying(300),
-    full_name character varying(1000),
-    inn character varying(10),
-    kpp character varying(9),
-    ogrn character varying(15),
-    ogrn_date date,
-    ogrn_authority character varying(1000),
-    okpo character varying(40),
-    okonh character varying(100),
-    counterparty_payment_details_id integer,
-    counterparty_person_id integer,
-    suggestion text,
+    no_vat boolean,
+    owner_id integer,
     parent_id integer,
     comment character varying(1000),
-    no_vat boolean,
+    legal_type_id integer,
+    counterparty_legal_rekv_id integer,
+    counterparty_person_id integer,
+    counterparty_payment_details_id integer,
     active boolean NOT NULL DEFAULT true,
     version integer NOT NULL DEFAULT 0,
     CONSTRAINT counterparties_pkey PRIMARY KEY (id)
@@ -160,22 +151,23 @@ CREATE TABLE public.counterparty_payment_details
     corresponding_account character varying(20),
     bic character varying(9) NOT NULL,
     bank character varying(300) NOT NULL,
-    active boolean NOT NULL DEFAULT true,
-    version integer NOT NULL DEFAULT 0,
     CONSTRAINT counterparty_payment_details_pkey PRIMARY KEY (id)
 );
-CREATE TABLE public.legal_types
+CREATE TABLE public.legal_rekvs
 (
     id integer NOT NULL auto_increment,
-    name character varying(50) NOT NULL,
-    okpf_short_name character varying(50),
-    okpf_full_name character varying(100),
-    okpf_id character varying(15),
-    okpf_type character varying(25),
-    active boolean NOT NULL DEFAULT true,
-    version integer NOT NULL DEFAULT 0,
-    CONSTRAINT legal_types_pkey PRIMARY KEY (id),
-    CONSTRAINT legal_types_uidx UNIQUE (name)
+    short_name  character varying(300),
+    full_name character varying(1000),
+    inn character varying(10),
+    kpp character varying(9),
+    ogrn character varying(15),
+    ogrn_date date,
+    ogrn_authority character varying(1000),
+    okpo character varying(40),
+    okonh character varying(100),
+    suggestion text,
+    CONSTRAINT legal_rekvs_pkey PRIMARY KEY (id),
+    CONSTRAINT legal_rekvs_uidx UNIQUE (inn, kpp)
 );
 CREATE TABLE public.settings
 (
@@ -237,13 +229,6 @@ CREATE TABLE public.shop_to_shop_specializations
     CONSTRAINT shop_to_shop_specializations_pkey PRIMARY KEY (id),
     CONSTRAINT shop_to_shop_specializations_uidx UNIQUE (shop_id, shop_specializations_id)
 );
-CREATE TABLE public.counterparty_statuses
-(
-    id integer NOT NULL auto_increment,
-    name character varying(100) NOT NULL,
-    CONSTRAINT counterparty_statuses_pkey PRIMARY KEY (id),
-    CONSTRAINT counterparty_statuses_uidx UNIQUE (name)
-);
 CREATE TABLE public.counterparty_to_counterparty_statuses
 (
     id integer NOT NULL auto_increment,
@@ -301,8 +286,6 @@ CREATE TABLE public.persons
     gender_id integer,
     email character varying(75),
     phones text,
-    version integer NOT NULL DEFAULT 0,
-    active boolean NOT NULL DEFAULT true,
     CONSTRAINT persons_pkey PRIMARY KEY (id)
 );
 CREATE TABLE public.enumerations

@@ -14,8 +14,10 @@ import org.springframework.stereotype.Component;
 public class CounterpartyServiceFacade extends BaseServiceFacade<Counterparty, CounterpartyView> {
 
   public CounterpartyServiceFacade(
-      ServiceI<Counterparty> service, MapperI<Counterparty, CounterpartyView> mapper,
+      ServiceI<Counterparty> service,
+      MapperI<Counterparty, CounterpartyView> mapper,
       EventRepositoryImpl eventRepository) {
     super(service, mapper, eventRepository);
   }
+
 }

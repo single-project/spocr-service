@@ -13,15 +13,15 @@ import javax.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.century.scp.spocr.base.models.domain.BaseEntity;
+import org.century.scp.spocr.base.models.domain.DomainEntity;
 import org.century.scp.spocr.enumeration.models.domain.Enumeration;
 
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @Data
 @Entity
 @Table(name = "persons")
 @NoArgsConstructor
-public class Person extends BaseEntity {
+public class Person implements DomainEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,13 +66,9 @@ public class Person extends BaseEntity {
   @Column(name = "phones")
   private String phones;
 
-  @Column(name = "active")
-  private Boolean active;
-
   public Person(String lastName, String firstName, String patronymic) {
     this.lastName = lastName;
     this.firstName = firstName;
     this.patronymic = patronymic;
-    this.active = true;
   }
 }

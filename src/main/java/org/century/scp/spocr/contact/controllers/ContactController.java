@@ -34,16 +34,17 @@ public class ContactController {
   private final ContactServiceFacade contactService;
 
   @PostMapping
-  public ResponseEntity<ContactView> addItem(
+  public ResponseEntity<Long> addItem(
       @Validated @RequestBody RequestForCreateContact contact) {
     return ResponseEntity.ok(contactService.create(contact));
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<ContactView> updateItem(
+  public ResponseEntity updateItem(
       @PathVariable(value = "id") long id,
       @Validated @RequestBody RequestForUpdateContact patch) {
-    return ResponseEntity.ok(contactService.update(id, patch, patch.getUpdatedFields()));
+    contactService.update(id, patch, patch.getUpdatedFields());
+    return ResponseEntity.ok().build();
   }
 
   @GetMapping("/{id}")

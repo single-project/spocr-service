@@ -33,15 +33,16 @@ public class OwnerController {
   private final OwnerServiceFacade ownerService;
 
   @PostMapping
-  public ResponseEntity<OwnerView> addItem(
+  public ResponseEntity<Long> addItem(
       @Validated @RequestBody RequestForCreateOwner owner) {
     return ResponseEntity.ok(ownerService.create(owner));
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<OwnerView> updateItem(
+  public ResponseEntity updateItem(
       @PathVariable Long id, @RequestBody RequestForUpdateOwner patch) {
-    return ResponseEntity.ok(ownerService.update(id, patch, patch.getUpdatedFields()));
+    ownerService.update(id, patch, patch.getUpdatedFields());
+    return ResponseEntity.ok().build();
   }
 
   @GetMapping("/{id}")

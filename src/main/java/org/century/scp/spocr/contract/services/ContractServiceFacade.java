@@ -44,13 +44,13 @@ public class ContractServiceFacade extends BaseServiceFacade<Contract, ContractV
   }
 
   @Override
-  public SubContractView createSubContract(SubContractView request) {
+  public Long createSubContract(SubContractView request) {
     return subContractServiceFacade.create(request);
   }
 
   @Override
-  public SubContractView updateSubContract(Long id, SubContractView request,
+  public void updateSubContract(Long id, SubContractView request,
       List<String> properties) {
-    return subContractServiceFacade.update(id, request, properties);
+    subContractServiceFacade.update(id, request, properties);
   }
 }

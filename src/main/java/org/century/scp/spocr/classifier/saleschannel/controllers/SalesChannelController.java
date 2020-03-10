@@ -33,16 +33,18 @@ public class SalesChannelController {
   private final SalesChannelServiceFacade salesChannelService;
 
   @PostMapping
-  public ResponseEntity<ClassifierView> addItem(
+  public ResponseEntity<Long> addItem(
       @Validated @RequestBody RequestForCreateClassifier salesChannel) {
     return ResponseEntity.ok(salesChannelService.create(salesChannel));
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<ClassifierView> updateItem(
+  public ResponseEntity updateItem(
       @PathVariable Long id, @RequestBody RequestForUpdateClassifier patch) {
-    return ResponseEntity.ok(salesChannelService.update(id, patch, patch.getUpdatedFields()));
+    salesChannelService.update(id, patch, patch.getUpdatedFields());
+    return ResponseEntity.ok().build();
   }
+
 
   @GetMapping("/{id}")
   public ResponseEntity<ClassifierView> getItem(@PathVariable(value = "id") long id) {

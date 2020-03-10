@@ -18,8 +18,8 @@ public interface SubContractServiceFacadeI {
       Pageable pageable);
 
   @Transactional
-  SubContractView createSubContract(SubContractView request);
+  Long createSubContract(SubContractView request);
 
   @Transactional
-  SubContractView updateSubContract(Long id, SubContractView request, List<String> properties);
+  void updateSubContract(Long id, SubContractView request, List<String> properties);
 }

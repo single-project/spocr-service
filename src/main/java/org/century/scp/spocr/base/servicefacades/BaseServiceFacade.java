@@ -24,9 +24,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class BaseServiceFacade<T extends DomainEntity, K extends DTO>
     implements ServiceFacade<T, K> {
 
-  private final ServiceI<T> service;
-  private final MapperI<T, K> mapper;
-  private final EventRepositoryImpl eventRepository;
+  protected final ServiceI<T> service;
+  protected final MapperI<T, K> mapper;
+  protected final EventRepositoryImpl eventRepository;
 
   @Override
   @Transactional(readOnly = true)
@@ -44,30 +44,30 @@ public class BaseServiceFacade<T extends DomainEntity, K extends DTO>
 
   @Override
   @Transactional
-  public K create(K request) {
+  public Long create(K request) {
     T entity = mapper.map(request);
     entity = service.create(entity);
     afterPersist(entity);
-    return mapper.map(entity);
+    return entity.getId();
   }
 
   @Override
   @Transactional
-  public K update(Long id, K request, List<String> properties) {
+  public void update(Long id, K request, List<String> properties) {
     T entity = mapper.map(request);
     entity = service.update(id, entity, properties);
     afterUpdate(entity, properties);
-    return mapper.map(entity);
   }
 
-  private void afterPersist(T entity) {
+
+  protected void afterPersist(T entity) {
     Map<String, Object> body = new HashMap<>();
     body.put("id", entity.getId());
     eventRepository.insert(
         EventEnum.CREATED.name(), entity.getClass().getName(), body, getCurrentUserLogin());
   }
 
-  private void afterUpdate(T entity, List<String> properties) {
+  protected void afterUpdate(T entity, List<String> properties) {
     Map<String, Object> body = new HashMap<>();
     body.put("id", entity.getId());
     body.put("fields", properties);

@@ -84,27 +84,28 @@ public class ContractController {
   }
 
   @PostMapping
-  public ResponseEntity<ContractView> addItem(
+  public ResponseEntity<Long> addItem(
       @Validated @RequestBody RequestForCreateContract createContractRequest) {
     return ResponseEntity.ok(contractServiceFacade.create(createContractRequest));
   }
 
   @PostMapping("/{id}/subcontracts")
-  public ResponseEntity<SubContractView> addSubContract(
+  public ResponseEntity<Long> addSubContract(
       @Validated @RequestBody RequestForCreateSubContract createContractRequest) {
     return ResponseEntity.ok(contractServiceFacade.createSubContract(createContractRequest));
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<ContractView> updateItem(
+  public ResponseEntity updateItem(
       @PathVariable Long id, @Validated @RequestBody RequestForUpdateContract patch) {
-    return ResponseEntity.ok(contractServiceFacade.update(id, patch, patch.getUpdatedFields()));
+    contractServiceFacade.update(id, patch, patch.getUpdatedFields());
+    return ResponseEntity.ok().build();
   }
 
   @PatchMapping("/{id}/subcontracts/{id}")
-  public ResponseEntity<SubContractView> updateSubContract(
+  public ResponseEntity updateSubContract(
       @PathVariable Long id, @Validated @RequestBody RequestForUpdateSubContract patch) {
-    return ResponseEntity.ok(
-        contractServiceFacade.updateSubContract(id, patch, patch.getUpdatedFields()));
+    contractServiceFacade.updateSubContract(id, patch, patch.getUpdatedFields());
+    return ResponseEntity.ok().build();
   }
 }

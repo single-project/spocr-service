@@ -1,6 +1,5 @@
 package org.century.scp.spocr.person.models.dto;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,18 +15,5 @@ public class RequestForCreatePerson extends PersonView {
   public Long getId() {
     return super.getId();
   }
-
-  @Null
-  @Override
-  public Long getVersion() {
-    return super.getVersion();
-  }
-
-  @NotNull
-  @Override
-  public Boolean getActive() {
-    return super.getActive();
-  }
-
 
 }

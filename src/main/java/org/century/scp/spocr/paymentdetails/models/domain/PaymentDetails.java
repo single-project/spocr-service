@@ -6,17 +6,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.century.scp.spocr.base.models.domain.BaseEntity;
+import org.century.scp.spocr.base.models.domain.DomainEntity;
 
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @Data
 @Entity
 @Table(name = "counterparty_payment_details")
 @NoArgsConstructor
-public class PaymentDetails extends BaseEntity {
+@AllArgsConstructor
+public class PaymentDetails implements DomainEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,8 +35,5 @@ public class PaymentDetails extends BaseEntity {
 
   @Column(name = "bank")
   private String bank;
-
-  @Column(name = "active")
-  private Boolean active;
 
 }

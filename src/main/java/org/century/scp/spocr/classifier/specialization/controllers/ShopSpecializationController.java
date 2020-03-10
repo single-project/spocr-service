@@ -33,15 +33,16 @@ public class ShopSpecializationController {
   private final ShopSpecializationServiceFacade shopSpecializationService;
 
   @PostMapping
-  public ResponseEntity<ClassifierView> addItem(
+  public ResponseEntity<Long> addItem(
       @Validated @RequestBody RequestForCreateClassifier shopType) {
     return ResponseEntity.ok(shopSpecializationService.create(shopType));
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<ClassifierView> updateItem(
+  public ResponseEntity updateItem(
       @PathVariable Long id, @RequestBody RequestForUpdateClassifier patch) {
-    return ResponseEntity.ok(shopSpecializationService.update(id, patch, patch.getUpdatedFields()));
+    shopSpecializationService.update(id, patch, patch.getUpdatedFields());
+    return ResponseEntity.ok().build();
   }
 
   @GetMapping("/{id}")

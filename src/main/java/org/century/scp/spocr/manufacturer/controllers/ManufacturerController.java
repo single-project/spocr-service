@@ -33,15 +33,16 @@ public class ManufacturerController {
   private final ManufacturerServiceFacade manufacturerService;
 
   @PostMapping
-  public ResponseEntity<ManufacturerView> addItem(
+  public ResponseEntity<Long> addItem(
       @Validated @RequestBody RequestForCreateManufacturer manufacturer) {
     return ResponseEntity.ok(manufacturerService.create(manufacturer));
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<ManufacturerView> updateItem(
+  public ResponseEntity updateItem(
       @PathVariable Long id, @RequestBody RequestForUpdateManufacturer patch) {
-    return ResponseEntity.ok(manufacturerService.update(id, patch, patch.getUpdatedFields()));
+    manufacturerService.update(id, patch, patch.getUpdatedFields());
+    return ResponseEntity.ok().build();
   }
 
   @GetMapping("/{id}")
