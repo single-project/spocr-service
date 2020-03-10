@@ -119,11 +119,9 @@ public class Shop extends BaseEntity {
   }
 
   public Shop(
-      String name, Counterparty counterparty, ShopType shopType, SalesChannel salesChannel) {
+      String name, Counterparty counterparty) {
     this.name = name;
     this.counterparty = counterparty;
-    addShopType(shopType);
-    addSalesChannel(salesChannel);
     this.active = true;
   }
 
@@ -135,13 +133,6 @@ public class Shop extends BaseEntity {
     this.shopTypes.addAll(shopTypes);
   }
 
-  public void addSalesChannels(@NonNull Collection<SalesChannel> salesChannels) {
-    if (this.salesChannels == null) {
-      this.salesChannels = new HashSet<>();
-    }
-
-    this.salesChannels.addAll(salesChannels);
-  }
 
   public void addShopType(ShopType shopType) {
     if (shopTypes == null) {
@@ -155,6 +146,20 @@ public class Shop extends BaseEntity {
       this.salesChannels = new HashSet<>();
     }
     salesChannels.add(salesChannel);
+  }
+
+  public void addShopDepart(ShopDepart shopDepart) {
+    if (shopDeparts == null) {
+      this.shopDeparts = new HashSet<>();
+    }
+    shopDeparts.add(shopDepart);
+  }
+
+  public void addShopSpecialization(ShopSpecialization shopSpecialization) {
+    if (shopSpecializations == null) {
+      this.shopSpecializations = new HashSet<>();
+    }
+    shopSpecializations.add(shopSpecialization);
   }
 
   public boolean linkedWithShopTypes() {

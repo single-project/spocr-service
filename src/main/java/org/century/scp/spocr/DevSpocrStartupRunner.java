@@ -279,9 +279,8 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
       Shop shop =
           new Shop(
               "Магазин" + i,
-              counterpartyService.get(new Random().nextInt(9) + 1),
-              shopTypesService.get(new Random().nextInt(5) + 1),
-              salesChannelService.get(new Random().nextInt(5) + 1));
+              counterpartyService.get(new Random().nextInt(9) + 1)
+          );
       Address address = new Address("address" + i);
       LinkedHashMap<Object, Object> suggestion = new LinkedHashMap<>();
       suggestion.put(i, "s" + i);
@@ -290,6 +289,14 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
       shop.setAddress(address);
       shop.setActive(i % 2 == 0);
       shop.addContact(c2);
+      shop.addSalesChannel(salesChannelService.get(new Random().nextInt(4) + 1));
+      shop.addSalesChannel(salesChannelService.get(new Random().nextInt(4) + 1));
+      shop.addShopType(shopTypesService.get(new Random().nextInt(4) + 1));
+      shop.addShopType(shopTypesService.get(new Random().nextInt(4) + 1));
+      shop.addShopDepart(shopDepartService.get(new Random().nextInt(4) + 1));
+      shop.addShopDepart(shopDepartService.get(new Random().nextInt(4) + 1));
+      shop.addShopSpecialization(shopSpecializationtService.get(new Random().nextInt(4) + 1));
+      shop.addShopSpecialization(shopSpecializationtService.get(new Random().nextInt(4) + 1));
       shopService.create(shop);
     }
   }
