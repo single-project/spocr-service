@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/contactroles")
+@RequestMapping("/api/contact-roles")
 @RequiredArgsConstructor
 public class ContactRoleController {
 

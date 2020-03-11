@@ -33,12 +33,11 @@ public class CounterpartyView extends BaseEntityView {
   private Set<ContactView> contacts;
   private ExtRegSystemCounterpartyPropertiesView extRegSystemProperties;
 
-  public CounterpartyView(Long id, Long version, Boolean active) {
-    super(id, version, active);
-  }
-
   public CounterpartyView(String name) {
     this.name = name;
   }
 
+  public CounterpartyView(Long id, Long version, Boolean active) {
+    super(id, version, active);
+  }
 }

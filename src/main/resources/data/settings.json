@@ -1,14 +1,4 @@
 {
-  "newLegalTypes": [
-    {
-      "id": 1,
-      "name": "Реквизит Физ.лица"
-    },
-    {
-      "id": 2,
-      "name": "Реквизит Организации/ИП"
-    }
-  ],
   "daDataConfiguration": {
     "apiKey": "23c98edeae3d036484034a201a493bb418139a7c"
   },
@@ -84,7 +74,7 @@
     {
       "id": 4,
       "name": "Типы магазинов",
-      "url": "/shoptypes",
+      "url": "/shop-types",
       "sortField": "name",
       "sortOrder": "asc",
       "columns": [
@@ -109,7 +99,7 @@
     {
       "id": 5,
       "name": "Отделы магазина",
-      "url": "/shopdeparts",
+      "url": "/shop-departs",
       "sortField": "name",
       "sortOrder": "asc",
       "columns": [
@@ -134,7 +124,7 @@
     {
       "id": 6,
       "name": "Каналы продаж",
-      "url": "/saleschannels",
+      "url": "/sales-channels",
       "sortField": "name",
       "sortOrder": "asc",
       "columns": [
@@ -159,7 +149,7 @@
     {
       "id": 7,
       "name": "Специализация магазинов",
-      "url": "/shopspecializations",
+      "url": "/shop-specializations",
       "sortField": "name",
       "sortOrder": "asc",
       "columns": [
@@ -246,7 +236,7 @@
     {
       "id": 10,
       "name": "Внешние системы",
-      "url": "/extregsystems",
+      "url": "/ext-reg-systems",
       "sortField": "name",
       "sortOrder": "asc",
       "columns": [

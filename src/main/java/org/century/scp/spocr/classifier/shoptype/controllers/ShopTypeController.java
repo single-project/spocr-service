@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/shoptypes")
+@RequestMapping("/api/shop-types")
 @RequiredArgsConstructor
 public class ShopTypeController {
 

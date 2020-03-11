@@ -375,3 +375,17 @@ CREATE TABLE public.counterparty_to_ext_reg_system_props
     properties text,
     CONSTRAINT counterparty_to_ext_reg_system_props_pkey PRIMARY KEY (id)
 );
+CREATE TABLE public.app_settings
+(
+    id integer NOT NULL auto_increment,
+    properties text,
+    CONSTRAINT app_settings_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.user_settings
+(
+    id integer NOT NULL auto_increment,
+    user_id integer NOT NULL,
+    properties text,
+    CONSTRAINT user_settings_pkey PRIMARY KEY (id),
+    CONSTRAINT user_settings_uidx UNIQUE (user_id)
+);

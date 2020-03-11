@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/extregsystems")
+@RequestMapping("/api/ext-reg-systems")
 @RequiredArgsConstructor
 public class ExtRegSystemController {
 

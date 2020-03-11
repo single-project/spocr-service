@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/extlinks")
+@RequestMapping("/api/ext-links")
 @RequiredArgsConstructor
 public class ExtLinkController {
 

@@ -127,6 +127,9 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
     owner.addContact(c1);
     owner = ownerService.create(owner);
 
+    // add entity types
+    Enumeration enumEntityTypeOwner = new Enumeration();
+
     // add 2 new cp statuses
     Enumeration enumCpStatusClient = new Enumeration();
     enumCpStatusClient.setIdent("CP-STATUS");
@@ -156,33 +159,15 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
     // legal types
     Enumeration enumLegalTypePhys = new Enumeration();
     enumLegalTypePhys.setIdent("LEGAL-TYPE");
-    enumLegalTypePhys.setValue("PHYS-PERS");
+    enumLegalTypePhys.setValue("PHYS");
     enumLegalTypePhys.setDescriptionKey("enumeration.legal-type.physical-person.description");
     enumerationService.create(enumLegalTypePhys);
 
-    Enumeration enumLegalTypeSoleTrader = new Enumeration();
-    enumLegalTypeSoleTrader.setIdent("LEGAL-TYPE");
-    enumLegalTypeSoleTrader.setValue("INDIVIDUAL");
-    enumLegalTypeSoleTrader.setDescriptionKey("enumeration.legal-type.individual.description");
-    LinkedHashMap<String, String> properties = new LinkedHashMap<>();
-    properties.put("opfShort", "ИП");
-    properties.put("opfFull", "Индивидуальный предприниматель");
-    properties.put("opfCode", "50101");
-    properties.put("opfType", "2014");
-    enumLegalTypeSoleTrader.setProperties(properties);
-    enumerationService.create(enumLegalTypeSoleTrader);
-
-    Enumeration enumLegalTypeLimCo = new Enumeration();
-    enumLegalTypeLimCo.setIdent("LEGAL-TYPE");
-    enumLegalTypeLimCo.setValue("LIMITED-CO");
-    enumLegalTypeLimCo.setDescriptionKey("enumeration.legal-type.limited-co.description");
-    properties = new LinkedHashMap<>();
-    properties.put("opfShort", "ООО");
-    properties.put("opfFull", "Общество с ограниченной ответственностью");
-    properties.put("opfCode", "12300");
-    properties.put("opfType", "2014");
-    enumLegalTypeLimCo.setProperties(properties);
-    enumerationService.create(enumLegalTypeLimCo);
+    Enumeration enumLegalTypeLegal = new Enumeration();
+    enumLegalTypeLegal.setIdent("LEGAL-TYPE");
+    enumLegalTypeLegal.setValue("LEGAL");
+    enumLegalTypeLegal.setDescriptionKey("enumeration.legal-type.legal.description");
+    enumerationService.create(enumLegalTypeLegal);
 
     // citizenship
     Enumeration enumCitizenRU = new Enumeration();
@@ -232,7 +217,7 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
       paymentDetails.setCorrespondingAccount("222");
 
       Counterparty e = new Counterparty("Контагент" + i);
-      e.setLegalType(enumLegalTypeLimCo);
+      e.setLegalType(enumLegalTypeLegal);
       e.setPaymentDetails(paymentDetails);
       e.addStatus(enumCpStatusClient);
       e.setPersonRekv(person);
