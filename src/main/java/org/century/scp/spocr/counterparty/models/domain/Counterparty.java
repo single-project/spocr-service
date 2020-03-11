@@ -96,6 +96,11 @@ public class Counterparty extends BaseEntity {
   @JoinColumn(name = "counterparty_legal_rekv_id", referencedColumnName = "id")
   private LegalRekv legalRekv;
 
+  @Cascade({CascadeType.PERSIST, CascadeType.MERGE})
+  @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true)
+  @JoinColumn(name = "counterparty_to_ext_reg_system_props_id", referencedColumnName = "id")
+  private ExtRegSystemCounterpartyProperties extRegSystemProperties;
+
   @Column
   private String comment;
 

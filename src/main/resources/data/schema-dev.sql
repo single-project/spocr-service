@@ -37,6 +37,7 @@ CREATE TABLE public.counterparties
     counterparty_legal_rekv_id integer,
     counterparty_person_id integer,
     counterparty_payment_details_id integer,
+    counterparty_to_ext_reg_system_props_id integer,
     active boolean NOT NULL DEFAULT true,
     version integer NOT NULL DEFAULT 0,
     CONSTRAINT counterparties_pkey PRIMARY KEY (id)
@@ -61,6 +62,7 @@ CREATE TABLE public.shops
     comment character varying(1000),
     counterparty_id integer NOT NULL,
     address_id integer,
+    shop_to_ext_reg_system_props_id integer,
     active boolean NOT NULL DEFAULT true,
     version integer NOT NULL DEFAULT 0,
     CONSTRAINT shops_pkey PRIMARY KEY (id)
@@ -349,4 +351,27 @@ CREATE TABLE public.shop_contacts
     contacts_id integer NOT NULL,
     CONSTRAINT shop_contacts_pkey PRIMARY KEY (id),
     CONSTRAINT shop_contacts_uidx UNIQUE (shop_id, contacts_id)
+);
+CREATE TABLE public.ext_reg_systems
+(
+    id integer NOT NULL auto_increment,
+    name character varying(100) NOT NULL,
+    active boolean NOT NULL DEFAULT true,
+    version integer NOT NULL DEFAULT 0,
+    CONSTRAINT ext_reg_systems_pkey PRIMARY KEY (id),
+    CONSTRAINT ext_reg_systems_uidx UNIQUE (name)
+);
+CREATE TABLE public.shop_to_ext_reg_system_props
+(
+    id integer NOT NULL auto_increment,
+    ext_reg_system_id integer NOT NULL,
+    properties text,
+    CONSTRAINT shop_to_ext_reg_system_props_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.counterparty_to_ext_reg_system_props
+(
+    id integer NOT NULL auto_increment,
+    ext_reg_system_id integer NOT NULL,
+    properties text,
+    CONSTRAINT counterparty_to_ext_reg_system_props_pkey PRIMARY KEY (id)
 );

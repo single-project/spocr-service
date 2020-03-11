@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.century.scp.spocr.manufacturer.models.dto.ManufacturerView;
+import org.century.scp.spocr.base.models.dto.BaseEntityListView;
 
 @Getter
 @Setter
@@ -45,7 +45,7 @@ public class RequestForUpdateClassifier extends ClassifierView {
 
   @NotNull
   @Override
-  public ManufacturerView getManufacturer() {
+  public BaseEntityListView getManufacturer() {
     return super.getManufacturer();
   }
 

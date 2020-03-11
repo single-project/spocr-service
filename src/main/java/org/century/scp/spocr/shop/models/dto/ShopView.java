@@ -5,10 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.century.scp.spocr.address.models.dto.AddressView;
+import org.century.scp.spocr.base.models.dto.BaseEntityListView;
 import org.century.scp.spocr.base.models.dto.BaseEntityView;
 import org.century.scp.spocr.classifier.models.dto.ClassifierView;
 import org.century.scp.spocr.contact.models.dto.ContactView;
-import org.century.scp.spocr.counterparty.models.dto.CounterpartyView;
 
 @Getter
 @Setter
@@ -21,12 +21,13 @@ public class ShopView extends BaseEntityView {
   private Set<ClassifierView> salesChannels;
   private Set<ClassifierView> shopDeparts;
   private Set<ClassifierView> shopSpecializations;
-  private CounterpartyView counterparty;
+  private BaseEntityListView counterparty;
   private String gln;
   private Float area;
   private String comment;
   private String signboard;
   private Set<ContactView> contacts;
+  private ExtRegSystemShopPropertiesView extRegSystemProperties;
 
   public ShopView(
       String name,
@@ -34,7 +35,7 @@ public class ShopView extends BaseEntityView {
       AddressView address,
       Set<ClassifierView> shopTypes,
       Set<ClassifierView> salesChannels,
-      CounterpartyView counterparty) {
+      BaseEntityListView counterparty) {
     super(active);
     this.name = name;
     this.shopTypes = shopTypes;

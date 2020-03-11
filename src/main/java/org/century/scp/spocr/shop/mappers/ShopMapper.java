@@ -14,7 +14,8 @@ import org.springframework.data.domain.Page;
         CounterpartyMapper.class,
         ClassifierMapper.class,
         AddressMapper.class,
-        ContactMapper.class
+        ContactMapper.class,
+        ExtRegSystemShopPropertiesMapper.class
     })
 public interface ShopMapper {
 

@@ -5,6 +5,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Random;
+import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.century.scp.spocr.accesslevel.models.SystemRole;
 import org.century.scp.spocr.accesslevel.models.SystemRule;
@@ -25,10 +26,13 @@ import org.century.scp.spocr.contact.services.ContactService;
 import org.century.scp.spocr.contract.models.domain.Contract;
 import org.century.scp.spocr.contract.services.ContractService;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
+import org.century.scp.spocr.counterparty.models.domain.ExtRegSystemCounterpartyProperties;
 import org.century.scp.spocr.counterparty.services.CounterpartyService;
 import org.century.scp.spocr.enumeration.models.domain.Enumeration;
 import org.century.scp.spocr.enumeration.services.EnumerationService;
 import org.century.scp.spocr.extlink.models.EntityType;
+import org.century.scp.spocr.extregsystem.models.domain.ExtRegSystem;
+import org.century.scp.spocr.extregsystem.services.ExtRegSystemService;
 import org.century.scp.spocr.manufacturer.models.domain.Manufacturer;
 import org.century.scp.spocr.manufacturer.services.ManufacturerService;
 import org.century.scp.spocr.owner.models.domain.Owner;
@@ -38,6 +42,7 @@ import org.century.scp.spocr.person.models.domain.Person;
 import org.century.scp.spocr.person.services.PersonService;
 import org.century.scp.spocr.security.models.domain.SecurityUser;
 import org.century.scp.spocr.security.services.CustomUserDetailsService;
+import org.century.scp.spocr.shop.models.domain.ExtRegSystemShopProperties;
 import org.century.scp.spocr.shop.models.domain.Shop;
 import org.century.scp.spocr.shop.services.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,11 +94,19 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
   private ContactRoleService contactRoleService;
   @Autowired
   private ContactService contactService;
+  @Autowired
+  private ExtRegSystemService extRegSystemService;
 
   @Override
   @Transactional
   public void run(ApplicationArguments args) throws Exception {
     signInAsUser();
+
+    // add 1 ext reg system
+    ExtRegSystem extRegSystem = new ExtRegSystem();
+    extRegSystem.setActive(true);
+    extRegSystem.setName("Меркурий");
+    extRegSystemService.create(extRegSystem);
 
     // add 3 new roles
     ContactRole role1 = contactRoleService.create(new ContactRole("Менеджер", true));
@@ -227,6 +240,12 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
       e.addPaymentType(enumPaymentTypeCashless);
       e.setNoVat(true);
       e.addContact(c1);
+      ExtRegSystemCounterpartyProperties props = new ExtRegSystemCounterpartyProperties();
+      props.setExtRegSystem(extRegSystemService.get(1));
+      LinkedHashMap params = new LinkedHashMap<>();
+      params.put("GUID", UUID.randomUUID());
+      props.setProperties(params);
+      e.setExtRegSystemProperties(props);
       counterpartyService.create(e);
     }
 
@@ -296,6 +315,12 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
       shop.addShopDepart(shopDepartService.get(new Random().nextInt(4) + 1));
       shop.addShopSpecialization(shopSpecializationtService.get(new Random().nextInt(4) + 1));
       shop.addShopSpecialization(shopSpecializationtService.get(new Random().nextInt(4) + 1));
+      ExtRegSystemShopProperties shopProperties = new ExtRegSystemShopProperties();
+      shopProperties.setExtRegSystem(extRegSystemService.get(1));
+      LinkedHashMap shopParams = new LinkedHashMap<>();
+      shopParams.put("GUID", UUID.randomUUID());
+      shopProperties.setProperties(shopParams);
+      shop.setExtRegSystemProperties(shopProperties);
       shopService.create(shop);
     }
   }

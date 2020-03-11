@@ -1,4 +1,4 @@
-package org.century.scp.spocr.shop.models.dto;
+package org.century.scp.spocr.extregsystem.models.dto;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -6,13 +6,11 @@ import javax.validation.constraints.Null;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.century.scp.spocr.address.models.dto.AddressView;
-import org.century.scp.spocr.base.models.dto.BaseEntityListView;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class RequestForCreateShop extends ShopView {
+public class RequestForCreateExtRegSystem extends ExtRegSystemView {
 
   @Null
   @Override
@@ -39,15 +37,4 @@ public class RequestForCreateShop extends ShopView {
     return super.getName();
   }
 
-  @NotNull
-  @Override
-  public BaseEntityListView getCounterparty() {
-    return super.getCounterparty();
-  }
-
-  @NotNull
-  @Override
-  public AddressView getAddress() {
-    return super.getAddress();
-  }
 }

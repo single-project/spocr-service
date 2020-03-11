@@ -18,7 +18,8 @@ import org.springframework.data.domain.Page;
         PersonMapper.class,
         OwnerMapper.class,
         ContactMapper.class,
-        LegalRekvMapper.class
+        LegalRekvMapper.class,
+        ExtRegSystemCounterpartyPropertiesMapper.class
     })
 public interface CounterpartyMapper {
 

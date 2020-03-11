@@ -100,6 +100,11 @@ public class Shop extends BaseEntity {
   @JoinColumn(name = "address_id", referencedColumnName = "id")
   private Address address;
 
+  @Cascade({CascadeType.PERSIST, CascadeType.MERGE})
+  @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true)
+  @JoinColumn(name = "shop_to_ext_reg_system_props_id", referencedColumnName = "id")
+  private ExtRegSystemShopProperties extRegSystemProperties;
+
   @Column(name = "active")
   private Boolean active;
 

@@ -242,6 +242,27 @@
           "header": "Активный"
         }
       ]
+    },
+    {
+      "id": 10,
+      "name": "Внешние системы",
+      "url": "/extregsystems",
+      "sortField": "name",
+      "sortOrder": "asc",
+      "columns": [
+        {
+          "field": "id",
+          "header": "Код"
+        },
+        {
+          "field": "name",
+          "header": "Наименование"
+        },
+        {
+          "field": "active",
+          "header": "Активный"
+        }
+      ]
     }
   ]
 }
