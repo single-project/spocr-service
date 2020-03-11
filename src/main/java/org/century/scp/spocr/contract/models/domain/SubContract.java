@@ -1,4 +1,4 @@
-package org.century.scp.spocr.contract.subcontract.models.domain;
+package org.century.scp.spocr.contract.models.domain;
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -14,7 +14,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.century.scp.spocr.base.models.domain.BaseEntity;
-import org.century.scp.spocr.contract.models.domain.Contract;
 
 @EqualsAndHashCode(callSuper = true)
 @Data

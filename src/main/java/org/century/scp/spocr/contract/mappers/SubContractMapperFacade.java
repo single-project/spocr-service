@@ -1,9 +1,9 @@
-package org.century.scp.spocr.contract.subcontract.mappers;
+package org.century.scp.spocr.contract.mappers;
 
 import lombok.RequiredArgsConstructor;
 import org.century.scp.spocr.base.mappers.MapperI;
-import org.century.scp.spocr.contract.subcontract.models.domain.SubContract;
-import org.century.scp.spocr.contract.subcontract.models.dto.SubContractView;
+import org.century.scp.spocr.contract.models.domain.SubContract;
+import org.century.scp.spocr.contract.models.dto.SubContractView;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 

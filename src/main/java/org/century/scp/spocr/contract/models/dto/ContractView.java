@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.century.scp.spocr.base.models.dto.BaseEntityView;
-import org.century.scp.spocr.contract.subcontract.models.dto.SubContractView;
 import org.century.scp.spocr.counterparty.models.dto.CounterpartyView;
 
 @Getter

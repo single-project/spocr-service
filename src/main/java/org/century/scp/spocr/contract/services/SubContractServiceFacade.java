@@ -1,11 +1,11 @@
-package org.century.scp.spocr.contract.subcontract.services;
+package org.century.scp.spocr.contract.services;
 
 import lombok.extern.slf4j.Slf4j;
 import org.century.scp.spocr.base.mappers.MapperI;
 import org.century.scp.spocr.base.servicefacades.BaseServiceFacade;
 import org.century.scp.spocr.base.services.ServiceI;
-import org.century.scp.spocr.contract.subcontract.models.domain.SubContract;
-import org.century.scp.spocr.contract.subcontract.models.dto.SubContractView;
+import org.century.scp.spocr.contract.models.domain.SubContract;
+import org.century.scp.spocr.contract.models.dto.SubContractView;
 import org.century.scp.spocr.event.repositories.EventRepositoryImpl;
 import org.springframework.stereotype.Component;
 

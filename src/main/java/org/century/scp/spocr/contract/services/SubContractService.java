@@ -1,11 +1,11 @@
-package org.century.scp.spocr.contract.subcontract.services;
+package org.century.scp.spocr.contract.services;
 
 import javax.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.century.scp.spocr.base.repositories.BaseRepository;
 import org.century.scp.spocr.base.services.BaseService;
 import org.century.scp.spocr.contract.models.domain.Contract;
-import org.century.scp.spocr.contract.subcontract.models.domain.SubContract;
+import org.century.scp.spocr.contract.models.domain.SubContract;
 import org.springframework.stereotype.Service;
 
 @Slf4j

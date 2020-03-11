@@ -16,7 +16,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.century.scp.spocr.base.models.domain.BaseEntity;
-import org.century.scp.spocr.contract.subcontract.models.domain.SubContract;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;

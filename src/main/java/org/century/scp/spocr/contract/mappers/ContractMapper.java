@@ -2,7 +2,6 @@ package org.century.scp.spocr.contract.mappers;
 
 import org.century.scp.spocr.contract.models.domain.Contract;
 import org.century.scp.spocr.contract.models.dto.ContractView;
-import org.century.scp.spocr.contract.subcontract.mappers.SubContractMapper;
 import org.mapstruct.Mapper;
 import org.springframework.data.domain.Page;
 

@@ -1,4 +1,4 @@
-package org.century.scp.spocr.contract.subcontract.models.dto;
+package org.century.scp.spocr.contract.models.dto;
 
 import java.util.Date;
 import javax.validation.constraints.NotEmpty;
@@ -7,7 +7,6 @@ import javax.validation.constraints.Null;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.century.scp.spocr.contract.models.dto.ContractView;
 
 @Getter
 @Setter

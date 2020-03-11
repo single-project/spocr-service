@@ -1,11 +1,10 @@
-package org.century.scp.spocr.contract.subcontract.models.dto;
+package org.century.scp.spocr.contract.models.dto;
 
 import java.util.Date;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.century.scp.spocr.base.models.dto.BaseEntityView;
-import org.century.scp.spocr.contract.models.dto.ContractView;
 
 @Getter
 @Setter
