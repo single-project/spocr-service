@@ -311,8 +311,11 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
   }
 
   public void signInAsUser() {
+    // ***** add system role - ADMIN ******
+    SystemRole adminRole = accessLevelService.createRole("ROLE_ADMIN");
+    
     // ***** add system role - MANAGER ******
-    SystemRole role = accessLevelService.createRole("ROLE_MANAGER");
+    SystemRole managerRole = accessLevelService.createRole("ROLE_MANAGER");
 
     // add possible rules
     SystemRule canReadRule = accessLevelService.createRule("READ_PRIVILEGE", EntityType.SHOP);
@@ -322,21 +325,21 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
         accessLevelService.createRule("UPDATE_PRIVILEGE", EntityType.SHOP_TYPE);
 
     // link role to rules
-    accessLevelService.addRuleToRole(role.getId(), canReadRule.getId());
-    accessLevelService.addRuleToRole(role.getId(), canCreateRule.getId());
-    accessLevelService.addRuleToRole(role.getId(), canUpdateRule.getId());
+    accessLevelService.addRuleToRole(managerRole.getId(), canReadRule.getId());
+    accessLevelService.addRuleToRole(managerRole.getId(), canCreateRule.getId());
+    accessLevelService.addRuleToRole(managerRole.getId(), canUpdateRule.getId());
 
     // link user to role
-    userDetailsService.addRole(1, role);
+    userDetailsService.addRole(1, adminRole, managerRole);
 
     // ***** add system role - READER ******
-    role = accessLevelService.createRole("ROLE_READER");
+    managerRole = accessLevelService.createRole("ROLE_READER");
 
     // link role to rules
-    accessLevelService.addRuleToRole(role.getId(), canReadRule.getId());
+    accessLevelService.addRuleToRole(managerRole.getId(), canReadRule.getId());
 
     // link user to role
-    userDetailsService.addRole(2, role);
+    userDetailsService.addRole(2, managerRole);
 
     SecurityUser user = users.findUserByLogin("user");
     Authentication auth =

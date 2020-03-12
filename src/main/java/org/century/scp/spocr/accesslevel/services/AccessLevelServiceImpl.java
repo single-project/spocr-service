@@ -53,11 +53,11 @@ public class AccessLevelServiceImpl {
     return ruleRepository.save(rule);
   }
 
-  public SystemRole addRuleToRole(long roleId, long ruleId) {
+  public void addRuleToRole(long roleId, long ruleId) {
     SystemRole role = getRole(roleId);
     SystemRule rule = getRule(ruleId);
     role.addRule(rule);
-    return roleRepository.save(role);
+    roleRepository.save(role);
   }
 
   public SystemRule getRule(long id) {

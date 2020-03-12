@@ -25,9 +25,9 @@ public class CustomUserDetailsService implements SecurityService, UserDetailsSer
     this.request = request;
   }
 
-  public SecurityUser addRole(int id, SystemRole role) {
+  public SecurityUser addRole(int id, SystemRole... roles) {
     SecurityUser user = findUserById(id);
-    user.addRole(role);
+    user.addRoles(roles);
     return userRepository.save(user);
   }
 
