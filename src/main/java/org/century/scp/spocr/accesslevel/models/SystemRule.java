@@ -9,13 +9,14 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.century.scp.spocr.base.models.domain.DomainEntity;
 
 @Data
 @Entity
 @Table(name = "system_rules")
 @NoArgsConstructor
 @AllArgsConstructor
-public class SystemRule {
+public class SystemRule implements DomainEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

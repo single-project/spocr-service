@@ -15,5 +15,4 @@ public class SettingsView {
 
   private Map<String, String> daDataConfiguration;
 
-  private List<Map<String, String>> newLegalTypes;
 }

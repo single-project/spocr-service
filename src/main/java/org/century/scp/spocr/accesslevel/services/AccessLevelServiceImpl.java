@@ -8,6 +8,7 @@ import org.century.scp.spocr.accesslevel.repositories.SystemRuleRepository;
 import org.century.scp.spocr.exceptions.SpocrEntityNotFoundException;
 import org.century.scp.spocr.extlink.models.EntityType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,17 +28,18 @@ public class AccessLevelServiceImpl {
     return roleRepository.findAll();
   }
 
-  public List<SystemRole> getRules() {
-    return roleRepository.findAll();
+  public List<SystemRule> getRules(Specification<SystemRule> specification) {
+    return ruleRepository.findAll(specification);
   }
 
   public SystemRole createRole(String name) {
     return roleRepository.save(new SystemRole(name));
   }
 
-  public SystemRole updateRole(long id, String name) {
-    SystemRole role = getRole(id);
-    role.setName(name);
+  public SystemRole updateRole(SystemRole patch) {
+    SystemRole role = getRole(patch.getId());
+    role.setName(patch.getName());
+    role.replaceRules(patch.getSystemRules());
     return roleRepository.save(role);
   }
 
@@ -58,13 +60,13 @@ public class AccessLevelServiceImpl {
     return roleRepository.save(role);
   }
 
-  private SystemRule getRule(long id) {
+  public SystemRule getRule(long id) {
     return ruleRepository
         .findById(id)
         .orElseThrow(() -> new SpocrEntityNotFoundException(SystemRole.class, id));
   }
 
-  private SystemRole getRole(long id) {
+  public SystemRole getRole(long id) {
     return roleRepository
         .findById(id)
         .orElseThrow(() -> new SpocrEntityNotFoundException(SystemRole.class, id));

@@ -51,4 +51,13 @@ public class SystemRole {
 
     systemRules.add(rule);
   }
+
+  public void replaceRules(List<SystemRule> rules) {
+    if (this.systemRules == null) {
+      this.systemRules = new ArrayList<>();
+    } else {
+      this.systemRules.clear();
+    }
+    systemRules.addAll(rules);
+  }
 }
