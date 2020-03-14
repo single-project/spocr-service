@@ -153,7 +153,16 @@ CREATE TABLE public.counterparty_payment_details
     corresponding_account character varying(20),
     bic character varying(9) NOT NULL,
     bank character varying(300) NOT NULL,
+    counterparty_id integer NOT NULL,
     CONSTRAINT counterparty_payment_details_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.counterparty_to_payment_details
+(
+    id integer NOT NULL auto_increment,
+    counterparty_id integer not null,
+    payment_details_id integer not null,
+    CONSTRAINT counterparty_to_payment_details_pkey PRIMARY KEY (id),
+    CONSTRAINT counterparty_to_payment_details_uidx UNIQUE (payment_details_id)
 );
 CREATE TABLE public.legal_rekvs
 (

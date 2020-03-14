@@ -2,6 +2,7 @@ package org.century.scp.spocr.counterparty.models.domain;
 
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -24,8 +26,6 @@ import org.century.scp.spocr.enumeration.models.domain.Enumeration;
 import org.century.scp.spocr.owner.models.domain.Owner;
 import org.century.scp.spocr.paymentdetails.models.domain.PaymentDetails;
 import org.century.scp.spocr.person.models.domain.Person;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -68,10 +68,12 @@ public class Counterparty extends BaseEntity {
   @JoinColumn(name = "parent_id")
   private Counterparty parent;
 
-  @Cascade({CascadeType.PERSIST, CascadeType.MERGE})
-  @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true)
-  @JoinColumn(name = "counterparty_payment_details_id", referencedColumnName = "id")
-  private PaymentDetails paymentDetails;
+  @OneToMany(
+      mappedBy = "counterparty",
+      fetch = FetchType.EAGER,
+      cascade = CascadeType.ALL,
+      orphanRemoval = true)
+  private Set<PaymentDetails> paymentDetails;
 
   @Column(name = "no_vat")
   private Boolean noVat;
@@ -86,18 +88,15 @@ public class Counterparty extends BaseEntity {
       inverseJoinColumns = @JoinColumn(name = "contacts_id"))
   private Set<Contact> contacts;
 
-  @Cascade({CascadeType.PERSIST, CascadeType.MERGE})
-  @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true)
+  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
   @JoinColumn(name = "counterparty_person_id", referencedColumnName = "id")
   private Person personRekv;
 
-  @Cascade({CascadeType.PERSIST, CascadeType.MERGE})
-  @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true)
+  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
   @JoinColumn(name = "counterparty_legal_rekv_id", referencedColumnName = "id")
   private LegalRekv legalRekv;
 
-  @Cascade({CascadeType.PERSIST, CascadeType.MERGE})
-  @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true)
+  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
   @JoinColumn(name = "counterparty_to_ext_reg_system_props_id", referencedColumnName = "id")
   private ExtRegSystemCounterpartyProperties extRegSystemProperties;
 
@@ -125,6 +124,10 @@ public class Counterparty extends BaseEntity {
     return paymentTypes != null && paymentTypes.size() > 0;
   }
 
+  public boolean linkedWithPaymentDetails() {
+    return paymentDetails != null && paymentDetails.size() > 0;
+  }
+
   public void addPaymentType(Enumeration paymentType) {
     if (paymentTypes == null) {
       paymentTypes = new HashSet<>();
@@ -143,5 +146,33 @@ public class Counterparty extends BaseEntity {
     }
 
     contacts.add(contact);
+  }
+
+  public void addPaymentDetails(PaymentDetails paymentDetails) {
+    if (this.paymentDetails == null) {
+      this.paymentDetails = new HashSet<>();
+    }
+    getPaymentDetails().add(paymentDetails);
+    paymentDetails.setCounterparty(this);
+  }
+
+  public void removePaymentDetails(PaymentDetails paymentDetails) {
+    getPaymentDetails().remove(paymentDetails);
+    paymentDetails.setCounterparty(null);
+  }
+
+  public void setPaymentDetails(Set<PaymentDetails> paymentDetails) {
+    if (linkedWithPaymentDetails()) {
+      this.paymentDetails.removeIf(
+          e -> {
+            e.setCounterparty(null);
+            return true;
+          });
+      if (paymentDetails != null) {
+        paymentDetails.forEach(this::addPaymentDetails);
+      }
+    } else if (paymentDetails != null) {
+      paymentDetails.forEach(this::addPaymentDetails);
+    }
   }
 }

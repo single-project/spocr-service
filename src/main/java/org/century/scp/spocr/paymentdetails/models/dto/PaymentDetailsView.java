@@ -24,4 +24,5 @@ public class PaymentDetailsView extends BaseEntityView {
 
   @Column(name = "bank")
   private String bank;
+
 }

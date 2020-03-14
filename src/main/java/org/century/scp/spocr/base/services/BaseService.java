@@ -63,7 +63,11 @@ public abstract class BaseService<T extends DomainEntity> implements ServiceI<T>
   public abstract void refresh(T entity);
 
   public <K extends DomainEntity> K getReference(K entity, Class<K> cl) {
-    return entityManager.find(cl, entity.getId());
+    if (entity.getId() != null) {
+      return entityManager.find(cl, entity.getId());
+    } else {
+      return entity;
+    }
   }
 
   public <K extends DomainEntity> Set<K> getReferences(Set<K> objects, Class<K> cl) {

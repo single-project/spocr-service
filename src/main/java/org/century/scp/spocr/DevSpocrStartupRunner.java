@@ -218,7 +218,6 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
 
       Counterparty e = new Counterparty("Контагент" + i);
       e.setLegalType(enumLegalTypeLegal);
-      e.setPaymentDetails(paymentDetails);
       e.addStatus(enumCpStatusClient);
       e.setPersonRekv(person);
       e.setOwner(owner);
@@ -231,7 +230,9 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
       params.put("GUID", UUID.randomUUID());
       props.setProperties(params);
       e.setExtRegSystemProperties(props);
+      e.addPaymentDetails(paymentDetails);
       counterpartyService.create(e);
+
     }
 
     // add 1 new contract and 2 subcontracts

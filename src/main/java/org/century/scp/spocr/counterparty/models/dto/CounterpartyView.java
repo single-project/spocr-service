@@ -22,7 +22,7 @@ public class CounterpartyView extends BaseEntityView {
   private String name;
   private EnumerationView legalType;
   private LegalRekvView legalRekv;
-  private PaymentDetailsView paymentDetails;
+  private Set<PaymentDetailsView> paymentDetails;
   private BaseEntityListView parent;
   private Set<EnumerationView> statuses;
   private Set<EnumerationView> paymentTypes;
