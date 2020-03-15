@@ -322,6 +322,7 @@ CREATE TABLE public.contact_roles
     id integer NOT NULL auto_increment,
     name character varying(100) NOT NULL,
     active boolean NOT NULL DEFAULT true,
+    VERSION integer NOT NULL DEFAULT 0,
     CONSTRAINT contact_roles_pkey PRIMARY KEY (id),
     CONSTRAINT contact_roles_uidx UNIQUE (name)
 );

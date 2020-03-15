@@ -5,8 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import javax.persistence.AttributeConverter;
+import lombok.extern.slf4j.Slf4j;
 import org.century.scp.spocr.exceptions.SpocrException;
 
+@Slf4j
 public class LinkedHashMapConverter implements AttributeConverter<LinkedHashMap, String> {
 
   @Override
@@ -14,7 +16,8 @@ public class LinkedHashMapConverter implements AttributeConverter<LinkedHashMap,
     try {
       return data != null ? new ObjectMapper().writeValueAsString(data) : null;
     } catch (JsonProcessingException e) {
-      throw new SpocrException("Ошибка преобразования данных", e);
+      log.error("failed-to-convert-data.exception", e);
+      throw new SpocrException("failed-to-convert-data.exception");
     }
   }
 
@@ -23,7 +26,8 @@ public class LinkedHashMapConverter implements AttributeConverter<LinkedHashMap,
     try {
       return json != null ? new ObjectMapper().readValue(json, LinkedHashMap.class) : null;
     } catch (IOException e) {
-      throw new SpocrException("Ошибка преобразования данных", e);
+      log.error("failed-to-convert-data.exception", e);
+      throw new SpocrException("failed-to-convert-data.exception");
     }
   }
 }

@@ -1,5 +1,9 @@
 package org.century.scp.spocr.exceptions;
 
+import lombok.Getter;
+
+
+@Getter
 public class SpocrException extends RuntimeException {
 
   private Object[] arguments;
@@ -10,6 +14,12 @@ public class SpocrException extends RuntimeException {
   }
 
   public SpocrException(String messageFormatKey, Object... arguments) {
+    this.arguments = arguments;
+    this.messageFormatKey = messageFormatKey;
+  }
+
+  public SpocrException(String messageFormatKey, Throwable cause, Object... arguments) {
+    super(cause);
     this.arguments = arguments;
     this.messageFormatKey = messageFormatKey;
   }
@@ -30,7 +40,4 @@ public class SpocrException extends RuntimeException {
     super(cause);
   }
 
-  public SpocrException(String message, Throwable cause) {
-    super(message, cause);
-  }
 }

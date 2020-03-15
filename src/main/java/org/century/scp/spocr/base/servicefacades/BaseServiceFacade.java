@@ -11,6 +11,7 @@ import org.century.scp.spocr.base.mappers.MapperI;
 import org.century.scp.spocr.base.models.domain.IdentifiedEntity;
 import org.century.scp.spocr.base.models.dto.DTO;
 import org.century.scp.spocr.base.services.ServiceI;
+import org.century.scp.spocr.base.utils.EntityNameConverter;
 import org.century.scp.spocr.event.models.domain.EventEnum;
 import org.century.scp.spocr.event.repositories.EventRepositoryImpl;
 import org.century.scp.spocr.security.models.domain.SecurityUser;
@@ -64,7 +65,8 @@ public class BaseServiceFacade<T extends IdentifiedEntity, K extends DTO>
     Map<String, Object> body = new HashMap<>();
     body.put("id", entity.getId());
     eventRepository.insert(
-        EventEnum.CREATED.name(), entity.getClass().getName(), body, getCurrentUserLogin());
+        EventEnum.CREATED.name(), EntityNameConverter.toMetaDataKey(entity.getClass()), body,
+        getCurrentUserLogin());
   }
 
   protected void afterUpdate(T entity, List<String> properties) {
@@ -72,7 +74,8 @@ public class BaseServiceFacade<T extends IdentifiedEntity, K extends DTO>
     body.put("id", entity.getId());
     body.put("fields", properties);
     eventRepository.insert(
-        EventEnum.UPDATED.name(), entity.getClass().getName(), body, getCurrentUserLogin());
+        EventEnum.UPDATED.name(), EntityNameConverter.toMetaDataKey(entity.getClass()), body,
+        getCurrentUserLogin());
   }
 
   private String getCurrentUserLogin() {

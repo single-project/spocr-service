@@ -49,19 +49,17 @@ public class CustomBeanUtils {
         try {
           Object sourceValue = readMethod.invoke(source);
           copy(target, writeMethod, sourceValue);
-        } catch (Throwable throwable) {
-          throw new SpocrException(
-              "Could not copy property '"
-                  + targetPropertyDescriptor.getName()
-                  + "' from source to target",
-              throwable);
+        } catch (Throwable e) {
+          log.error("could-not-copy-property.exception", e);
+          throw new SpocrException("could-not-copy-property.exception",
+              targetPropertyDescriptor.getName());
         }
       }
     }
   }
 
-  private static <T extends IdentifiedEntity> void copy(T target, Method writeMethod,
-      Object sourceValue)
+  private static <T extends IdentifiedEntity> void copy(
+      T target, Method writeMethod, Object sourceValue)
       throws IllegalAccessException, InvocationTargetException {
     writeMethod.invoke(target, sourceValue);
   }

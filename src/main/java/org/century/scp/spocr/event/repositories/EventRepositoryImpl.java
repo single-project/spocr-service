@@ -51,7 +51,8 @@ public class EventRepositoryImpl {
     try {
       return objectMapper.writeValueAsString(body);
     } catch (JsonProcessingException e) {
-      throw new SpocrException("Не удалось преобразовать данные", e);
+      log.error("failed-to-convert-data.exception", e);
+      throw new SpocrException("failed-to-convert-data.exception");
     }
   }
 }

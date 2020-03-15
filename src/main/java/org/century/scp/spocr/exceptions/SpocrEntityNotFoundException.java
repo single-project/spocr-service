@@ -1,17 +1,12 @@
 package org.century.scp.spocr.exceptions;
 
-import com.google.common.base.CaseFormat;
+import org.century.scp.spocr.base.utils.EntityNameConverter;
 
 public class SpocrEntityNotFoundException extends SpocrException {
 
   public SpocrEntityNotFoundException(Class<?> c, long id) {
-    super(String.format("%s-not-found.exception",
-        CaseFormat.UPPER_CAMEL.converterTo(CaseFormat.LOWER_HYPHEN).convert(c.getSimpleName())),
+    super(String.format("%s-not-found.exception", EntityNameConverter.toMessageServiceKey(c)),
         id);
-  }
-
-  public SpocrEntityNotFoundException(String message) {
-    super(message);
   }
 
 }

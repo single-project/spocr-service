@@ -109,9 +109,9 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
     extRegSystemService.create(extRegSystem);
 
     // add 3 new roles
-    ContactRole role1 = contactRoleService.create(new ContactRole("Менеджер", true));
-    ContactRole role2 = contactRoleService.create(new ContactRole("Кладовщик", true));
-    ContactRole role3 = contactRoleService.create(new ContactRole("Директор", false));
+    ContactRole role1 = contactRoleService.create(new ContactRole("Менеджер"));
+    ContactRole role2 = contactRoleService.create(new ContactRole("Кладовщик"));
+    ContactRole role3 = contactRoleService.create(new ContactRole("Директор"));
 
     // add 2 new contacts
     Person person1 = personService.create(new Person("Петров", "Иван", "Сидорович"));
