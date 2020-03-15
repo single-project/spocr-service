@@ -17,8 +17,7 @@ public enum EntityType {
   SHOP_SPECIALIZATION,
   MANUFACTURER,
   COUNTERPARTY,
-  EXT_REG_SYSTEM,
-  ;
+  EXT_REG_SYSTEM;
 
   public static List<String> getTypes() {
     return Stream.of(values()).map(Enum::name).collect(Collectors.toList());
