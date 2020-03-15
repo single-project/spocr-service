@@ -1,8 +1,7 @@
 package org.century.scp.spocr.security.models.dto;
 
 import java.io.Serializable;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,10 +13,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AuthenticationRequest implements Serializable {
 
-  @NotNull
-  @NotEmpty
+  @NotBlank
   private String username;
-  @NotNull
-  @NotEmpty
+  @NotBlank
   private String password;
 }

@@ -1,8 +1,7 @@
 package org.century.scp.spocr.person.models.dto;
 
 import java.util.List;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import lombok.Getter;
@@ -16,21 +15,18 @@ public class RequestForUpdatePerson extends PersonView {
 
   private List<String> updatedFields;
 
-  @NotNull
   @Positive
   @Override
   public Long getId() {
     return super.getId();
   }
 
-  @NotNull
-  @NotEmpty
+  @NotBlank
   @Override
   public String getName() {
     return super.getName();
   }
 
-  @NotNull
   @Size(min = 1)
   public List<String> getUpdatedFields() {
     return updatedFields;

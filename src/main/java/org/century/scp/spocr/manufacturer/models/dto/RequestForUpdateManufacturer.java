@@ -1,7 +1,7 @@
 package org.century.scp.spocr.manufacturer.models.dto;
 
 import java.util.List;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
@@ -16,7 +16,6 @@ public class RequestForUpdateManufacturer extends ManufacturerView {
 
   private List<String> updatedFields;
 
-  @NotNull
   @PositiveOrZero
   @Override
   public Long getVersion() {
@@ -29,14 +28,12 @@ public class RequestForUpdateManufacturer extends ManufacturerView {
     return super.getActive();
   }
 
-  @NotNull
-  @NotEmpty
+  @NotBlank
   @Override
   public String getName() {
     return super.getName();
   }
 
-  @NotNull
   @Size(min = 1)
   public List<String> getUpdatedFields() {
     return this.updatedFields;

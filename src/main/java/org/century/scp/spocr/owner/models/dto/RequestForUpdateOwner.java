@@ -1,7 +1,7 @@
 package org.century.scp.spocr.owner.models.dto;
 
 import java.util.List;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
@@ -16,7 +16,6 @@ public class RequestForUpdateOwner extends OwnerView {
 
   private List<String> updatedFields;
 
-  @NotNull
   @PositiveOrZero
   @Override
   public Long getVersion() {
@@ -29,14 +28,12 @@ public class RequestForUpdateOwner extends OwnerView {
     return super.getActive();
   }
 
-  @NotNull
-  @NotEmpty
+  @NotBlank
   @Override
   public String getName() {
     return super.getName();
   }
 
-  @NotNull
   @Size(min = 1)
   public List<String> getUpdatedFields() {
     return this.updatedFields;

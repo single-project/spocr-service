@@ -22,7 +22,6 @@ public class RequestForUpdateContact extends ContactView {
     return super.getId();
   }
 
-  @NotNull
   @PositiveOrZero
   @Override
   public Long getVersion() {
@@ -47,7 +46,6 @@ public class RequestForUpdateContact extends ContactView {
     return super.getPerson();
   }
 
-  @NotNull
   @Size(min = 1)
   public List<String> getUpdatedFields() {
     return this.updatedFields;

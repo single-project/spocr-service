@@ -2,7 +2,7 @@ package org.century.scp.spocr.contract.models.dto;
 
 import java.util.Date;
 import java.util.List;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
@@ -19,14 +19,12 @@ public class RequestForUpdateContract extends ContractView {
 
   private List<String> updatedFields;
 
-  @NotNull
   @Positive
   @Override
   public Long getId() {
     return super.getId();
   }
 
-  @NotNull
   @PositiveOrZero
   @Override
   public Long getVersion() {
@@ -39,8 +37,7 @@ public class RequestForUpdateContract extends ContractView {
     return super.getActive();
   }
 
-  @NotNull
-  @NotEmpty
+  @NotBlank
   @Override
   public String getName() {
     return super.getName();
@@ -58,8 +55,7 @@ public class RequestForUpdateContract extends ContractView {
     return super.getStartDate();
   }
 
-  @NotNull
-  @NotEmpty
+  @NotBlank
   @Override
   public String getContractNumber() {
     return super.getContractNumber();
@@ -77,7 +73,6 @@ public class RequestForUpdateContract extends ContractView {
     return super.getCounterparty2();
   }
 
-  @NotNull
   @Size(min = 1)
   public List<String> getUpdatedFields() {
     return updatedFields;

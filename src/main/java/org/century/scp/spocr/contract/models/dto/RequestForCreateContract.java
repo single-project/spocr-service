@@ -1,7 +1,7 @@
 package org.century.scp.spocr.contract.models.dto;
 
 import java.util.Date;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import lombok.Getter;
@@ -32,8 +32,7 @@ public class RequestForCreateContract extends ContractView {
     return super.getActive();
   }
 
-  @NotNull
-  @NotEmpty
+  @NotBlank
   @Override
   public String getName() {
     return super.getName();
@@ -50,8 +49,7 @@ public class RequestForCreateContract extends ContractView {
     return super.getStartDate();
   }
 
-  @NotNull
-  @NotEmpty
+  @NotBlank
   @Override
   public String getContractNumber() {
     return super.getContractNumber();

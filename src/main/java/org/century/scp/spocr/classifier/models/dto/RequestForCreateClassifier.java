@@ -1,6 +1,6 @@
 package org.century.scp.spocr.classifier.models.dto;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import lombok.Getter;
@@ -31,8 +31,7 @@ public class RequestForCreateClassifier extends ClassifierView {
     return super.getActive();
   }
 
-  @NotNull
-  @NotEmpty
+  @NotBlank
   @Override
   public String getName() {
     return super.getName();

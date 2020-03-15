@@ -1,7 +1,7 @@
 package org.century.scp.spocr.shop.models.dto;
 
 import java.util.List;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
@@ -18,14 +18,12 @@ public class RequestForUpdateShop extends ShopView {
 
   private List<String> updatedFields;
 
-  @NotNull
   @Positive
   @Override
   public Long getId() {
     return super.getId();
   }
 
-  @NotNull
   @PositiveOrZero
   @Override
   public Long getVersion() {
@@ -38,8 +36,7 @@ public class RequestForUpdateShop extends ShopView {
     return super.getActive();
   }
 
-  @NotNull
-  @NotEmpty
+  @NotBlank
   @Override
   public String getName() {
     return super.getName();
@@ -51,7 +48,6 @@ public class RequestForUpdateShop extends ShopView {
     return super.getCounterparty();
   }
 
-  @NotNull
   @Size(min = 1)
   public List<String> getUpdatedFields() {
     return updatedFields;

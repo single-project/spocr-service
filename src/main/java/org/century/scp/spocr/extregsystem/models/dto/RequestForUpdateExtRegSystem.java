@@ -1,7 +1,7 @@
 package org.century.scp.spocr.extregsystem.models.dto;
 
 import java.util.List;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
@@ -22,7 +22,6 @@ public class RequestForUpdateExtRegSystem extends ExtRegSystemView {
     return super.getId();
   }
 
-  @NotNull
   @PositiveOrZero
   @Override
   public Long getVersion() {
@@ -35,14 +34,12 @@ public class RequestForUpdateExtRegSystem extends ExtRegSystemView {
     return super.getActive();
   }
 
-  @NotNull
-  @NotEmpty
+  @NotBlank
   @Override
   public String getName() {
     return super.getName();
   }
 
-  @NotNull
   @Size(min = 1)
   public List<String> getUpdatedFields() {
     return this.updatedFields;

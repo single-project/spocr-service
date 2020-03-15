@@ -1,7 +1,7 @@
 package org.century.scp.spocr.classifier.models.dto;
 
 import java.util.List;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
@@ -23,7 +23,6 @@ public class RequestForUpdateClassifier extends ClassifierView {
     return super.getId();
   }
 
-  @NotNull
   @PositiveOrZero
   @Override
   public Long getVersion() {
@@ -36,8 +35,7 @@ public class RequestForUpdateClassifier extends ClassifierView {
     return super.getActive();
   }
 
-  @NotNull
-  @NotEmpty
+  @NotBlank
   @Override
   public String getName() {
     return super.getName();
@@ -49,7 +47,6 @@ public class RequestForUpdateClassifier extends ClassifierView {
     return super.getManufacturer();
   }
 
-  @NotNull
   @Size(min = 1)
   public List<String> getUpdatedFields() {
     return this.updatedFields;
