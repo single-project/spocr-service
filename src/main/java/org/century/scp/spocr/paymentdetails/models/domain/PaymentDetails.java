@@ -11,7 +11,7 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.century.scp.spocr.base.models.domain.DomainEntity;
+import org.century.scp.spocr.base.models.domain.IdentifiedEntity;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 
 @Data
@@ -19,7 +19,7 @@ import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 @Table(name = "counterparty_payment_details")
 @NoArgsConstructor
 @AllArgsConstructor
-public class PaymentDetails implements DomainEntity {
+public class PaymentDetails implements IdentifiedEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -9,15 +9,5 @@ import org.century.scp.spocr.base.models.dto.BaseEntityView;
 @Setter
 @NoArgsConstructor
 public class ManufacturerView extends BaseEntityView {
-
   private String name;
-
-  public ManufacturerView(String name) {
-    this.name = name;
-  }
-
-  public ManufacturerView(long id, String name, Long version, Boolean active) {
-    super(id, version, active);
-    this.name = name;
-  }
 }

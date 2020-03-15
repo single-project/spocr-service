@@ -11,13 +11,13 @@ import javax.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.century.scp.spocr.base.converters.LinkedHashMapConverter;
-import org.century.scp.spocr.base.models.domain.DomainEntity;
+import org.century.scp.spocr.base.models.domain.IdentifiedEntity;
 
 @Data
 @Entity
 @Table(name = "enumerations")
 @NoArgsConstructor
-public class Enumeration implements DomainEntity {
+public class Enumeration implements IdentifiedEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

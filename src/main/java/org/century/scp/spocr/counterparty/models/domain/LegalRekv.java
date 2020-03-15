@@ -13,7 +13,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.century.scp.spocr.base.converters.LinkedHashMapConverter;
-import org.century.scp.spocr.base.models.domain.DomainEntity;
+import org.century.scp.spocr.base.models.domain.IdentifiedEntity;
 
 @EqualsAndHashCode
 @Data
@@ -21,7 +21,7 @@ import org.century.scp.spocr.base.models.domain.DomainEntity;
 @Table(name = "legal_rekvs")
 @NoArgsConstructor
 @AllArgsConstructor
-public class LegalRekv implements DomainEntity {
+public class LegalRekv implements IdentifiedEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

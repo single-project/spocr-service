@@ -1,7 +1,6 @@
 package org.century.scp.spocr.counterparty.models.dto;
 
 import java.util.Set;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,7 +15,6 @@ import org.century.scp.spocr.person.models.dto.PersonView;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class CounterpartyView extends BaseEntityView {
 
   private String name;
@@ -33,11 +31,4 @@ public class CounterpartyView extends BaseEntityView {
   private Set<ContactView> contacts;
   private ExtRegSystemCounterpartyPropertiesView extRegSystemProperties;
 
-  public CounterpartyView(String name) {
-    this.name = name;
-  }
-
-  public CounterpartyView(Long id, Long version, Boolean active) {
-    super(id, version, active);
-  }
 }

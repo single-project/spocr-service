@@ -1,14 +1,14 @@
 package org.century.scp.spocr.base.servicefacades;
 
 import java.util.List;
-import org.century.scp.spocr.base.models.domain.DomainEntity;
+import org.century.scp.spocr.base.models.domain.IdentifiedEntity;
 import org.century.scp.spocr.base.models.dto.DTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.transaction.annotation.Transactional;
 
-public interface ServiceFacade<T extends DomainEntity, K extends DTO> {
+public interface ServiceFacade<T extends IdentifiedEntity, K extends DTO> {
 
   @Transactional(readOnly = true)
   K get(Long id);

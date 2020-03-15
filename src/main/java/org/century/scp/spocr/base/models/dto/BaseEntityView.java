@@ -1,10 +1,8 @@
 package org.century.scp.spocr.base.models.dto;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-@EqualsAndHashCode
 @Getter
 @Setter
 public abstract class BaseEntityView implements DTO {
@@ -17,18 +15,20 @@ public abstract class BaseEntityView implements DTO {
     this.active = true;
   }
 
-  public BaseEntityView(Boolean active) {
-    this.active = active;
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof BaseEntityView)) {
+      return false;
+    }
+    return getId() != null && getId().equals(((BaseEntityView) o).getId());
   }
 
-  public BaseEntityView(Long version, Boolean active) {
-    this.version = version;
-    this.active = active;
+  @Override
+  public int hashCode() {
+    return 31;
   }
 
-  public BaseEntityView(Long id, Long version, Boolean active) {
-    this.id = id;
-    this.version = version;
-    this.active = active;
-  }
 }

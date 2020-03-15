@@ -39,7 +39,7 @@ CREATE TABLE public.counterparties
     counterparty_payment_details_id integer,
     counterparty_to_ext_reg_system_props_id integer,
     active boolean NOT NULL DEFAULT true,
-    version integer NOT NULL DEFAULT 0,
+    VERSION integer NOT NULL DEFAULT 0,
     CONSTRAINT counterparties_pkey PRIMARY KEY (id)
 );
 CREATE TABLE public.events
@@ -64,7 +64,7 @@ CREATE TABLE public.shops
     address_id integer,
     shop_to_ext_reg_system_props_id integer,
     active boolean NOT NULL DEFAULT true,
-    version integer NOT NULL DEFAULT 0,
+    VERSION integer NOT NULL DEFAULT 0,
     CONSTRAINT shops_pkey PRIMARY KEY (id)
 );
 CREATE TABLE public.manufactures
@@ -72,7 +72,7 @@ CREATE TABLE public.manufactures
     id integer NOT NULL auto_increment,
     name character varying(100) NOT NULL,
     active boolean NOT NULL DEFAULT true,
-    version integer NOT NULL DEFAULT 0,
+    VERSION integer NOT NULL DEFAULT 0,
     CONSTRAINT manufactures_pkey PRIMARY KEY (id),
     CONSTRAINT manufactures_name_uidx UNIQUE (name)
 );
@@ -82,7 +82,7 @@ CREATE TABLE public.shop_types
     name character varying(100) NOT NULL,
     active boolean NOT NULL DEFAULT true,
     manufactures_id integer NOT NULL,
-    version integer NOT NULL DEFAULT 0,
+    VERSION integer NOT NULL DEFAULT 0,
     CONSTRAINT shop_types_pkey PRIMARY KEY (id),
     CONSTRAINT shop_types_uidx UNIQUE (name, manufactures_id)
 );
@@ -192,7 +192,7 @@ CREATE TABLE public.sales_channels
     name character varying(100) NOT NULL,
     active boolean NOT NULL DEFAULT true,
     manufactures_id integer NOT NULL,
-    version integer NOT NULL DEFAULT 0,
+    VERSION integer NOT NULL DEFAULT 0,
     CONSTRAINT sales_channels_pkey PRIMARY KEY (id),
     CONSTRAINT sales_channels_uidx UNIQUE (name, manufactures_id)
 );
@@ -210,7 +210,7 @@ CREATE TABLE public.shop_departs
     name character varying(100) NOT NULL,
     active boolean NOT NULL DEFAULT true,
     manufactures_id integer NOT NULL,
-    version integer NOT NULL DEFAULT 0,
+    VERSION integer NOT NULL DEFAULT 0,
     CONSTRAINT shop_departs_pkey PRIMARY KEY (id),
     CONSTRAINT shop_departs_uidx UNIQUE (name, manufactures_id)
 );
@@ -228,7 +228,7 @@ CREATE TABLE public.shop_specializations
     name character varying(100) NOT NULL,
     active boolean NOT NULL DEFAULT true,
     manufactures_id integer NOT NULL,
-    version integer NOT NULL DEFAULT 0,
+    VERSION integer NOT NULL DEFAULT 0,
     CONSTRAINT shop_specializations_pkey PRIMARY KEY (id),
     CONSTRAINT shop_specializations_uidx UNIQUE (name, manufactures_id)
 );
@@ -267,7 +267,7 @@ CREATE TABLE public.contracts
     start_date date NOT NULL,
     end_date date NOT NULL,
     active boolean NOT NULL DEFAULT true,
-    version integer NOT NULL DEFAULT 0,
+    VERSION integer NOT NULL DEFAULT 0,
     CONSTRAINT contracts_pkey PRIMARY KEY (id)
 );
 CREATE TABLE public.sub_contracts
@@ -279,7 +279,7 @@ CREATE TABLE public.sub_contracts
     comment character varying(1000),
     sub_contract_date date NOT NULL,
     active boolean NOT NULL DEFAULT true,
-    version integer NOT NULL DEFAULT 0,
+    VERSION integer NOT NULL DEFAULT 0,
     CONSTRAINT sub_contracts_pkey PRIMARY KEY (id)
 );
 CREATE TABLE public.persons
@@ -313,7 +313,7 @@ CREATE TABLE public.owners
     id integer NOT NULL auto_increment,
     name character varying(100) NOT NULL,
     active boolean NOT NULL DEFAULT true,
-    version integer NOT NULL DEFAULT 0,
+    VERSION integer NOT NULL DEFAULT 0,
     CONSTRAINT owners_pkey PRIMARY KEY (id),
     CONSTRAINT owners_name_uidx UNIQUE (name)
 );
@@ -322,7 +322,6 @@ CREATE TABLE public.contact_roles
     id integer NOT NULL auto_increment,
     name character varying(100) NOT NULL,
     active boolean NOT NULL DEFAULT true,
-    version integer NOT NULL DEFAULT 0,
     CONSTRAINT contact_roles_pkey PRIMARY KEY (id),
     CONSTRAINT contact_roles_uidx UNIQUE (name)
 );
@@ -332,8 +331,7 @@ CREATE TABLE public.contacts
     contact_role_id integer NOT NULL,
     person_id integer NOT NULL,
     comment character varying(1000),
-    active boolean NOT NULL DEFAULT true,
-    version integer NOT NULL DEFAULT 0,
+    VERSION integer NOT NULL DEFAULT 0,
     CONSTRAINT contacts_pkey PRIMARY KEY (id),
     CONSTRAINT contacts_uidx UNIQUE (contact_role_id, person_id)
 );
@@ -366,7 +364,7 @@ CREATE TABLE public.ext_reg_systems
     id integer NOT NULL auto_increment,
     name character varying(100) NOT NULL,
     active boolean NOT NULL DEFAULT true,
-    version integer NOT NULL DEFAULT 0,
+    VERSION integer NOT NULL DEFAULT 0,
     CONSTRAINT ext_reg_systems_pkey PRIMARY KEY (id),
     CONSTRAINT ext_reg_systems_uidx UNIQUE (name)
 );

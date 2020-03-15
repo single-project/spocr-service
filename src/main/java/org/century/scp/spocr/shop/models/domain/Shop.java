@@ -1,25 +1,21 @@
 package org.century.scp.spocr.shop.models.domain;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.century.scp.spocr.address.models.domain.Address;
-import org.century.scp.spocr.base.models.domain.BaseEntity;
+import org.century.scp.spocr.base.models.domain.AbstractIdentifiedEntity;
 import org.century.scp.spocr.classifier.saleschannel.models.domain.SalesChannel;
 import org.century.scp.spocr.classifier.shopdepart.domain.ShopDepart;
 import org.century.scp.spocr.classifier.shoptype.models.domain.ShopType;
@@ -28,18 +24,13 @@ import org.century.scp.spocr.contact.models.domain.Contact;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
-import org.springframework.lang.NonNull;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
 @Entity
+@Getter
+@Setter
 @Table(name = "shops")
 @NoArgsConstructor
-public class Shop extends BaseEntity {
-
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+public class Shop extends AbstractIdentifiedEntity {
 
   @Column(name = "name")
   private String name;
@@ -109,35 +100,11 @@ public class Shop extends BaseEntity {
   private Boolean active;
 
   public Shop(
-      Long id,
-      String name,
-      Counterparty counterparty,
-      Collection<ShopType> shopTypes,
-      Address address,
-      Boolean active) {
-    this.id = id;
-    this.name = name;
-    this.counterparty = counterparty;
-    addShopTypes(shopTypes);
-    this.address = address;
-    this.active = active;
-  }
-
-  public Shop(
       String name, Counterparty counterparty) {
     this.name = name;
     this.counterparty = counterparty;
     this.active = true;
   }
-
-  public void addShopTypes(@NonNull Collection<ShopType> shopTypes) {
-    if (this.shopTypes == null) {
-      this.shopTypes = new HashSet<>();
-    }
-
-    this.shopTypes.addAll(shopTypes);
-  }
-
 
   public void addShopType(ShopType shopType) {
     if (shopTypes == null) {

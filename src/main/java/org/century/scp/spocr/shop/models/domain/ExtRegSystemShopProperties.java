@@ -14,7 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.century.scp.spocr.base.models.domain.DomainEntity;
+import org.century.scp.spocr.base.models.domain.IdentifiedEntity;
 import org.century.scp.spocr.extregsystem.models.domain.ExtRegSystem;
 
 @EqualsAndHashCode
@@ -23,7 +23,7 @@ import org.century.scp.spocr.extregsystem.models.domain.ExtRegSystem;
 @Table(name = "shop_to_ext_reg_system_props")
 @NoArgsConstructor
 @AllArgsConstructor
-public class ExtRegSystemShopProperties implements DomainEntity {
+public class ExtRegSystemShopProperties implements IdentifiedEntity {
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "ext_reg_system_id")

@@ -1,14 +1,14 @@
 package org.century.scp.spocr.base.services;
 
 import java.util.List;
-import org.century.scp.spocr.base.models.domain.DomainEntity;
+import org.century.scp.spocr.base.models.domain.IdentifiedEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.lang.NonNull;
 import org.springframework.security.access.prepost.PreAuthorize;
 
-public interface ServiceI<T extends DomainEntity> {
+public interface ServiceI<T extends IdentifiedEntity> {
 
   @NonNull
   @PreAuthorize("hasAuthority('READ_PRIVILEGE')")

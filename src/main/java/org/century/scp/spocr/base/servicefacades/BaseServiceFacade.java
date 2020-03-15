@@ -8,7 +8,7 @@ import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.century.scp.spocr.base.mappers.MapperI;
-import org.century.scp.spocr.base.models.domain.DomainEntity;
+import org.century.scp.spocr.base.models.domain.IdentifiedEntity;
 import org.century.scp.spocr.base.models.dto.DTO;
 import org.century.scp.spocr.base.services.ServiceI;
 import org.century.scp.spocr.event.models.domain.EventEnum;
@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @RequiredArgsConstructor
-public class BaseServiceFacade<T extends DomainEntity, K extends DTO>
+public class BaseServiceFacade<T extends IdentifiedEntity, K extends DTO>
     implements ServiceFacade<T, K> {
 
   protected final ServiceI<T> service;

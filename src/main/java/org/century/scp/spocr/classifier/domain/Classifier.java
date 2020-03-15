@@ -1,27 +1,19 @@
 package org.century.scp.spocr.classifier.domain;
 
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.century.scp.spocr.base.models.domain.BaseEntity;
+import org.century.scp.spocr.base.models.domain.AbstractIdentifiedEntity;
 import org.century.scp.spocr.manufacturer.models.domain.Manufacturer;
 
 @Data
 @MappedSuperclass
 @NoArgsConstructor
-public class Classifier extends BaseEntity {
-
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+public class Classifier extends AbstractIdentifiedEntity {
 
   @Column(name = "name")
   private String name;
@@ -32,20 +24,6 @@ public class Classifier extends BaseEntity {
 
   @Column(name = "active")
   private Boolean active;
-
-  public Classifier(Long id, String name, boolean active, long version, Manufacturer manufacturer) {
-    super(version);
-    this.id = id;
-    this.name = name;
-    this.active = active;
-    this.manufacturer = manufacturer;
-  }
-
-  public Classifier(String name, Manufacturer manufacturer) {
-    this.name = name;
-    this.manufacturer = manufacturer;
-    this.active = true;
-  }
 
   public Classifier(String name, Manufacturer manufacturer, boolean active) {
     this.name = name;
@@ -58,32 +36,14 @@ public class Classifier extends BaseEntity {
     if (this == o) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (!(o instanceof Classifier)) {
       return false;
     }
-    if (!super.equals(o)) {
-      return false;
-    }
-    Classifier that = (Classifier) o;
-    try {
-      return getId().equals(that.getId());
-    } catch (Throwable e) {
-      throw new NullPointerException();
-    }
+    return getId() != null && getId().equals(((Classifier) o).getId());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), getId());
-  }
-
-  @Override
-  public String toString() {
-    return "Classifier{" +
-        "id=" + id +
-        ", name='" + name + '\'' +
-        ", manufacturer=" + manufacturer.getName() +
-        ", active=" + active +
-        '}';
+    return 31;
   }
 }

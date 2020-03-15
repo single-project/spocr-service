@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.century.scp.spocr.base.models.domain.DomainEntity;
+import org.century.scp.spocr.base.models.domain.IdentifiedEntity;
 import org.century.scp.spocr.enumeration.models.domain.Enumeration;
 
 @EqualsAndHashCode
@@ -21,7 +21,7 @@ import org.century.scp.spocr.enumeration.models.domain.Enumeration;
 @Entity
 @Table(name = "persons")
 @NoArgsConstructor
-public class Person implements DomainEntity {
+public class Person implements IdentifiedEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

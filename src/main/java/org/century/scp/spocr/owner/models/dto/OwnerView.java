@@ -11,7 +11,6 @@ import org.century.scp.spocr.contact.models.dto.ContactView;
 @Setter
 @NoArgsConstructor
 public class OwnerView extends BaseEntityView {
-
   private String name;
   private List<ContactView> contacts;
 

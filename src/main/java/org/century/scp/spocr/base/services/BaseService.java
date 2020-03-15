@@ -5,7 +5,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
-import org.century.scp.spocr.base.models.domain.DomainEntity;
+import org.century.scp.spocr.base.models.domain.IdentifiedEntity;
 import org.century.scp.spocr.base.repositories.BaseRepository;
 import org.century.scp.spocr.base.utils.CustomBeanUtils;
 import org.century.scp.spocr.exceptions.SpocrEntityNotFoundException;
@@ -17,7 +17,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 @RequiredArgsConstructor
-public abstract class BaseService<T extends DomainEntity> implements ServiceI<T> {
+public abstract class BaseService<T extends IdentifiedEntity> implements ServiceI<T> {
 
   private final Class<T> entityClass;
   private final EntityManager entityManager;
@@ -62,7 +62,7 @@ public abstract class BaseService<T extends DomainEntity> implements ServiceI<T>
 
   public abstract void refresh(T entity);
 
-  public <K extends DomainEntity> K getReference(K entity, Class<K> cl) {
+  public <K extends IdentifiedEntity> K getReference(K entity, Class<K> cl) {
     if (entity.getId() != null) {
       return entityManager.find(cl, entity.getId());
     } else {
@@ -70,11 +70,11 @@ public abstract class BaseService<T extends DomainEntity> implements ServiceI<T>
     }
   }
 
-  public <K extends DomainEntity> Set<K> getReferences(Set<K> objects, Class<K> cl) {
+  public <K extends IdentifiedEntity> Set<K> getReferences(Set<K> objects, Class<K> cl) {
     return objects.stream().map(e -> getReference(e, cl)).collect(Collectors.toSet());
   }
 
-  public <K extends DomainEntity> List<K> getReferences(List<K> objects, Class<K> cl) {
+  public <K extends IdentifiedEntity> List<K> getReferences(List<K> objects, Class<K> cl) {
     return objects.stream().map(e -> getReference(e, cl)).collect(Collectors.toList());
   }
 }

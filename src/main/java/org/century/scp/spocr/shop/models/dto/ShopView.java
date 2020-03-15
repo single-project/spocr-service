@@ -29,18 +29,4 @@ public class ShopView extends BaseEntityView {
   private Set<ContactView> contacts;
   private ExtRegSystemShopPropertiesView extRegSystemProperties;
 
-  public ShopView(
-      String name,
-      boolean active,
-      AddressView address,
-      Set<ClassifierView> shopTypes,
-      Set<ClassifierView> salesChannels,
-      BaseEntityListView counterparty) {
-    super(active);
-    this.name = name;
-    this.shopTypes = shopTypes;
-    this.salesChannels = salesChannels;
-    this.counterparty = counterparty;
-    this.address = address;
-  }
 }

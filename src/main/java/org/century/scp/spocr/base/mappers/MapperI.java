@@ -1,10 +1,10 @@
 package org.century.scp.spocr.base.mappers;
 
-import org.century.scp.spocr.base.models.domain.DomainEntity;
+import org.century.scp.spocr.base.models.domain.IdentifiedEntity;
 import org.century.scp.spocr.base.models.dto.DTO;
 import org.springframework.data.domain.Page;
 
-public interface MapperI<T extends DomainEntity, K extends DTO> {
+public interface MapperI<T extends IdentifiedEntity, K extends DTO> {
 
   T map(K dto);
 

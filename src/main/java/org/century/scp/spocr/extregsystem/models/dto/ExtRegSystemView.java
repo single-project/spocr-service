@@ -9,6 +9,5 @@ import org.century.scp.spocr.base.models.dto.BaseEntityView;
 @Setter
 @NoArgsConstructor
 public class ExtRegSystemView extends BaseEntityView {
-
   private String name;
 }
