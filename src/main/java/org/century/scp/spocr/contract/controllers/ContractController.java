@@ -47,6 +47,7 @@ public class ContractController {
           @Spec(path = "name", params = "q", spec = LikeIgnoreCase.class),
           @Spec(path = "id", params = "id", spec = Equal.class),
           @Spec(path = "name", params = "name", spec = LikeIgnoreCase.class),
+          @Spec(path = "contractNumber", params = "contractNumber", spec = LikeIgnoreCase.class),
           @Spec(path = "counterparty1.id", params = "counterparty1.id", spec = Equal.class),
           @Spec(path = "counterparty2.id", params = "counterparty2.id", spec = Equal.class),
           @Spec(

@@ -152,6 +152,12 @@
       <artifactId>json-schema-validator</artifactId>
       <version>${json-schema-validator.version}</version>
     </dependency>
+    <dependency>
+      <groupId>com.github.victools</groupId>
+      <artifactId>jsonschema-generator</artifactId>
+      <version>4.6.0</version>
+      <scope>test</scope>
+    </dependency>
     <!--tests-->
     <dependency>
       <groupId>com.intuit.karate</groupId>

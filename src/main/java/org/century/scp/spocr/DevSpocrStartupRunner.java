@@ -27,6 +27,7 @@ import org.century.scp.spocr.contract.models.domain.Contract;
 import org.century.scp.spocr.contract.services.ContractService;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.models.domain.ExtRegSystemCounterpartyProperties;
+import org.century.scp.spocr.counterparty.models.domain.LegalRekv;
 import org.century.scp.spocr.counterparty.services.CounterpartyService;
 import org.century.scp.spocr.enumeration.models.domain.Enumeration;
 import org.century.scp.spocr.enumeration.services.EnumerationService;
@@ -206,7 +207,15 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
     person.setDocType(enumDocTypePass);
     personService.create(person);
 
-    // add 5 legal types
+    // add 5 legal rekv
+    LegalRekv legalRekv = new LegalRekv();
+    legalRekv.setFullName("Индивидуальный предприниматель Иванов Сидр");
+    legalRekv.setInn("234234234");
+    legalRekv.setOgrn("1167847438220");
+    legalRekv.setOgrnAuthority("Орган выдавший ОГРН");
+    legalRekv.setOkpo("05561358");
+    legalRekv.setShortName("ИП Ивано");
+
 
     // add 10 new counteragent
     for (int i = 1; i <= 10; i++) {
@@ -219,7 +228,7 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
       Counterparty e = new Counterparty("Контагент" + i);
       e.setLegalType(enumLegalTypeLegal);
       e.addStatus(enumCpStatusClient);
-      e.setPersonRekv(person);
+      e.setLegalRekv(legalRekv);
       e.setOwner(owner);
       e.addPaymentType(enumPaymentTypeCashless);
       e.setNoVat(true);
