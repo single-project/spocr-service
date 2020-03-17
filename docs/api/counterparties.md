@@ -442,6 +442,8 @@
 
 List all counterparties. You can use the filter query parameter to fetch counterparties:
 
+**Request**
+
 `GET /api/counterparties`
 
 **Parameters**
@@ -475,9 +477,9 @@ List all counterparties. You can use the filter query parameter to fetch counter
 ```
 ### Add new Counterparty
 
-`POST /api/counterparties`
-
 **Request**
+
+`POST /api/counterparties`
 
 Required fields for patch request are:
 * active
@@ -514,9 +516,9 @@ The service returns the code of the created counterparty
 
 ### Edit an Counterparty
 
-`PATCH /api/counterparties/:counterparty_id`
-
 **Request**
+
+`PATCH /api/counterparties/:counterparty_id`
 
 Required fields for patch request are:
 * id

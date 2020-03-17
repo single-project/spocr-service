@@ -8,9 +8,21 @@ import com.github.victools.jsonschema.generator.SchemaGeneratorConfig;
 import com.github.victools.jsonschema.generator.SchemaGeneratorConfigBuilder;
 import com.github.victools.jsonschema.generator.SchemaVersion;
 import org.century.scp.spocr.counterparty.models.dto.CounterpartyView;
+import org.century.scp.spocr.shop.models.dto.ShopView;
 import org.junit.jupiter.api.Test;
 
 public class Generate {
+
+  @Test
+  public void generateShop() {
+    ObjectMapper objectMapper = new ObjectMapper();
+    SchemaGeneratorConfigBuilder configBuilder = new SchemaGeneratorConfigBuilder(objectMapper,
+        SchemaVersion.DRAFT_2019_09, OptionPreset.PLAIN_JSON);
+    SchemaGeneratorConfig config = configBuilder.build();
+    SchemaGenerator generator = new SchemaGenerator(config);
+    JsonNode jsonSchema = generator.generateSchema(ShopView.class);
+    System.out.println(jsonSchema.toString());
+  }
 
   @Test
   public void generateCounterparty() {
