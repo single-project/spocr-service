@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200324-40
+      author: akurutin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: contacts_id
+            baseTableName: owner_contacts
+            constraintName: fkeq8evr127c08pqxrl5dpi2d01
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: contacts
+            validate: true
+  - changeSet:
+      id: 1584955013647-82
+      author: akurutin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: owner_id
+            baseTableName: owner_contacts
+            constraintName: fk4t4d0kc5x8fvfikl77ummhjdy
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: owners
+            validate: true

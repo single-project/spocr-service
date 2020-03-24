@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200324-75
+      author: akurutin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: shop_types_id
+            baseTableName: shop_to_types
+            constraintName: fk4oi2e08sy7o1xhpgrocpa2n5u
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: shop_types
+            validate: true
+  - changeSet:
+      id: 1584955013647-76
+      author: akurutin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: shop_id
+            baseTableName: shop_to_types
+            constraintName: fkih2qhgcxp4oeqhx2c61axqqb1
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: shops
+            validate: true

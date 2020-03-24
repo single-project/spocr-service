@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200324-77
+      author: akurutin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: manufactures_id
+            baseTableName: shop_types
+            constraintName: fkbtfptipog3ojb1y52v9rpk3ul
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: manufactures
+            validate: true

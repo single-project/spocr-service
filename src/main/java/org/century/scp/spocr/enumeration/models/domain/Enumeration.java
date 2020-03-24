@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.century.scp.spocr.base.converters.LinkedHashMapConverter;
+import org.century.scp.spocr.base.converters.MapConverter;
 import org.century.scp.spocr.base.models.domain.IdentifiedEntity;
 
 @Data
@@ -18,6 +18,8 @@ import org.century.scp.spocr.base.models.domain.IdentifiedEntity;
 @Table(name = "enumerations")
 @NoArgsConstructor
 public class Enumeration implements IdentifiedEntity {
+
+  private static final String MESSAGE_KEY_PREFIX = "enumeration";
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +35,11 @@ public class Enumeration implements IdentifiedEntity {
   private String descriptionKey;
 
   @Column
-  @Convert(converter = LinkedHashMapConverter.class)
+  @Convert(converter = MapConverter.class)
   private LinkedHashMap properties;
 
+  public void buildDescriptionKey() {
+    this.descriptionKey =
+        String.format("%s.%s.%s.description", MESSAGE_KEY_PREFIX, ident, value).toLowerCase();
+  }
 }

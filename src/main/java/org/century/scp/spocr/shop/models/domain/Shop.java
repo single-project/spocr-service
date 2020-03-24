@@ -53,7 +53,7 @@ public class Shop extends AbstractIdentifiedEntity {
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
-      name = "shop_to_shop_types",
+      name = "shop_to_types",
       joinColumns = @JoinColumn(name = "shop_id"),
       inverseJoinColumns = @JoinColumn(name = "shop_types_id"))
   private Set<ShopType> shopTypes;
@@ -67,14 +67,14 @@ public class Shop extends AbstractIdentifiedEntity {
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
-      name = "shop_to_shop_departs",
+      name = "shop_to_departs",
       joinColumns = @JoinColumn(name = "shop_id"),
       inverseJoinColumns = @JoinColumn(name = "shop_departs_id"))
   private Set<ShopDepart> shopDeparts;
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
-      name = "shop_to_shop_specializations",
+      name = "shop_to_specializations",
       joinColumns = @JoinColumn(name = "shop_id"),
       inverseJoinColumns = @JoinColumn(name = "shop_specializations_id"))
   private Set<ShopSpecialization> shopSpecializations;

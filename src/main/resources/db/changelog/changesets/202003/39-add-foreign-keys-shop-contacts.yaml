@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200324-39
+      author: akurutin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: contacts_id
+            baseTableName: shop_contacts
+            constraintName: fkda0ub2hqou4wnq9sp96t7fcc9
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: contacts
+            validate: true
+  - changeSet:
+      id: 1584955013647-74
+      author: akurutin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: shop_id
+            baseTableName: shop_contacts
+            constraintName: fk7pax2kl78fsitml6is8f973oj
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: shops
+            validate: true

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+  <include file="changesets/202003/1-create-user-to-system-roles.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/2-create-contacts.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/202003/3-create-security-user.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/202003/4-create-legal-rekvs.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/202003/5-create-shop-contacts.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/202003/6-create-counterparty-to-ext-reg-system-props.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/7-create-shop-to-types.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/202003/8-create-persons.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/202003/9-create-system-rules.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/202003/10-create-sub-contracts.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/202003/11-create-system-roles.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/202003/12-create-shop-types.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/202003/13-create-contracts.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/202003/14-create-role-to-rules.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/202003/15-create-shop-to-specializations.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/16-create-shop-to-sales-channels.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/17-create-counterparty-contacts.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/18-create-manufactures.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/202003/19-create-owner-contacts.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/202003/20-create-shop-specializations.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/21-create-counterparty-payment-details.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/22-create-sales-channels.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/202003/23-create-shop-to-ext-reg-system-props.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/24-create-addresses.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/202003/25-create-counterparties.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/202003/26-create-security-user-role.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/27-create-external-ids.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/202003/28-create-shops.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/202003/29-create-shop-departs.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/202003/30-create-shop-to-departs.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/202003/31-create-enumerations.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/202003/32-create-counterparty-to-statuses.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/33-create-contact-roles.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/202003/34-create-counterparty-to-payment-types.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/35-create-ext-reg-systems.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/202003/36-create-owners.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/202003/37-create-user-to-system-roles.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/38-add-foreign-keys-counterparty-contacts.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/39-add-foreign-keys-shop-contacts.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/40-add-foreign-keys-owner-contacts.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/41-add-foreign-keys-counterparties.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/42-add-foreign-keys-sub-contracts.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/43-add-foreign-keys-role-to-rules.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/44-add-foreign-keys-shop-specializations.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/45-add-foreign-keys-sales-channels.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/46-add-foreign-keys-shops.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/202003/47-add-foreign-keys-contracts.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/48-add-foreign-keys-counterparty-to-payment-types.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/49-add-foreign-keys-counterparty-to-statuses.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/50-add-foreign-keys-counterparty-payment-details.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/51-add-foreign-keys-shop-departs.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/52-add-foreign-keys-shop-to-departs.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/53-add-foreign-keys-persons.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/54-add-foreign-keys-contacts.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/55-add-foreign-keys-counterparty-to-ext-reg-system-props.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/56-add-foreign-keys-shop-to-ext-reg-system-props.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/57-add-foreign-keys-user-to-system-roles.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/58.add-foreign-keys-shop-to-types.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/59-add-foreign-keys-shop-types.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/60-add-foreign-keys-shop-to-specializations.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/61-add-foreign-keys-shop-to-sales-channels.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/202003/62-create-events.yaml" relativeToChangelogFile="true"/>
+</databaseChangeLog>

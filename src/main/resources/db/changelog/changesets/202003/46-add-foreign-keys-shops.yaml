@@ -1,0 +1,46 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200324-47
+      author: akurutin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: address_id
+            baseTableName: shops
+            constraintName: fk5kd1hexorlofv8mdrktpe5q6b
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: addresses
+            validate: true
+  - changeSet:
+      id: 1584955013647-48
+      author: akurutin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: counterparty_id
+            baseTableName: shops
+            constraintName: fk1ddhq0gjqy4974gpui2w87ac9
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: counterparties
+            validate: true
+  - changeSet:
+      id: 1584955013647-58
+      author: akurutin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: shop_to_ext_reg_system_props_id
+            baseTableName: shops
+            constraintName: fk6x85e1p9qprk87y4w1rchk82h
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: shop_to_ext_reg_system_props
+            validate: true

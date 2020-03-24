@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200324-37
+      author: akurutin (generated)
+      changes:
+        - addUniqueConstraint:
+            columnNames: system_roles_id
+            constraintName: uk_7g7258jxfhglw4bu9ggpj9x8v
+            tableName: user_to_system_roles

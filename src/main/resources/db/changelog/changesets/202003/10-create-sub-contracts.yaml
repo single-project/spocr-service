@@ -1,0 +1,39 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200324-10
+      author: akurutin (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: sub_contracts_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: version
+                  type: BIGINT
+              - column:
+                  name: active
+                  type: BOOLEAN
+              - column:
+                  name: comment
+                  type: VARCHAR(255)
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: sub_contract_date
+                  type: TIMESTAMP WITHOUT TIME ZONE
+              - column:
+                  name: sub_contract_number
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: contract_id
+                  type: BIGINT
+            tableName: sub_contracts

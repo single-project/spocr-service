@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200324-5
+      author: akurutin (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: shop_contacts_pkey
+                  name: shop_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: shop_contacts_pkey
+                  name: contacts_id
+                  type: BIGINT
+            tableName: shop_contacts

@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200324-71
+      author: akurutin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: system_roles_id
+            baseTableName: user_to_system_roles
+            constraintName: fk3928fu4qrfnx0fg3en5buqtcq
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: system_roles
+            validate: true
+  - changeSet:
+      id: 1584955013647-72
+      author: akurutin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: user_to_system_roles
+            constraintName: fkpv19r9r3pve1n1pk5dr1ad2j9
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: security_user
+            validate: true

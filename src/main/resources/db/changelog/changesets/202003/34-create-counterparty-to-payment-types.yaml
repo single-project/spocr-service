@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200324-34
+      author: akurutin (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: counterparty_to_payment_types_pkey
+                  name: counterparty_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: counterparty_to_payment_types_pkey
+                  name: enumerations_id
+                  type: BIGINT
+            tableName: counterparty_to_payment_types

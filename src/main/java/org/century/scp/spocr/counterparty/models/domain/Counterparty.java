@@ -40,7 +40,7 @@ public class Counterparty extends AbstractIdentifiedEntity {
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
-      name = "counterparty_to_counterparty_statuses",
+      name = "counterparty_to_statuses",
       joinColumns = @JoinColumn(name = "counterparty_id"),
       inverseJoinColumns = @JoinColumn(name = "enumerations_id"))
   private Set<Enumeration> statuses;

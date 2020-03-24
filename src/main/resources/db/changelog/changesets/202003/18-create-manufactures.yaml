@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200324-18
+      author: akurutin (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: manufactures_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: version
+                  type: BIGINT
+              - column:
+                  name: active
+                  type: BOOLEAN
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+            tableName: manufactures

@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200324-53
+      author: akurutin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: counterparty_id
+            baseTableName: counterparty_to_statuses
+            constraintName: fkaipyxr559xf785l1fh3j45vs0
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: counterparties
+            validate: true
+  - changeSet:
+      id: 1584955013647-65
+      author: akurutin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: enumerations_id
+            baseTableName: counterparty_to_statuses
+            constraintName: fkiqfxg2jji1gxuahjgnhow2pqv
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: enumerations
+            validate: true

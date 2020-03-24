@@ -1,0 +1,91 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200324-41
+      author: akurutin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: counterparty_to_ext_reg_system_props_id
+            baseTableName: counterparties
+            constraintName: fk7skb1nqo3qc8o94d6vlhh6nqj
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: counterparty_to_ext_reg_system_props
+            validate: true
+  - changeSet:
+      id: 1584955013647-52
+      author: akurutin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: counterparty_legal_rekv_id
+            baseTableName: counterparties
+            constraintName: fka1hifcep7vw1cfp0csdiaqe0k
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: legal_rekvs
+            validate: true
+  - changeSet:
+      id: 1584955013647-54
+      author: akurutin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: parent_id
+            baseTableName: counterparties
+            constraintName: fkbh2fmx623xtekboyfvo08hu37
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: counterparties
+            validate: true
+  - changeSet:
+      id: 1584955013647-55
+      author: akurutin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: counterparty_person_id
+            baseTableName: counterparties
+            constraintName: fkjpxul2gi4y2rfhxooajo4f9d1
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: persons
+            validate: true
+  - changeSet:
+      id: 1584955013647-67
+      author: akurutin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: legal_type_id
+            baseTableName: counterparties
+            constraintName: fkmurqb02oh1lh1ryfnfxfnvaus
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: enumerations
+            validate: true
+  - changeSet:
+      id: 1584955013647-83
+      author: akurutin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: owner_id
+            baseTableName: counterparties
+            constraintName: fk9x40v31s6fn4sjf7jusym4lt3
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: owners
+            validate: true

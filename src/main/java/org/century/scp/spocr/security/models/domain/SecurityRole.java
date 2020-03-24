@@ -13,7 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 @Data
 @Entity
 @Builder
-@Table(name = "security_user_role_table", schema = "public")
+@Table(name = "security_user_role", schema = "public")
 @NoArgsConstructor
 public class SecurityRole implements GrantedAuthority, Serializable {
 

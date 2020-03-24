@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200324-1
+      author: akurutin (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: user_id
+                  type: INTEGER
+              - column:
+                  constraints:
+                    nullable: false
+                  name: system_roles_id
+                  type: BIGINT
+            tableName: user_to_system_roles

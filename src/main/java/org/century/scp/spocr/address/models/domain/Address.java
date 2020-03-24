@@ -8,10 +8,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.century.scp.spocr.base.converters.LinkedHashMapConverter;
+import org.century.scp.spocr.base.converters.MapConverter;
 
 @EqualsAndHashCode
 @Data
@@ -37,8 +38,12 @@ public class Address {
   private String comment;
 
   @Column(name = "suggestion")
-  @Convert(converter = LinkedHashMapConverter.class)
+  @Convert(converter = MapConverter.class)
   private LinkedHashMap suggestion;
+
+  @Version
+  @Column(name = "VERSION")
+  private Long version;
 
   public Address(String address) {
     this.address = address;

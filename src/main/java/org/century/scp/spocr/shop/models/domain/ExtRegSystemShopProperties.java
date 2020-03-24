@@ -2,6 +2,7 @@ package org.century.scp.spocr.shop.models.domain;
 
 import java.util.LinkedHashMap;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,6 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.century.scp.spocr.base.converters.MapConverter;
 import org.century.scp.spocr.base.models.domain.IdentifiedEntity;
 import org.century.scp.spocr.extregsystem.models.domain.ExtRegSystem;
 
@@ -29,6 +31,7 @@ public class ExtRegSystemShopProperties implements IdentifiedEntity {
   @JoinColumn(name = "ext_reg_system_id")
   ExtRegSystem extRegSystem;
   @Column(name = "properties")
+  @Convert(converter = MapConverter.class)
   LinkedHashMap properties;
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200324-17
+      author: akurutin (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: counterparty_contacts_pkey
+                  name: counterparty_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: counterparty_contacts_pkey
+                  name: contacts_id
+                  type: BIGINT
+            tableName: counterparty_contacts

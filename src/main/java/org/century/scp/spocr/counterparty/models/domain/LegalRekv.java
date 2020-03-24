@@ -4,28 +4,21 @@ import java.util.LinkedHashMap;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.century.scp.spocr.base.converters.LinkedHashMapConverter;
-import org.century.scp.spocr.base.models.domain.IdentifiedEntity;
+import lombok.Setter;
+import org.century.scp.spocr.base.converters.MapConverter;
+import org.century.scp.spocr.base.models.domain.AbstractIdentifiedEntity;
 
-@EqualsAndHashCode
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "legal_rekvs")
 @NoArgsConstructor
 @AllArgsConstructor
-public class LegalRekv implements IdentifiedEntity {
-
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+public class LegalRekv extends AbstractIdentifiedEntity {
 
   @Column(name = "short_name")
   private String shortName;
@@ -55,7 +48,6 @@ public class LegalRekv implements IdentifiedEntity {
   private String okonh;
 
   @Column(name = "suggestion")
-  @Convert(converter = LinkedHashMapConverter.class)
+  @Convert(converter = MapConverter.class)
   private LinkedHashMap suggestion;
-
 }

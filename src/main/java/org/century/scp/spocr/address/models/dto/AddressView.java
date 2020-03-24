@@ -1,6 +1,6 @@
 package org.century.scp.spocr.address.models.dto;
 
-import java.util.HashMap;
+import java.util.Map;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,12 +13,9 @@ public class AddressView {
   private Long id;
   private String address;
   private String comment;
-  private HashMap suggestion;
+  private Map suggestion;
   private Double latitude;
   private Double longitude;
+  private Long version;
 
-  public AddressView(String address, HashMap suggestion) {
-    this.address = address;
-    this.suggestion = suggestion;
-  }
 }

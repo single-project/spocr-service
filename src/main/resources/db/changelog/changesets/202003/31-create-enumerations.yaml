@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200324-31
+      author: akurutin (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: enumerations_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: description_key
+                  type: VARCHAR(255)
+              - column:
+                  name: ident
+                  type: VARCHAR(255)
+              - column:
+                  name: properties
+                  type: VARCHAR(255)
+              - column:
+                  name: value
+                  type: VARCHAR(255)
+            tableName: enumerations

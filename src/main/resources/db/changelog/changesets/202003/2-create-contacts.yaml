@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200324-2
+      author: akurutin (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: contacts_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: version
+                  type: BIGINT
+              - column:
+                  name: comment
+                  type: VARCHAR(255)
+              - column:
+                  name: person_id
+                  type: BIGINT
+              - column:
+                  name: contact_role_id
+                  type: BIGINT
+            tableName: contacts

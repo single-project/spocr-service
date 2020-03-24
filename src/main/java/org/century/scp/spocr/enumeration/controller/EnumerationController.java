@@ -6,15 +6,19 @@ import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.century.scp.spocr.enumeration.models.domain.Enumeration;
 import org.century.scp.spocr.enumeration.models.dto.EnumerationView;
+import org.century.scp.spocr.enumeration.models.dto.RequestForCreateEnumeration;
 import org.century.scp.spocr.enumeration.services.EnumerationServiceFacade;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,5 +41,11 @@ public class EnumerationController {
           Specification<Enumeration> enumerationSpecification,
       @PageableDefault(sort = "ident") Pageable pageable) {
     return ResponseEntity.ok(enumerationService.get(enumerationSpecification, pageable));
+  }
+
+  @PostMapping
+  public ResponseEntity<Long> addItem(
+      @Validated @RequestBody RequestForCreateEnumeration enumeration) {
+    return ResponseEntity.ok(enumerationService.create(enumeration));
   }
 }

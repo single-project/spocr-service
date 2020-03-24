@@ -60,7 +60,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Component
-@Profile({"dev", "prod"})
+@Profile({"dev1"})
 public class DevSpocrStartupRunner implements ApplicationRunner {
 
   @Autowired
