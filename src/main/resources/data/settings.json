@@ -6,6 +6,7 @@
   "availableTables": [
     {
       "id": 1,
+      "key": "shop",
       "name": "Магазины",
       "url": "/shops",
       "sortField": "name",
@@ -31,6 +32,7 @@
     },
     {
       "id": 2,
+      "key": "counterparty",
       "name": "Контрагенты",
       "url": "/counterparties",
       "sortField": "name",
@@ -52,6 +54,7 @@
     },
     {
       "id": 3,
+      "key": "manufacturer",
       "name": "Производители",
       "url": "/manufactures",
       "sortField": "name",
@@ -73,6 +76,7 @@
     },
     {
       "id": 4,
+      "key": "shop-type",
       "name": "Типы магазинов",
       "url": "/shop-types",
       "sortField": "name",
@@ -98,6 +102,7 @@
     },
     {
       "id": 5,
+      "key": "shop-depart",
       "name": "Отделы магазина",
       "url": "/shop-departs",
       "sortField": "name",
@@ -123,6 +128,7 @@
     },
     {
       "id": 6,
+      "key": "sales-channel",
       "name": "Каналы продаж",
       "url": "/sales-channels",
       "sortField": "name",
@@ -148,6 +154,7 @@
     },
     {
       "id": 7,
+      "key": "shop-specialization",
       "name": "Специализация магазинов",
       "url": "/shop-specializations",
       "sortField": "name",
@@ -173,6 +180,7 @@
     },
     {
       "id": 8,
+      "key": "contract",
       "name": "Договоры",
       "url": "/contracts",
       "sortField": "name",
@@ -214,6 +222,7 @@
     },
     {
       "id": 9,
+      "key": "owner",
       "name": "Хозяева сети",
       "url": "/owners",
       "sortField": "name",
@@ -235,6 +244,7 @@
     },
     {
       "id": 10,
+      "key": "ext-reg-system",
       "name": "Внешние системы",
       "url": "/ext-reg-systems",
       "sortField": "name",
