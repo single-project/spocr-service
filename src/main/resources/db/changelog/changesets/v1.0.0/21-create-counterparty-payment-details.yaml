@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200324-21
+      author: akurutin (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: counterparty_payment_details_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: VERSION
+                  type: BIGINT
+              - column:
+                  name: bank
+                  type: VARCHAR(255)
+              - column:
+                  name: bic
+                  type: VARCHAR(255)
+              - column:
+                  name: corresponding_account
+                  type: VARCHAR(255)
+              - column:
+                  name: payment_account
+                  type: VARCHAR(255)
+              - column:
+                  name: counterparty_id
+                  type: BIGINT
+            tableName: counterparty_payment_details
