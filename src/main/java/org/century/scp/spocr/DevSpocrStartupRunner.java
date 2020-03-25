@@ -34,6 +34,7 @@ import org.century.scp.spocr.counterparty.models.domain.ExtRegSystemCounterparty
 import org.century.scp.spocr.counterparty.models.domain.LegalRekv;
 import org.century.scp.spocr.counterparty.services.CounterpartyService;
 import org.century.scp.spocr.enumeration.services.EnumerationService;
+import org.century.scp.spocr.exceptions.SpocrEntityNotFoundException;
 import org.century.scp.spocr.extlink.models.EntityType;
 import org.century.scp.spocr.extregsystem.models.domain.ExtRegSystem;
 import org.century.scp.spocr.extregsystem.services.ExtRegSystemService;
@@ -63,7 +64,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Component
-@Profile({"dev1"})
+@Profile({"dev"})
 public class DevSpocrStartupRunner implements ApplicationRunner {
 
   @Autowired
@@ -105,6 +106,14 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
   @Transactional
   public void run(ApplicationArguments args) throws Exception {
     signInAsUser();
+
+    // if exception then go
+    try {
+      extRegSystemService.get(1);
+      return;
+    } catch (SpocrEntityNotFoundException e) {
+      //
+    }
 
     // add 1 ext reg system
     ExtRegSystem extRegSystem = new ExtRegSystem();
@@ -226,7 +235,7 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
     Randomizer sd = new Randomizer();
     Randomizer sp = new Randomizer();
     for (int i = 1; i <= 100; i++) {
-      Shop shop = new Shop("Магазин" + i, counterpartyService.get(cr.generateRandom(1, 9)));
+      Shop shop = new Shop("Магазин" + i, counterpartyService.get(cr.generateRandom(9)));
       Address address = new Address("address" + i);
       LinkedHashMap<Object, Object> suggestion = new LinkedHashMap<>();
       suggestion.put(i, "s" + i);
@@ -235,14 +244,14 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
       shop.setAddress(address);
       shop.setActive(i % 2 == 0);
       shop.addContact(c2);
-      shop.addSalesChannel(salesChannelService.get(sc.generateRandom(1, 4)));
-      shop.addSalesChannel(salesChannelService.get(sc.generateRandom(1, 4)));
-      shop.addShopType(shopTypesService.get(st.generateRandom(1, 4)));
-      shop.addShopType(shopTypesService.get(st.generateRandom(1, 4)));
-      shop.addShopDepart(shopDepartService.get(sd.generateRandom(1, 4)));
-      shop.addShopDepart(shopDepartService.get(sd.generateRandom(1, 4)));
-      shop.addShopSpecialization(shopSpecializationtService.get(sp.generateRandom(1, 4)));
-      shop.addShopSpecialization(shopSpecializationtService.get(sp.generateRandom(1, 4)));
+      shop.addSalesChannel(salesChannelService.get(sc.generateRandom(4)));
+      shop.addSalesChannel(salesChannelService.get(sc.generateRandom(4)));
+      shop.addShopType(shopTypesService.get(st.generateRandom(4)));
+      shop.addShopType(shopTypesService.get(st.generateRandom(4)));
+      shop.addShopDepart(shopDepartService.get(sd.generateRandom(4)));
+      shop.addShopDepart(shopDepartService.get(sd.generateRandom(4)));
+      shop.addShopSpecialization(shopSpecializationtService.get(sp.generateRandom(4)));
+      shop.addShopSpecialization(shopSpecializationtService.get(sp.generateRandom(4)));
       ExtRegSystemShopProperties shopProperties = new ExtRegSystemShopProperties();
       shopProperties.setExtRegSystem(extRegSystemService.get(1));
       Map<String, Object> shopParams = new HashMap<>();
@@ -253,7 +262,12 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
     }
   }
 
-  public void signInAsUser() {
+  private void signInAsUser() {
+    // ***** get user - USER ******
+    SecurityUser user = users.findUserByLogin("user");
+    // ***** get reader - USER ******
+    SecurityUser reader = users.findUserByLogin("reader");
+
     // ***** add system role - ADMIN ******
     SystemRole adminRole = accessLevelService.createRole("ROLE_ADMIN");
 
@@ -273,7 +287,7 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
     accessLevelService.addRuleToRole(managerRole.getId(), canUpdateRule.getId());
 
     // link user to role
-    userDetailsService.addRole(1, adminRole, managerRole);
+    userDetailsService.addRole(user.getId(), adminRole, managerRole);
 
     // ***** add system role - READER ******
     managerRole = accessLevelService.createRole("ROLE_READER");
@@ -282,9 +296,8 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
     accessLevelService.addRuleToRole(managerRole.getId(), canReadRule.getId());
 
     // link user to role
-    userDetailsService.addRole(2, managerRole);
+    userDetailsService.addRole(reader.getId(), managerRole);
 
-    SecurityUser user = users.findUserByLogin("user");
     Authentication auth =
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
@@ -299,8 +312,8 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
     Random rnd = new Random();
     List<Integer> exclude = new ArrayList<>();
 
-    public int generateRandom(int start, int end) {
-      int random = start + rnd.nextInt(end - start + 1 - exclude.size());
+    int generateRandom(int end) {
+      int random = 1 + rnd.nextInt(Math.max(end - exclude.size(), 1));
       for (int ex : exclude) {
         if (random < ex) {
           break;
