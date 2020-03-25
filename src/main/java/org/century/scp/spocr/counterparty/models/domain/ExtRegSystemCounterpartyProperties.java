@@ -1,6 +1,6 @@
 package org.century.scp.spocr.counterparty.models.domain;
 
-import java.util.LinkedHashMap;
+import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -27,14 +27,14 @@ import org.century.scp.spocr.extregsystem.models.domain.ExtRegSystem;
 @AllArgsConstructor
 public class ExtRegSystemCounterpartyProperties implements IdentifiedEntity {
 
+  @Column(name = "properties")
+  @Convert(converter = MapConverter.class)
+  Map<String, Object> properties;
+
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "ext_reg_system_id")
   ExtRegSystem extRegSystem;
-  @Column(name = "properties")
-  @Convert(converter = MapConverter.class)
-  LinkedHashMap properties;
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-
 }

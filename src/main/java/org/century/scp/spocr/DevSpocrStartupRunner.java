@@ -2,8 +2,12 @@ package org.century.scp.spocr;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +33,6 @@ import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.models.domain.ExtRegSystemCounterpartyProperties;
 import org.century.scp.spocr.counterparty.models.domain.LegalRekv;
 import org.century.scp.spocr.counterparty.services.CounterpartyService;
-import org.century.scp.spocr.enumeration.models.domain.Enumeration;
 import org.century.scp.spocr.enumeration.services.EnumerationService;
 import org.century.scp.spocr.extlink.models.EntityType;
 import org.century.scp.spocr.extregsystem.models.domain.ExtRegSystem;
@@ -128,83 +131,14 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
     owner.addContact(c1);
     owner = ownerService.create(owner);
 
-    // add entity types
-    Enumeration enumEntityTypeOwner = new Enumeration();
-
-    // add 2 new cp statuses
-    Enumeration enumCpStatusClient = new Enumeration();
-    enumCpStatusClient.setIdent("CP-STATUS");
-    enumCpStatusClient.setValue("CLIENT");
-    enumCpStatusClient.setDescriptionKey("enumeration.cp-status.client.description");
-    enumerationService.create(enumCpStatusClient);
-
-    Enumeration enumCpStatusProvider = new Enumeration();
-    enumCpStatusProvider.setIdent("CP-STATUS");
-    enumCpStatusProvider.setValue("PROVIDER");
-    enumCpStatusProvider.setDescriptionKey("enumeration.cp-status.provider.description");
-    enumerationService.create(enumCpStatusProvider);
-
-    // add 2 new payment types
-    Enumeration enumPaymentTypeCash = new Enumeration();
-    enumPaymentTypeCash.setIdent("PAYMENT-TYPE");
-    enumPaymentTypeCash.setValue("CASH");
-    enumPaymentTypeCash.setDescriptionKey("enumeration.payment-type.cash.description");
-    enumerationService.create(enumPaymentTypeCash);
-
-    Enumeration enumPaymentTypeCashless = new Enumeration();
-    enumPaymentTypeCashless.setIdent("PAYMENT-TYPE");
-    enumPaymentTypeCashless.setValue("CASHLESS");
-    enumPaymentTypeCashless.setDescriptionKey("enumeration.payment-type.cashless.description");
-    enumerationService.create(enumPaymentTypeCashless);
-
-    // legal types
-    Enumeration enumLegalTypePhys = new Enumeration();
-    enumLegalTypePhys.setIdent("LEGAL-TYPE");
-    enumLegalTypePhys.setValue("PHYS");
-    enumLegalTypePhys.setDescriptionKey("enumeration.legal-type.physical-person.description");
-    enumerationService.create(enumLegalTypePhys);
-
-    Enumeration enumLegalTypeLegal = new Enumeration();
-    enumLegalTypeLegal.setIdent("LEGAL-TYPE");
-    enumLegalTypeLegal.setValue("LEGAL");
-    enumLegalTypeLegal.setDescriptionKey("enumeration.legal-type.legal.description");
-    enumerationService.create(enumLegalTypeLegal);
-
-    // citizenship
-    Enumeration enumCitizenRU = new Enumeration();
-    enumCitizenRU.setIdent("CITIZENSHIP");
-    enumCitizenRU.setValue("RU");
-    enumCitizenRU.setDescriptionKey("enumeration.citizenship.ru.description");
-    enumerationService.create(enumCitizenRU);
-
-    // gender
-    Enumeration enumGenderMale = new Enumeration();
-    enumGenderMale.setIdent("GENDER");
-    enumGenderMale.setValue("MALE");
-    enumGenderMale.setDescriptionKey("enumeration.gender.male.description");
-    enumerationService.create(enumGenderMale);
-
-    Enumeration enumGenderFemale = new Enumeration();
-    enumGenderFemale.setIdent("GENDER");
-    enumGenderFemale.setValue("FEMALE");
-    enumGenderFemale.setDescriptionKey("enumeration.gender.female.description");
-    enumerationService.create(enumGenderFemale);
-
-    // doc type
-    Enumeration enumDocTypePass = new Enumeration();
-    enumDocTypePass.setIdent("DOC-TYPE");
-    enumDocTypePass.setValue("PASSPORT_RF");
-    enumDocTypePass.setDescriptionKey("enumeration.doc-type.passport-rf.description");
-    enumerationService.create(enumDocTypePass);
-
     // add 1 new person
     Person person = new Person();
     person.setLastName("Уик");
     person.setLastName("Джон");
     person.setBirthDate(new Date());
-    person.setCitizenship(enumCitizenRU);
-    person.setGender(enumGenderMale);
-    person.setDocType(enumDocTypePass);
+    person.setCitizenship(enumerationService.getByIdentAndValue("CITIZENSHIP", "RU"));
+    person.setGender(enumerationService.getByIdentAndValue("GENDER", "MALE"));
+    person.setDocType(enumerationService.getByIdentAndValue("DOC-TYPE", "PASSPORT-RF"));
     personService.create(person);
 
     // add 5 legal rekv
@@ -216,7 +150,6 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
     legalRekv.setOkpo("05561358");
     legalRekv.setShortName("ИП Ивано");
 
-
     // add 10 new counteragent
     for (int i = 1; i <= 10; i++) {
       PaymentDetails paymentDetails = new PaymentDetails();
@@ -226,22 +159,21 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
       paymentDetails.setCorrespondingAccount("222");
 
       Counterparty e = new Counterparty("Контагент" + i);
-      e.setLegalType(enumLegalTypeLegal);
-      e.addStatus(enumCpStatusClient);
+      e.setLegalType(enumerationService.getByIdentAndValue("LEGAL-TYPE", "LEGAL"));
+      e.addStatus(enumerationService.getByIdentAndValue("CP-STATUS", "CLIENT"));
       e.setLegalRekv(legalRekv);
       e.setOwner(owner);
-      e.addPaymentType(enumPaymentTypeCashless);
+      e.addPaymentType(enumerationService.getByIdentAndValue("PAYMENT-TYPE", "CASHLESS"));
       e.setNoVat(true);
       e.addContact(c1);
       ExtRegSystemCounterpartyProperties props = new ExtRegSystemCounterpartyProperties();
       props.setExtRegSystem(extRegSystemService.get(1));
-      LinkedHashMap params = new LinkedHashMap<>();
+      Map<String, Object> params = new HashMap<>();
       params.put("GUID", UUID.randomUUID());
       props.setProperties(params);
       e.setExtRegSystemProperties(props);
       e.addPaymentDetails(paymentDetails);
       counterpartyService.create(e);
-
     }
 
     // add 1 new contract and 2 subcontracts
@@ -288,12 +220,13 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
     shopDepartService.create(new ShopDepart("Отдел магазин 5", m2, true));
 
     // add 100 new shops
+    Randomizer cr = new Randomizer();
+    Randomizer sc = new Randomizer();
+    Randomizer st = new Randomizer();
+    Randomizer sd = new Randomizer();
+    Randomizer sp = new Randomizer();
     for (int i = 1; i <= 100; i++) {
-      Shop shop =
-          new Shop(
-              "Магазин" + i,
-              counterpartyService.get(new Random().nextInt(9) + 1)
-          );
+      Shop shop = new Shop("Магазин" + i, counterpartyService.get(cr.generateRandom(1, 9)));
       Address address = new Address("address" + i);
       LinkedHashMap<Object, Object> suggestion = new LinkedHashMap<>();
       suggestion.put(i, "s" + i);
@@ -302,17 +235,17 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
       shop.setAddress(address);
       shop.setActive(i % 2 == 0);
       shop.addContact(c2);
-      shop.addSalesChannel(salesChannelService.get(new Random().nextInt(4) + 1));
-      shop.addSalesChannel(salesChannelService.get(new Random().nextInt(4) + 1));
-      shop.addShopType(shopTypesService.get(new Random().nextInt(4) + 1));
-      shop.addShopType(shopTypesService.get(new Random().nextInt(4) + 1));
-      shop.addShopDepart(shopDepartService.get(new Random().nextInt(4) + 1));
-      shop.addShopDepart(shopDepartService.get(new Random().nextInt(4) + 1));
-      shop.addShopSpecialization(shopSpecializationtService.get(new Random().nextInt(4) + 1));
-      shop.addShopSpecialization(shopSpecializationtService.get(new Random().nextInt(4) + 1));
+      shop.addSalesChannel(salesChannelService.get(sc.generateRandom(1, 4)));
+      shop.addSalesChannel(salesChannelService.get(sc.generateRandom(1, 4)));
+      shop.addShopType(shopTypesService.get(st.generateRandom(1, 4)));
+      shop.addShopType(shopTypesService.get(st.generateRandom(1, 4)));
+      shop.addShopDepart(shopDepartService.get(sd.generateRandom(1, 4)));
+      shop.addShopDepart(shopDepartService.get(sd.generateRandom(1, 4)));
+      shop.addShopSpecialization(shopSpecializationtService.get(sp.generateRandom(1, 4)));
+      shop.addShopSpecialization(shopSpecializationtService.get(sp.generateRandom(1, 4)));
       ExtRegSystemShopProperties shopProperties = new ExtRegSystemShopProperties();
       shopProperties.setExtRegSystem(extRegSystemService.get(1));
-      LinkedHashMap shopParams = new LinkedHashMap<>();
+      Map<String, Object> shopParams = new HashMap<>();
       shopParams.put("GUID", UUID.randomUUID());
       shopProperties.setProperties(shopParams);
       shop.setExtRegSystemProperties(shopProperties);
@@ -323,7 +256,7 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
   public void signInAsUser() {
     // ***** add system role - ADMIN ******
     SystemRole adminRole = accessLevelService.createRole("ROLE_ADMIN");
-    
+
     // ***** add system role - MANAGER ******
     SystemRole managerRole = accessLevelService.createRole("ROLE_MANAGER");
 
@@ -359,5 +292,23 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
 
     SecurityContext sc = SecurityContextHolder.getContext();
     sc.setAuthentication(auth);
+  }
+
+  class Randomizer {
+
+    Random rnd = new Random();
+    List<Integer> exclude = new ArrayList<>();
+
+    public int generateRandom(int start, int end) {
+      int random = start + rnd.nextInt(end - start + 1 - exclude.size());
+      for (int ex : exclude) {
+        if (random < ex) {
+          break;
+        }
+        random++;
+      }
+      exclude.add(random);
+      return random;
+    }
   }
 }

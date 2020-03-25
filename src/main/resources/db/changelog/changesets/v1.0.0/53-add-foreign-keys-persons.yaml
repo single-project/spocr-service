@@ -15,7 +15,7 @@ databaseChangeLog:
             referencedTableName: enumerations
             validate: true
   - changeSet:
-        id: 20200324-64
+      id: 20200324-64
       author: akurutin (generated)
       changes:
         - addForeignKeyConstraint:
@@ -30,7 +30,7 @@ databaseChangeLog:
             referencedTableName: enumerations
             validate: true
   - changeSet:
-        id: 20200324-66
+      id: 20200324-66
       author: akurutin (generated)
       changes:
         - addForeignKeyConstraint:
