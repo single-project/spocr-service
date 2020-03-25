@@ -8,6 +8,7 @@ import lombok.Data;
 public class TableConfig {
 
   private int id;
+  private String key;
   private String name;
   private String url;
   private List<FieldConfig> columns;
