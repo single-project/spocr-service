@@ -15,7 +15,7 @@ databaseChangeLog:
             referencedTableName: sales_channels
             validate: true
   - changeSet:
-        id: 20200324-81
+      id: 20200324-81
       author: akurutin (generated)
       changes:
         - addForeignKeyConstraint:
