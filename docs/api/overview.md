@@ -4,6 +4,29 @@
 
 This describes the resources that make up the official SPOCR REST API v1. 
 
+**Main entities**
+
+[Current version]()
+[Schema]()
+[Authentication]()
+[Parameters]()
+[Root endpoint]()
+[Client errors]()
+[HTTP verbs]()
+[Pagination and Sorting]()
+[Cross origin resource sharing]()
+[Internalization]()
+[Owners](owner.md)
+[Counterparties](counterparty.md)
+[Shops](shop.md)
+[Contracts](contract.md)
+[ExtRegSystems](ext-reg-system.md)
+[Manufacturers](manufacturer.md)
+[SalesChannels](sales-channel.md)
+[ShopDeparts](shop-depart.md)
+[ShopSpecializations](shop-specializations.md)
+[ShopType](shop-type.md)
+
 
 ### Current version
 
