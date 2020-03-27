@@ -423,6 +423,7 @@ List all shops. You can use the filter query parameter to fetch shops:
 |---|---|---|
 | `q` | Search by part of name.  | ?q=manu|
 | `active` |  Sign that entity is active. Available values are `true/false`. | ?active=true |
+| `name` |  Ignore case search by part of shop name. | ?name=sho |
 | `counterparty.id` |  Counterparty id. | ?counterparty.id=11 |
 | `counterparty.name` |  Ignore case search by part of owner name. | ?counterparty.name=counte |
 | `page` | Page number | ?page=1 |
@@ -486,12 +487,13 @@ The service returns the code of the created shop
 
 **Request**
 
-`PATCH /api/counterparties/:shop_id`
+`PATCH /api/shops/:shop_id`
 
 Required fields for patch request are:
 * id
 * version - current entity state version
 * updatedFields - array of changed field names
+* and all required fields from create request
 
 ````json
 {
