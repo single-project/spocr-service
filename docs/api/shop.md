@@ -1,4 +1,4 @@
-### Shops
+### Shop
 
 
 ### Models
