@@ -425,7 +425,7 @@ List all shops. You can use the filter query parameter to fetch shops:
 | `active` |  Sign that entity is active. Available values are `true/false`. | ?active=true |
 | `name` |  Ignore case search by part of shop name. | ?name=sho |
 | `counterparty.id` |  Counterparty id. | ?counterparty.id=11 |
-| `counterparty.name` |  Ignore case search by part of owner name. | ?counterparty.name=counte |
+| `counterparty.name` |  Ignore case search by part of counterparty name. | ?counterparty.name=counte |
 | `page` | Page number | ?page=1 |
 | `size` |  Page rows limit | ?size=100 |
 | `sort` |  Sorting. Available values for the direction are `asc/desc`. | ?sort=id,asc |

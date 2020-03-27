@@ -5,8 +5,8 @@ import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.century.scp.spocr.base.models.dto.BaseEntityListView;
 import org.century.scp.spocr.base.models.dto.BaseEntityView;
-import org.century.scp.spocr.counterparty.models.dto.CounterpartyView;
 
 @Getter
 @Setter
@@ -19,7 +19,7 @@ public class ContractView extends BaseEntityView {
   private String comment;
   private Boolean active;
   private String contractNumber;
-  private CounterpartyView counterparty1;
-  private CounterpartyView counterparty2;
+  private BaseEntityListView counterparty1;
+  private BaseEntityListView counterparty2;
   private List<SubContractView> subContracts;
 }

@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.century.scp.spocr.counterparty.models.dto.CounterpartyView;
+import org.century.scp.spocr.base.models.dto.BaseEntityListView;
 
 @Getter
 @Setter
@@ -63,13 +63,13 @@ public class RequestForUpdateContract extends ContractView {
 
   @NotNull
   @Override
-  public CounterpartyView getCounterparty1() {
+  public BaseEntityListView getCounterparty1() {
     return super.getCounterparty1();
   }
 
   @NotNull
   @Override
-  public CounterpartyView getCounterparty2() {
+  public BaseEntityListView getCounterparty2() {
     return super.getCounterparty2();
   }
 
