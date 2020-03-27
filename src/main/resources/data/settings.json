@@ -14,19 +14,23 @@
       "columns": [
         {
           "field": "id",
-          "header": "Код"
+          "header": "Код",
+          "type": "Number"
         },
         {
           "field": "name",
-          "header": "Имя"
+          "header": "Имя",
+          "type": "String"
         },
         {
           "field": "counterparty",
-          "header": "Контрагент"
+          "header": "Контрагент",
+          "type": "Object"
         },
         {
           "field": "active",
-          "header": "Активный"
+          "header": "Активный",
+          "type": "Boolean"
         }
       ]
     },
@@ -40,15 +44,18 @@
       "columns": [
         {
           "field": "id",
-          "header": "Код"
+          "header": "Код",
+          "type": "Number"
         },
         {
           "field": "name",
-          "header": "Имя"
+          "header": "Имя",
+          "type": "String"
         },
         {
           "field": "active",
-          "header": "Активный"
+          "header": "Активный",
+          "type": "Boolean"
         }
       ]
     },
@@ -62,15 +69,18 @@
       "columns": [
         {
           "field": "id",
-          "header": "Код"
+          "header": "Код",
+          "type": "Number"
         },
         {
           "field": "name",
-          "header": "Имя"
+          "header": "Имя",
+          "type": "String"
         },
         {
           "field": "active",
-          "header": "Активный"
+          "header": "Активный",
+          "type": "Boolean"
         }
       ]
     },
@@ -84,19 +94,23 @@
       "columns": [
         {
           "field": "id",
-          "header": "Код"
+          "header": "Код",
+          "type": "Number"
         },
         {
           "field": "name",
-          "header": "Имя"
+          "header": "Имя",
+          "type": "String"
         },
         {
           "field": "manufacturer",
-          "header": "Производитель"
+          "header": "Производитель",
+          "type": "Object"
         },
         {
           "field": "active",
-          "header": "Активный"
+          "header": "Активный",
+          "type": "Boolean"
         }
       ]
     },
@@ -110,19 +124,23 @@
       "columns": [
         {
           "field": "id",
-          "header": "Код"
+          "header": "Код",
+          "type": "Number"
         },
         {
           "field": "name",
-          "header": "Имя"
+          "header": "Имя",
+          "type": "String"
         },
         {
           "field": "manufacturer",
-          "header": "Производитель"
+          "header": "Производитель",
+          "type": "Object"
         },
         {
           "field": "active",
-          "header": "Активный"
+          "header": "Активный",
+          "type": "Boolean"
         }
       ]
     },
@@ -136,19 +154,23 @@
       "columns": [
         {
           "field": "id",
-          "header": "Код"
+          "header": "Код",
+          "type": "Number"
         },
         {
           "field": "name",
-          "header": "Имя"
+          "header": "Имя",
+          "type": "String"
         },
         {
           "field": "manufacturer",
-          "header": "Производитель"
+          "header": "Производитель",
+          "type": "Object"
         },
         {
           "field": "active",
-          "header": "Активный"
+          "header": "Активный",
+          "type": "Boolean"
         }
       ]
     },
@@ -162,19 +184,23 @@
       "columns": [
         {
           "field": "id",
-          "header": "Код"
+          "header": "Код",
+          "type": "Number"
         },
         {
           "field": "name",
-          "header": "Имя"
+          "header": "Имя",
+          "type": "String"
         },
         {
           "field": "manufacturer",
-          "header": "Производитель"
+          "header": "Производитель",
+          "type": "Object"
         },
         {
           "field": "active",
-          "header": "Активный"
+          "header": "Активный",
+          "type": "Boolean"
         }
       ]
     },
@@ -188,35 +214,43 @@
       "columns": [
         {
           "field": "id",
-          "header": "Код"
+          "header": "Код",
+          "type": "Number"
         },
         {
           "field": "name",
-          "header": "Описание"
+          "header": "Описание",
+          "type": "String"
         },
         {
           "field": "counterparty1",
-          "header": "Контрагент 1"
+          "header": "Контрагент 1",
+          "type": "Object"
         },
         {
           "field": "counterparty2",
-          "header": "Контрагент 2"
+          "header": "Контрагент 2",
+          "type": "Object"
         },
         {
           "field": "contractNumber",
-          "header": "№ Договора"
+          "header": "№ Договора",
+          "type": "String"
         },
         {
           "field": "startDate",
-          "header": "Дата начала"
+          "header": "Дата начала",
+          "type": "Date"
         },
         {
           "field": "endDate",
-          "header": "Дата окончания"
+          "header": "Дата окончания",
+          "type": "Date"
         },
         {
           "field": "active",
-          "header": "Активный"
+          "header": "Активный",
+          "type": "Boolean"
         }
       ]
     },
@@ -230,15 +264,18 @@
       "columns": [
         {
           "field": "id",
-          "header": "Код"
+          "header": "Код",
+          "type": "Number"
         },
         {
           "field": "name",
-          "header": "Наименование"
+          "header": "Наименование",
+          "type": "String"
         },
         {
           "field": "active",
-          "header": "Активный"
+          "header": "Активный",
+          "type": "Boolean"
         }
       ]
     },
@@ -252,15 +289,18 @@
       "columns": [
         {
           "field": "id",
-          "header": "Код"
+          "header": "Код",
+          "type": "Number"
         },
         {
           "field": "name",
-          "header": "Наименование"
+          "header": "Наименование",
+          "type": "String"
         },
         {
           "field": "active",
-          "header": "Активный"
+          "header": "Активный",
+          "type": "Boolean"
         }
       ]
     }
