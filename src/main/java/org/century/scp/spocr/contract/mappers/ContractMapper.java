@@ -2,10 +2,11 @@ package org.century.scp.spocr.contract.mappers;
 
 import org.century.scp.spocr.contract.models.domain.Contract;
 import org.century.scp.spocr.contract.models.dto.ContractView;
+import org.century.scp.spocr.counterparty.mappers.CounterpartyMapper;
 import org.mapstruct.Mapper;
 import org.springframework.data.domain.Page;
 
-@Mapper(uses = SubContractMapper.class)
+@Mapper(uses = {SubContractMapper.class, CounterpartyMapper.class})
 public abstract class ContractMapper {
 
   public abstract Contract map(ContractView view);

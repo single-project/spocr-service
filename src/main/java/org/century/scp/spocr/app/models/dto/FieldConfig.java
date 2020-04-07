@@ -9,4 +9,5 @@ public class FieldConfig {
 
   private String field;
   private String header;
+  private String type;
 }

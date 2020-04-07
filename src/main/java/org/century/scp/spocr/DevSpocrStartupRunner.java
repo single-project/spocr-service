@@ -115,6 +115,42 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
       //
     }
 
+    // ***** get user - USER ******
+    SecurityUser user = users.findUserByLogin("user");
+    // ***** get reader - USER ******
+    SecurityUser reader = users.findUserByLogin("reader");
+
+    //
+    // ***** add system role - ADMIN ******
+    SystemRole adminRole = accessLevelService.createRole("ROLE_ADMIN");
+
+    // ***** add system role - MANAGER ******
+    SystemRole managerRole = accessLevelService.createRole("ROLE_MANAGER");
+
+    // add possible rules
+    SystemRule canReadRule = accessLevelService.createRule("READ_PRIVILEGE", EntityType.SHOP);
+    SystemRule canCreateRule =
+        accessLevelService.createRule("CREATE_PRIVILEGE", EntityType.SHOP_TYPE);
+    SystemRule canUpdateRule =
+        accessLevelService.createRule("UPDATE_PRIVILEGE", EntityType.SHOP_TYPE);
+
+    // link role to rules
+    accessLevelService.addRuleToRole(managerRole.getId(), canReadRule.getId());
+    accessLevelService.addRuleToRole(managerRole.getId(), canCreateRule.getId());
+    accessLevelService.addRuleToRole(managerRole.getId(), canUpdateRule.getId());
+
+    // link user to role
+    userDetailsService.addRole(user.getId(), adminRole, managerRole);
+
+    // ***** add system role - READER ******
+    managerRole = accessLevelService.createRole("ROLE_READER");
+
+    // link role to rules
+    accessLevelService.addRuleToRole(managerRole.getId(), canReadRule.getId());
+
+    // link user to role
+    userDetailsService.addRole(reader.getId(), managerRole);
+
     // add 1 ext reg system
     ExtRegSystem extRegSystem = new ExtRegSystem();
     extRegSystem.setActive(true);
@@ -265,38 +301,6 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
   private void signInAsUser() {
     // ***** get user - USER ******
     SecurityUser user = users.findUserByLogin("user");
-    // ***** get reader - USER ******
-    SecurityUser reader = users.findUserByLogin("reader");
-
-    // ***** add system role - ADMIN ******
-    SystemRole adminRole = accessLevelService.createRole("ROLE_ADMIN");
-
-    // ***** add system role - MANAGER ******
-    SystemRole managerRole = accessLevelService.createRole("ROLE_MANAGER");
-
-    // add possible rules
-    SystemRule canReadRule = accessLevelService.createRule("READ_PRIVILEGE", EntityType.SHOP);
-    SystemRule canCreateRule =
-        accessLevelService.createRule("CREATE_PRIVILEGE", EntityType.SHOP_TYPE);
-    SystemRule canUpdateRule =
-        accessLevelService.createRule("UPDATE_PRIVILEGE", EntityType.SHOP_TYPE);
-
-    // link role to rules
-    accessLevelService.addRuleToRole(managerRole.getId(), canReadRule.getId());
-    accessLevelService.addRuleToRole(managerRole.getId(), canCreateRule.getId());
-    accessLevelService.addRuleToRole(managerRole.getId(), canUpdateRule.getId());
-
-    // link user to role
-    userDetailsService.addRole(user.getId(), adminRole, managerRole);
-
-    // ***** add system role - READER ******
-    managerRole = accessLevelService.createRole("ROLE_READER");
-
-    // link role to rules
-    accessLevelService.addRuleToRole(managerRole.getId(), canReadRule.getId());
-
-    // link user to role
-    userDetailsService.addRole(reader.getId(), managerRole);
 
     Authentication auth =
         authenticationManager.authenticate(

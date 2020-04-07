@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.OnTypeMismatch;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.century.scp.spocr.contract.models.domain.Contract;
 import org.century.scp.spocr.contract.models.domain.SubContract;
@@ -44,22 +45,34 @@ public class ContractController {
   @GetMapping
   public ResponseEntity<Page<ContractView>> getItems(
       @And({
-          @Spec(path = "name", params = "q", spec = LikeIgnoreCase.class),
-          @Spec(path = "id", params = "id", spec = Equal.class),
-          @Spec(path = "name", params = "name", spec = LikeIgnoreCase.class),
-          @Spec(path = "contractNumber", params = "contractNumber", spec = LikeIgnoreCase.class),
-          @Spec(path = "counterparty1.id", params = "counterparty1.id", spec = Equal.class),
-          @Spec(path = "counterparty2.id", params = "counterparty2.id", spec = Equal.class),
-          @Spec(
-              path = "counterparty1.name",
-              params = "counterparty1.name",
-              spec = LikeIgnoreCase.class),
-          @Spec(
-              path = "counterparty2.name",
-              params = "counterparty2.name",
-              spec = LikeIgnoreCase.class),
-          @Spec(path = "active", params = "active", spec = Equal.class)
-      })
+            @Spec(path = "name", params = "q", spec = LikeIgnoreCase.class),
+            @Spec(path = "id", params = "id", spec = Equal.class),
+            @Spec(path = "name", params = "name", spec = LikeIgnoreCase.class),
+            @Spec(path = "contractNumber", params = "contractNumber", spec = LikeIgnoreCase.class),
+            @Spec(path = "counterparty1.id", params = "counterparty1.id", spec = Equal.class),
+            @Spec(path = "counterparty2.id", params = "counterparty2.id", spec = Equal.class),
+            @Spec(
+                path = "counterparty1.name",
+                params = "counterparty1.name",
+                spec = LikeIgnoreCase.class),
+            @Spec(
+                path = "counterparty2.name",
+                params = "counterparty2.name",
+                spec = LikeIgnoreCase.class),
+            @Spec(path = "active", params = "active", spec = Equal.class),
+            @Spec(
+                path = "startDate",
+                params = {"startDate"},
+                spec = Equal.class,
+                config = "yyyy-MM-dd'T'HH:mm:ssZ",
+                onTypeMismatch = OnTypeMismatch.EXCEPTION),
+            @Spec(
+                path = "endDate",
+                params = {"endDate"},
+                spec = Equal.class,
+                config = "yyyy-MM-dd'T'HH:mm:ssZ",
+                onTypeMismatch = OnTypeMismatch.EXCEPTION)
+          })
           Specification<Contract> contractSpecification,
       Pageable pageable) {
     return ResponseEntity.ok(contractServiceFacade.get(contractSpecification, pageable));
@@ -68,16 +81,16 @@ public class ContractController {
   @GetMapping("/{id}/subcontracts")
   public ResponseEntity<Page<SubContractView>> getSubContracts(
       @And({
-          @Spec(path = "name", params = "q", spec = LikeIgnoreCase.class),
-          @Spec(path = "id", params = "id", spec = Equal.class),
-          @Spec(path = "name", params = "name", spec = LikeIgnoreCase.class),
-          @Spec(path = "contract.id", params = "contract.id", spec = Equal.class),
-          @Spec(
-              path = "subContractNumber",
-              params = "subContractNumber",
-              spec = LikeIgnoreCase.class),
-          @Spec(path = "active", params = "active", spec = Equal.class)
-      })
+            @Spec(path = "name", params = "q", spec = LikeIgnoreCase.class),
+            @Spec(path = "id", params = "id", spec = Equal.class),
+            @Spec(path = "name", params = "name", spec = LikeIgnoreCase.class),
+            @Spec(path = "contract.id", params = "contract.id", spec = Equal.class),
+            @Spec(
+                path = "subContractNumber",
+                params = "subContractNumber",
+                spec = LikeIgnoreCase.class),
+            @Spec(path = "active", params = "active", spec = Equal.class)
+          })
           Specification<SubContract> subContractSpecification,
       Pageable pageable) {
     return ResponseEntity.ok(
@@ -85,8 +98,7 @@ public class ContractController {
   }
 
   @PostMapping
-  public ResponseEntity<Long> addItem(
-      @Validated @RequestBody RequestForCreateContract createContractRequest) {
+  public ResponseEntity<Long> addItem(@RequestBody RequestForCreateContract createContractRequest) {
     return ResponseEntity.ok(contractServiceFacade.create(createContractRequest));
   }
 
