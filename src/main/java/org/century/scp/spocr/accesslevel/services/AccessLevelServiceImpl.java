@@ -60,6 +60,18 @@ public class AccessLevelServiceImpl {
     roleRepository.save(role);
   }
 
+  public SystemRole getRole(String key) {
+    return roleRepository
+        .findSystemRoleByName(key)
+        .orElseThrow(() -> new SpocrEntityNotFoundException(SystemRole.class, key));
+  }
+
+  public SystemRule getRule(String key) {
+    return ruleRepository
+        .findSystemRuleByName(key)
+        .orElseThrow(() -> new SpocrEntityNotFoundException(SystemRule.class, key));
+  }
+
   public SystemRule getRule(long id) {
     return ruleRepository
         .findById(id)

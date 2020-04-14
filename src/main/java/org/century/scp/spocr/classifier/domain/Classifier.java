@@ -19,7 +19,7 @@ public class Classifier extends AbstractIdentifiedEntity {
   private String name;
 
   @ManyToOne(fetch = FetchType.EAGER, optional = false)
-  @JoinColumn(name = "manufactures_id", nullable = false)
+  @JoinColumn(name = "manufacturers_id", nullable = false)
   private Manufacturer manufacturer;
 
   @Column(name = "active")

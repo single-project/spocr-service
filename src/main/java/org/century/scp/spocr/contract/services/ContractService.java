@@ -8,6 +8,7 @@ import org.century.scp.spocr.base.services.BaseService;
 import org.century.scp.spocr.contract.models.domain.Contract;
 import org.century.scp.spocr.contract.models.domain.SubContract;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
+import org.century.scp.spocr.enumeration.models.domain.Enumeration;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -20,6 +21,14 @@ public class ContractService extends BaseService<Contract> {
 
   @Override
   public void refresh(Contract entity) {
+    if (entity.getStatus() != null && entity.getStatus().getId() != null) {
+      entity.setStatus(getReference(entity.getStatus(), Enumeration.class));
+    }
+
+    if (entity.getType() != null && entity.getType().getId() != null) {
+      entity.setType(getReference(entity.getType(), Enumeration.class));
+    }
+
     if (entity.linkedWithSubContracts()) {
       List<SubContract> subContracts = getReferences(entity.getSubContracts(), SubContract.class);
       entity.setSubContracts(subContracts);

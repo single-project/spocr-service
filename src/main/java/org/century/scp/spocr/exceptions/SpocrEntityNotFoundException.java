@@ -9,6 +9,11 @@ public class SpocrEntityNotFoundException extends SpocrException {
         id);
   }
 
+  public SpocrEntityNotFoundException(Class<?> c, String id) {
+    super(String.format("%s-not-found.exception", EntityNameConverter.toMessageServiceKey(c)),
+        id);
+  }
+
   public SpocrEntityNotFoundException(Class<?> c, String ident, String value) {
     super(String.format("%s-not-found.exception", EntityNameConverter.toMessageServiceKey(c)),
         ident, value);

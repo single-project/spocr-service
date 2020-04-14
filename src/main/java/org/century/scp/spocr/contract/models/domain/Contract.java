@@ -17,11 +17,14 @@ import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.enumeration.models.domain.Enumeration;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "contracts")
+@DynamicInsert
 @NoArgsConstructor
 public class Contract extends AbstractIdentifiedEntity {
 
@@ -59,6 +62,7 @@ public class Contract extends AbstractIdentifiedEntity {
   private String commodityCredit;
 
   @Column(name = "autoprolongation")
+  @ColumnDefault("true")
   private Boolean autoprolongation;
 
   @ManyToOne(fetch = FetchType.EAGER)

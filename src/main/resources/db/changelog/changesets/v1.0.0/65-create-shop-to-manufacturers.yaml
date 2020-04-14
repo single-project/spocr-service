@@ -17,6 +17,6 @@ databaseChangeLog:
                     nullable: false
                     primaryKey: true
                     primaryKeyName: shop_to_manufacturers_pkey
-                  name: manufactures_id
+                  name: manufacturers_id
                   type: BIGINT
             tableName: shop_to_manufacturers

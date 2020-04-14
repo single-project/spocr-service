@@ -35,6 +35,13 @@ public abstract class BaseService<T extends IdentifiedEntity> implements Service
   @NonNull
   @Override
   @PreAuthorize("hasAuthority('READ_PRIVILEGE')")
+  public Page<T> getPage(Pageable pageable) {
+    return repository.findAll(pageable);
+  }
+
+  @NonNull
+  @Override
+  @PreAuthorize("hasAuthority('READ_PRIVILEGE')")
   public Page<T> getBySpecification(Specification<T> specification, Pageable pageable) {
     return repository.findAll(specification, pageable);
   }

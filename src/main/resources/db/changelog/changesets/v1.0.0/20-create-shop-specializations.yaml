@@ -25,6 +25,6 @@ databaseChangeLog:
               - column:
                   constraints:
                     nullable: false
-                  name: manufactures_id
+                  name: manufacturers_id
                   type: BIGINT
             tableName: shop_specializations

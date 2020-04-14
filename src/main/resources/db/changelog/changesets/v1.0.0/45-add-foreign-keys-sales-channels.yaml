@@ -4,7 +4,7 @@ databaseChangeLog:
       author: akurutin (generated)
       changes:
         - addForeignKeyConstraint:
-            baseColumnNames: manufactures_id
+            baseColumnNames: manufacturers_id
             baseTableName: sales_channels
             constraintName: fkncpij6vio86fnd9tyalyage2s
             deferrable: false
@@ -12,5 +12,5 @@ databaseChangeLog:
             onDelete: NO ACTION
             onUpdate: NO ACTION
             referencedColumnNames: id
-            referencedTableName: manufactures
+            referencedTableName: manufacturers
             validate: true

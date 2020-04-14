@@ -63,7 +63,7 @@
       "id": 3,
       "key": "manufacturer",
       "name": "Производители",
-      "url": "/manufactures",
+      "url": "/manufacturers",
       "sortField": "name",
       "sortOrder": "asc",
       "columns": [

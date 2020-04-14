@@ -105,5 +105,8 @@
   <include file="changesets/v1.0.0/63-insert-enumerations.yaml" relativeToChangelogFile="true"/>
   <include file="changesets/v1.0.0/64-insert-admin.yaml" relativeToChangelogFile="true"/>
   <include file="changesets/v1.0.0/65-create-shop-to-manufacturers.yaml" relativeToChangelogFile="true"/>
-  <include file="changesets/v1.0.0/66-tag-v1.0.0-state.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/66-create-app-settings.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/67-create-user-settings.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/68-insert-initial-state.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/69-tag-v1.0.0-state.yaml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

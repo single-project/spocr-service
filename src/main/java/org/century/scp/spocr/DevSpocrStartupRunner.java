@@ -10,11 +10,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import lombok.extern.slf4j.Slf4j;
 import org.century.scp.spocr.accesslevel.models.SystemRole;
 import org.century.scp.spocr.accesslevel.models.SystemRule;
 import org.century.scp.spocr.accesslevel.services.AccessLevelServiceImpl;
 import org.century.scp.spocr.address.models.domain.Address;
+import org.century.scp.spocr.app.services.AppServiceImpl;
 import org.century.scp.spocr.classifier.saleschannel.models.domain.SalesChannel;
 import org.century.scp.spocr.classifier.saleschannel.services.SalesChannelService;
 import org.century.scp.spocr.classifier.shopdepart.domain.ShopDepart;
@@ -34,8 +37,6 @@ import org.century.scp.spocr.counterparty.models.domain.ExtRegSystemCounterparty
 import org.century.scp.spocr.counterparty.models.domain.LegalRekv;
 import org.century.scp.spocr.counterparty.services.CounterpartyService;
 import org.century.scp.spocr.enumeration.services.EnumerationService;
-import org.century.scp.spocr.exceptions.SpocrEntityNotFoundException;
-import org.century.scp.spocr.extlink.models.EntityType;
 import org.century.scp.spocr.extregsystem.models.domain.ExtRegSystem;
 import org.century.scp.spocr.extregsystem.services.ExtRegSystemService;
 import org.century.scp.spocr.manufacturer.models.domain.Manufacturer;
@@ -54,6 +55,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -67,95 +70,68 @@ import org.springframework.transaction.annotation.Transactional;
 @Profile({"dev"})
 public class DevSpocrStartupRunner implements ApplicationRunner {
 
-  @Autowired
-  private CounterpartyService counterpartyService;
-  @Autowired
-  private ManufacturerService manufacturerService;
+  @Autowired private CounterpartyService counterpartyService;
+  @Autowired private ManufacturerService manufacturerService;
 
-  @Autowired
-  private ShopService shopService;
+  @Autowired private ShopService shopService;
   @Autowired private AccessLevelServiceImpl accessLevelService;
   @Autowired private CustomUserDetailsService userDetailsService;
   @Autowired private AuthenticationManager authenticationManager;
   @Autowired private CustomUserDetailsService users;
 
-  @Autowired
-  private ContractService contractService;
-  @Autowired
-  private PersonService personService;
-  @Autowired
-  private EnumerationService enumerationService;
-  @Autowired
-  private OwnerService ownerService;
-  @Autowired
-  private ShopTypesService shopTypesService;
-  @Autowired
-  private SalesChannelService salesChannelService;
-  @Autowired
-  private ShopSpecializationtService shopSpecializationtService;
-  @Autowired
-  private ShopDepartService shopDepartService;
-  @Autowired
-  private ContactRoleService contactRoleService;
-  @Autowired
-  private ContactService contactService;
-  @Autowired
-  private ExtRegSystemService extRegSystemService;
+  @Autowired private ContractService contractService;
+  @Autowired private PersonService personService;
+  @Autowired private EnumerationService enumerationService;
+  @Autowired private OwnerService ownerService;
+  @Autowired private ShopTypesService shopTypesService;
+  @Autowired private SalesChannelService salesChannelService;
+  @Autowired private ShopSpecializationtService shopSpecializationtService;
+  @Autowired private ShopDepartService shopDepartService;
+  @Autowired private ContactRoleService contactRoleService;
+  @Autowired private ContactService contactService;
+  @Autowired private ExtRegSystemService extRegSystemService;
+  @Autowired private AppServiceImpl appService;
+
+  @PersistenceContext
+  private EntityManager entityManager;
 
   @Override
   @Transactional
   public void run(ApplicationArguments args) throws Exception {
-    signInAsUser();
+    signInAsAdmin();
 
     // if exception then go
-    try {
-      extRegSystemService.get(1);
+    if (appService.wasInitialized()) {
       return;
-    } catch (SpocrEntityNotFoundException e) {
-      //
     }
 
-    // ***** get user - USER ******
+    // ***** security settings ******
     SecurityUser user = users.findUserByLogin("user");
-    // ***** get reader - USER ******
     SecurityUser reader = users.findUserByLogin("reader");
 
-    //
-    // ***** add system role - ADMIN ******
-    SystemRole adminRole = accessLevelService.createRole("ROLE_ADMIN");
+    SystemRole adminRole = accessLevelService.getRole("ROLE_ADMIN");
+    SystemRole readerRole = accessLevelService.getRole("ROLE_READER");
+    SystemRole managerRole = accessLevelService.getRole("ROLE_MANAGER");
 
-    // ***** add system role - MANAGER ******
-    SystemRole managerRole = accessLevelService.createRole("ROLE_MANAGER");
+    SystemRule canReadRule = accessLevelService.getRule("READ_PRIVILEGE");
+    SystemRule canCreateRule = accessLevelService.getRule("CREATE_PRIVILEGE");
+    SystemRule canUpdateRule = accessLevelService.getRule("UPDATE_PRIVILEGE");
 
-    // add possible rules
-    SystemRule canReadRule = accessLevelService.createRule("READ_PRIVILEGE", EntityType.SHOP);
-    SystemRule canCreateRule =
-        accessLevelService.createRule("CREATE_PRIVILEGE", EntityType.SHOP_TYPE);
-    SystemRule canUpdateRule =
-        accessLevelService.createRule("UPDATE_PRIVILEGE", EntityType.SHOP_TYPE);
-
-    // link role to rules
+    accessLevelService.addRuleToRole(readerRole.getId(), canReadRule.getId());
     accessLevelService.addRuleToRole(managerRole.getId(), canReadRule.getId());
     accessLevelService.addRuleToRole(managerRole.getId(), canCreateRule.getId());
     accessLevelService.addRuleToRole(managerRole.getId(), canUpdateRule.getId());
 
-    // link user to role
+    userDetailsService.addRole(reader.getId(), readerRole);
     userDetailsService.addRole(user.getId(), adminRole, managerRole);
 
-    // ***** add system role - READER ******
-    managerRole = accessLevelService.createRole("ROLE_READER");
-
-    // link role to rules
-    accessLevelService.addRuleToRole(managerRole.getId(), canReadRule.getId());
-
-    // link user to role
-    userDetailsService.addRole(reader.getId(), managerRole);
+    signInAsUser();
 
     // add 1 ext reg system
     ExtRegSystem extRegSystem = new ExtRegSystem();
     extRegSystem.setActive(true);
     extRegSystem.setName("Меркурий");
-    extRegSystemService.create(extRegSystem);
+    extRegSystem = extRegSystemService.create(extRegSystem);
 
     // add 3 new roles
     ContactRole role1 = contactRoleService.create(new ContactRole("Менеджер"));
@@ -212,7 +188,7 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
       e.setNoVat(true);
       e.addContact(c1);
       ExtRegSystemCounterpartyProperties props = new ExtRegSystemCounterpartyProperties();
-      props.setExtRegSystem(extRegSystemService.get(1));
+      props.setExtRegSystem(extRegSystem);
       Map<String, Object> params = new HashMap<>();
       params.put("GUID", UUID.randomUUID());
       props.setProperties(params);
@@ -221,15 +197,31 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
       counterpartyService.create(e);
     }
 
-    // add 1 new contract and 2 subcontracts
+    // add 2 new contracts
+    Page<Counterparty> counterparties = counterpartyService.getPage(PageRequest.of(0, 10));
+
     Contract contract = new Contract();
     contract.setName("Продажа товаров");
-    contract.setCounterparty1(counterpartyService.get(1));
-    contract.setCounterparty2(counterpartyService.get(2));
+    contract.setCounterparty1(counterparties.getContent().get(0));
+    contract.setCounterparty2(counterparties.getContent().get(1));
     contract.setActive(true);
     contract.setContractNumber("123AA");
     contract.setStartDate(new Date());
     contract.setEndDate(Date.from(new Date().toInstant().plus(1, DAYS)));
+    contract.setType(enumerationService.getByIdentAndValue("CONTRACT-TYPE", "GOODS"));
+    contract.setStatus(enumerationService.getByIdentAndValue("CONTRACT-STATUS", "ACTIVE"));
+    contractService.create(contract);
+
+    contract = new Contract();
+    contract.setName("Продажа услуг");
+    contract.setCounterparty1(counterparties.getContent().get(2));
+    contract.setCounterparty2(counterparties.getContent().get(3));
+    contract.setActive(true);
+    contract.setContractNumber("BBBBAA22");
+    contract.setStartDate(Date.from(new Date().toInstant().plus(100, DAYS)));
+    contract.setEndDate(Date.from(new Date().toInstant().plus(300, DAYS)));
+    contract.setType(enumerationService.getByIdentAndValue("CONTRACT-TYPE", "SERVICE"));
+    contract.setStatus(enumerationService.getByIdentAndValue("CONTRACT-STATUS", "INACTIVE"));
     contractService.create(contract);
 
     // add 2 new manufacturer
@@ -270,8 +262,15 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
     Randomizer st = new Randomizer();
     Randomizer sd = new Randomizer();
     Randomizer sp = new Randomizer();
+    
+    Page<SalesChannel> salesChannels = salesChannelService.getPage(PageRequest.of(0,10));
+    Page<ShopType> shopTypes = shopTypesService.getPage(PageRequest.of(0,10));
+    Page<ShopDepart> shopDeparts = shopDepartService.getPage(PageRequest.of(0,10));
+    Page<ShopSpecialization> shopSpecializations = shopSpecializationtService.getPage(PageRequest.of(0,10));
+
+
     for (int i = 1; i <= 100; i++) {
-      Shop shop = new Shop("Магазин" + i, counterpartyService.get(cr.generateRandom(9)));
+      Shop shop = new Shop("Магазин" + i, counterparties.getContent().get(cr.generateRandom(9)));
       Address address = new Address("address" + i);
       LinkedHashMap<Object, Object> suggestion = new LinkedHashMap<>();
       suggestion.put(i, "s" + i);
@@ -280,32 +279,43 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
       shop.setAddress(address);
       shop.setActive(i % 2 == 0);
       shop.addContact(c2);
-      shop.addSalesChannel(salesChannelService.get(sc.generateRandom(4)));
-      shop.addSalesChannel(salesChannelService.get(sc.generateRandom(4)));
-      shop.addShopType(shopTypesService.get(st.generateRandom(4)));
-      shop.addShopType(shopTypesService.get(st.generateRandom(4)));
-      shop.addShopDepart(shopDepartService.get(sd.generateRandom(4)));
-      shop.addShopDepart(shopDepartService.get(sd.generateRandom(4)));
-      shop.addShopSpecialization(shopSpecializationtService.get(sp.generateRandom(4)));
-      shop.addShopSpecialization(shopSpecializationtService.get(sp.generateRandom(4)));
+      shop.addSalesChannel(salesChannels.getContent().get(sc.generateRandom(4)));
+      shop.addSalesChannel(salesChannels.getContent().get(sc.generateRandom(4)));
+      shop.addShopType(shopTypes.getContent().get(st.generateRandom(4)));
+      shop.addShopType(shopTypes.getContent().get(st.generateRandom(4)));
+      shop.addShopDepart(shopDeparts.getContent().get(sd.generateRandom(4)));
+      shop.addShopDepart(shopDeparts.getContent().get(sd.generateRandom(4)));
+      shop.addShopSpecialization(shopSpecializations.getContent().get(sp.generateRandom(4)));
+      shop.addShopSpecialization(shopSpecializations.getContent().get(sp.generateRandom(4)));
       ExtRegSystemShopProperties shopProperties = new ExtRegSystemShopProperties();
-      shopProperties.setExtRegSystem(extRegSystemService.get(1));
+      shopProperties.setExtRegSystem(extRegSystem);
       Map<String, Object> shopParams = new HashMap<>();
       shopParams.put("GUID", UUID.randomUUID());
       shopProperties.setProperties(shopParams);
       shop.setExtRegSystemProperties(shopProperties);
       shopService.create(shop);
     }
+
+    //end
+    appService.setInitEnd();
   }
 
   private void signInAsUser() {
+    signInAs("user", "111111");
+  }
+
+  private void signInAsAdmin() {
+    signInAs("admin", "111111");
+  }
+
+  private void signInAs(String username, String password) {
     // ***** get user - USER ******
-    SecurityUser user = users.findUserByLogin("user");
+    SecurityUser user = users.findUserByLogin(username);
 
     Authentication auth =
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
-                user.getLogin(), "111111", user.getAuthorities()));
+                user.getLogin(), password, user.getAuthorities()));
 
     SecurityContext sc = SecurityContextHolder.getContext();
     sc.setAuthentication(auth);

@@ -36,4 +36,14 @@ databaseChangeLog:
                     nullable: false
                   name: contract_id
                   type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: status_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: true
+                  name: link
+                  type: VARCHAR(1000)
             tableName: sub_contracts

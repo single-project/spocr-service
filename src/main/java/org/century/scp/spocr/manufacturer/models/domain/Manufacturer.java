@@ -11,7 +11,7 @@ import org.century.scp.spocr.base.models.domain.AbstractIdentifiedEntity;
 @Entity
 @Getter
 @Setter
-@Table(name = "manufactures")
+@Table(name = "manufacturers")
 @NoArgsConstructor
 public class Manufacturer extends AbstractIdentifiedEntity {
 

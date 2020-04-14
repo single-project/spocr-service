@@ -16,6 +16,10 @@ public interface ServiceI<T extends IdentifiedEntity> {
 
   @NonNull
   @PreAuthorize("hasAuthority('READ_PRIVILEGE')")
+  Page<T> getPage(Pageable pageable);
+
+  @NonNull
+  @PreAuthorize("hasAuthority('READ_PRIVILEGE')")
   Page<T> getBySpecification(Specification<T> specification, Pageable pageable);
 
   @NonNull

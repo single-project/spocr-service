@@ -63,7 +63,7 @@ public class Shop extends AbstractIdentifiedEntity {
   @JoinTable(
       name = "shop_to_manufacturers",
       joinColumns = @JoinColumn(name = "shop_id"),
-      inverseJoinColumns = @JoinColumn(name = "manufactures_id"))
+      inverseJoinColumns = @JoinColumn(name = "manufacturers_id"))
   private Set<Manufacturer> manufacturers;
 
   @ManyToMany(fetch = FetchType.EAGER)

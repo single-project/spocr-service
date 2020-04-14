@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.century.scp.spocr.base.models.domain.AbstractIdentifiedEntity;
+import org.century.scp.spocr.enumeration.models.domain.Enumeration;
 
 @Entity
 @Getter
@@ -37,5 +38,12 @@ public class SubContract extends AbstractIdentifiedEntity {
 
   @Column(name = "active")
   private Boolean active;
+
+  @Column(name = "link")
+  private String link;
+
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "status_id")
+  private Enumeration status;
 
 }
