@@ -19,6 +19,7 @@ databaseChangeLog:
               - column:
                   name: active
                   type: BOOLEAN
+                  defaultValueBoolean: true
               - column:
                   name: comment
                   type: VARCHAR(255)
@@ -44,4 +45,28 @@ databaseChangeLog:
                     nullable: false
                   name: counterparty_2_id
                   type: BIGINT
+              - column:
+                  constraints:
+                    nullable: true
+                  name: commodity_credit
+                  type: VARCHAR(20)
+              - column:
+                  name: autoprolongation
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+              - column:
+                  constraints:
+                    nullable: false
+                  name: type_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: status_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: true
+                  name: link
+                  type: VARCHAR(1000)
             tableName: contracts

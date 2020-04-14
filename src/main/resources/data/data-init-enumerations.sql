@@ -18,3 +18,11 @@ INSERT INTO public.enumerations (ident, value, description_key)
 VALUES('GENDER', 'FEMALE', 'enumeration.gender.female.description');
 INSERT INTO public.enumerations (ident, value, description_key)
 VALUES('DOC-TYPE', 'PASSPORT-RF', 'enumeration.doc-type.passport-rf.description');
+INSERT INTO public.enumerations (ident, value, description_key)
+VALUES('CONTRACT-TYPE', 'GOODS', 'enumeration.contract-type.goods.description');
+INSERT INTO public.enumerations (ident, value, description_key)
+VALUES('CONTRACT-TYPE', 'SERVICE', 'enumeration.contract-type.service.description');
+INSERT INTO public.enumerations (ident, value, description_key)
+VALUES('CONTRACT-STATUS', 'ACTIVE', 'enumeration.contract-status.active.description');
+INSERT INTO public.enumerations (ident, value, description_key)
+VALUES('CONTRACT-STATUS', 'INACTIVE', 'enumeration.contract-status.inactive.description');

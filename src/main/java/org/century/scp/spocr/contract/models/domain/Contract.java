@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.century.scp.spocr.base.models.domain.AbstractIdentifiedEntity;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
+import org.century.scp.spocr.enumeration.models.domain.Enumeration;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
@@ -53,6 +54,23 @@ public class Contract extends AbstractIdentifiedEntity {
 
   @Column(name = "active")
   private Boolean active;
+
+  @Column(name = "commodity_credit")
+  private String commodityCredit;
+
+  @Column(name = "autoprolongation")
+  private Boolean autoprolongation;
+
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "type_id")
+  private Enumeration type;
+
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "status_id")
+  private Enumeration status;
+
+  @Column(name = "link")
+  private String link;
 
   public boolean linkedWithSubContracts() {
     return (subContracts != null && subContracts.size() > 0);
