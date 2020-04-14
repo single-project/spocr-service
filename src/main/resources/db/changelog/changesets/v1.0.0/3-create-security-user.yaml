@@ -19,7 +19,7 @@ databaseChangeLog:
                   type: BOOLEAN
               - column:
                   name: comment
-                  type: VARCHAR(255)
+                  type: VARCHAR(1000)
               - column:
                   name: date_create
                   type: TIMESTAMP WITHOUT TIME ZONE

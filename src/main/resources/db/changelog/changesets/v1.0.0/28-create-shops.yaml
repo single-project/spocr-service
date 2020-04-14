@@ -24,7 +24,7 @@ databaseChangeLog:
                   type: FLOAT4
               - column:
                   name: comment
-                  type: VARCHAR(255)
+                  type: VARCHAR(1000)
               - column:
                   name: gln
                   type: VARCHAR(255)

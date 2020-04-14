@@ -22,10 +22,13 @@ import org.century.scp.spocr.enumeration.models.domain.Enumeration;
 import org.century.scp.spocr.owner.models.domain.Owner;
 import org.century.scp.spocr.paymentdetails.models.domain.PaymentDetails;
 import org.century.scp.spocr.person.models.domain.Person;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 @Entity
 @Getter
 @Setter
+@DynamicInsert
 @Table(name = "counterparties")
 @NoArgsConstructor
 public class Counterparty extends AbstractIdentifiedEntity {
@@ -67,6 +70,7 @@ public class Counterparty extends AbstractIdentifiedEntity {
   private Set<PaymentDetails> paymentDetails;
 
   @Column(name = "no_vat")
+  @ColumnDefault("true")
   private Boolean noVat;
 
   @Column(name = "active")

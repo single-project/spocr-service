@@ -62,7 +62,7 @@ public class Contract extends AbstractIdentifiedEntity {
   private String commodityCredit;
 
   @Column(name = "autoprolongation")
-  @ColumnDefault("true")
+  @ColumnDefault("false")
   private Boolean autoprolongation;
 
   @ManyToOne(fetch = FetchType.EAGER)
