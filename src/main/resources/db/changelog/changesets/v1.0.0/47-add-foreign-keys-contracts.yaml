@@ -29,3 +29,33 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: counterparties
             validate: true
+  - changeSet:
+        id: 20200324-89
+        author: akurutin (generated)
+        changes:
+            - addForeignKeyConstraint:
+                  baseColumnNames: type_id
+                  baseTableName: contracts
+                  constraintName: contract_type_id_fk
+                  deferrable: false
+                  initiallyDeferred: false
+                  onDelete: NO ACTION
+                  onUpdate: NO ACTION
+                  referencedColumnNames: id
+                  referencedTableName: enumerations
+                  validate: true
+  - changeSet:
+        id: 20200324-90
+        author: akurutin (generated)
+        changes:
+            - addForeignKeyConstraint:
+                  baseColumnNames: status_id
+                  baseTableName: contracts
+                  constraintName: contract_status_id_fk
+                  deferrable: false
+                  initiallyDeferred: false
+                  onDelete: NO ACTION
+                  onUpdate: NO ACTION
+                  referencedColumnNames: id
+                  referencedTableName: enumerations
+                  validate: true
