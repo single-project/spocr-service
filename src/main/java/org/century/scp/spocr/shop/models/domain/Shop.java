@@ -22,6 +22,7 @@ import org.century.scp.spocr.classifier.shoptype.models.domain.ShopType;
 import org.century.scp.spocr.classifier.specialization.domain.ShopSpecialization;
 import org.century.scp.spocr.contact.models.domain.Contact;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
+import org.century.scp.spocr.manufacturer.models.domain.Manufacturer;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
@@ -57,6 +58,13 @@ public class Shop extends AbstractIdentifiedEntity {
       joinColumns = @JoinColumn(name = "shop_id"),
       inverseJoinColumns = @JoinColumn(name = "shop_types_id"))
   private Set<ShopType> shopTypes;
+
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(
+      name = "shop_to_manufacturers",
+      joinColumns = @JoinColumn(name = "shop_id"),
+      inverseJoinColumns = @JoinColumn(name = "manufactures_id"))
+  private Set<Manufacturer> manufacturers;
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
@@ -132,6 +140,10 @@ public class Shop extends AbstractIdentifiedEntity {
       this.shopSpecializations = new HashSet<>();
     }
     shopSpecializations.add(shopSpecialization);
+  }
+
+  public boolean linkedWithManufacturers() {
+    return manufacturers != null && manufacturers.size() > 0;
   }
 
   public boolean linkedWithShopTypes() {

@@ -27,7 +27,7 @@
     relativeToChangelogFile="true"/>
   <include file="changesets/v1.0.0/17-create-counterparty-contacts.yaml"
     relativeToChangelogFile="true"/>
-  <include file="changesets/v1.0.0/18-create-manufactures.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/18-create-manufacturers.yaml" relativeToChangelogFile="true"/>
   <include file="changesets/v1.0.0/19-create-owner-contacts.yaml" relativeToChangelogFile="true"/>
   <include file="changesets/v1.0.0/20-create-shop-specializations.yaml"
     relativeToChangelogFile="true"/>
@@ -104,5 +104,6 @@
   <include file="changesets/v1.0.0/62-create-events.yaml" relativeToChangelogFile="true"/>
   <include file="changesets/v1.0.0/63-insert-enumerations.yaml" relativeToChangelogFile="true"/>
   <include file="changesets/v1.0.0/64-insert-admin.yaml" relativeToChangelogFile="true"/>
-  <include file="changesets/v1.0.0/65-tag-v1.0.0-state.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/65-create-shop-to-manufacturers.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/66-tag-v1.0.0-state.yaml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

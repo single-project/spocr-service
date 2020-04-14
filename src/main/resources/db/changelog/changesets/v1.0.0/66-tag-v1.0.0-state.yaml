@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 20200324-87
+      id: 20200324-88
       author: akurutin
       changes:
         - tagDatabase:

@@ -82,15 +82,10 @@
                "type":"number"
             },
             "suggestion":{
-               "type":"object",
-               "properties":{
-                  "loadFactor":{
-                     "type":"number"
-                  },
-                  "threshold":{
-                     "type":"integer"
-                  }
-               }
+               "type":"object"
+            },
+            "version":{
+               "type":"integer"
             }
          }
       },
@@ -217,6 +212,12 @@
       },
       "id":{
          "type":"integer"
+      },
+      "manufacturers":{
+         "type":"array",
+         "items":{
+            "$ref":"#/$defs/BaseEntityListView"
+         }
       },
       "name":{
          "type":"string"

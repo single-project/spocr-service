@@ -11,6 +11,7 @@ import org.century.scp.spocr.classifier.shoptype.models.domain.ShopType;
 import org.century.scp.spocr.classifier.specialization.domain.ShopSpecialization;
 import org.century.scp.spocr.contact.models.domain.Contact;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
+import org.century.scp.spocr.manufacturer.models.domain.Manufacturer;
 import org.century.scp.spocr.shop.models.domain.Shop;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,12 @@ public class ShopService extends BaseService<Shop> {
     // counterparty
     if (shop.getCounterparty() != null && shop.getCounterparty().getId() != null) {
       shop.setCounterparty(getReference(shop.getCounterparty(), Counterparty.class));
+    }
+
+    //manufacturers
+    if (shop.linkedWithManufacturers()) {
+      Set<Manufacturer> manufacturers = getReferences(shop.getManufacturers(), Manufacturer.class);
+      shop.setManufacturers(manufacturers);
     }
 
     // shop types
