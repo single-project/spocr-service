@@ -19,6 +19,23 @@
                "type":"string"
             }
          }
+      },
+      "EnumerationView":{
+         "type":"object",
+         "properties":{
+            "id":{
+               "type":"integer"
+            },
+            "ident":{
+               "type":"string"
+            },
+            "name":{
+               "type":"string"
+            },
+            "properties":{
+               "type":"object"
+            }
+         }
       }
    },
    "type":"object",
@@ -26,7 +43,13 @@
       "active":{
          "type":"boolean"
       },
+      "autoprolongation":{
+         "type":"boolean"
+      },
       "comment":{
+         "type":"string"
+      },
+      "commodityCredit":{
          "type":"string"
       },
       "contractNumber":{
@@ -44,11 +67,17 @@
       "id":{
          "type":"integer"
       },
+      "link":{
+         "type":"string"
+      },
       "name":{
          "type":"string"
       },
       "startDate":{
          "type":"string"
+      },
+      "status":{
+         "$ref":"#/$defs/EnumerationView"
       },
       "subContracts":{
          "type":"array",
@@ -67,8 +96,14 @@
                "id":{
                   "type":"integer"
                },
+               "link":{
+                  "type":"string"
+               },
                "name":{
                   "type":"string"
+               },
+               "status":{
+                  "$ref":"#/$defs/EnumerationView"
                },
                "subContractDate":{
                   "type":"string"
@@ -81,6 +116,9 @@
                }
             }
          }
+      },
+      "type":{
+         "$ref":"#/$defs/EnumerationView"
       },
       "version":{
          "type":"integer"
