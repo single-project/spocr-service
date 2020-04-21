@@ -7,6 +7,7 @@ import org.century.scp.spocr.extlink.repositories.ExtLinkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,7 @@ public class ExtLinkServiceImpl {
   }
 
   @Transactional
+  @PreAuthorize("hasAuthority('CREATE_PRIVILEGE')")
   public ExtLink create(ExtLink extLink) {
     try {
       return extLinkRepository.save(extLink);
