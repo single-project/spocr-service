@@ -10,6 +10,7 @@ import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.century.scp.spocr.base.models.dto.BaseEntityListView;
 
 @Getter
 @Setter
@@ -50,7 +51,7 @@ public class RequestForUpdateSubContract extends SubContractView {
 
   @NotNull
   @Override
-  public ContractView getContract() {
+  public BaseEntityListView getContract() {
     return super.getContract();
   }
 

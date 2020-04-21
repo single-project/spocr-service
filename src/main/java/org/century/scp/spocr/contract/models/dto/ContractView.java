@@ -1,7 +1,7 @@
 package org.century.scp.spocr.contract.models.dto;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,5 +26,5 @@ public class ContractView extends BaseEntityView {
   private Boolean autoprolongation;
   private BaseEntityListView counterparty1;
   private BaseEntityListView counterparty2;
-  private List<SubContractView> subContracts;
+  private Set<SubContractView> subContracts;
 }

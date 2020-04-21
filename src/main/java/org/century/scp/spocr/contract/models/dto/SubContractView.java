@@ -4,6 +4,7 @@ import java.util.Date;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.century.scp.spocr.base.models.dto.BaseEntityListView;
 import org.century.scp.spocr.base.models.dto.BaseEntityView;
 import org.century.scp.spocr.enumeration.models.dto.EnumerationView;
 
@@ -18,7 +19,7 @@ public class SubContractView extends BaseEntityView {
   private String comment;
   private Boolean active;
   private Date subContractDate;
-  private ContractView contract;
+  private BaseEntityListView contract;
   private String subContractNumber;
   private EnumerationView status;
 }

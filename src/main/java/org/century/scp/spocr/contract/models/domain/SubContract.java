@@ -20,7 +20,7 @@ import org.century.scp.spocr.enumeration.models.domain.Enumeration;
 @NoArgsConstructor
 public class SubContract extends AbstractIdentifiedEntity {
 
-  @ManyToOne(fetch = FetchType.EAGER, optional = false)
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "contract_id", nullable = false)
   private Contract contract;
 

@@ -1,6 +1,6 @@
 package org.century.scp.spocr.contract.services;
 
-import java.util.List;
+import java.util.Set;
 import javax.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.century.scp.spocr.base.repositories.BaseRepository;
@@ -30,7 +30,7 @@ public class ContractService extends BaseService<Contract> {
     }
 
     if (entity.linkedWithSubContracts()) {
-      List<SubContract> subContracts = getReferences(entity.getSubContracts(), SubContract.class);
+      Set<SubContract> subContracts = getReferences(entity.getSubContracts(), SubContract.class);
       entity.setSubContracts(subContracts);
     }
 

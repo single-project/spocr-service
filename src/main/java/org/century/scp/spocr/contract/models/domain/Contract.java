@@ -1,7 +1,8 @@
 package org.century.scp.spocr.contract.models.domain;
 
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,8 +16,6 @@ import lombok.Setter;
 import org.century.scp.spocr.base.models.domain.AbstractIdentifiedEntity;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.enumeration.models.domain.Enumeration;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -28,9 +27,12 @@ import org.hibernate.annotations.DynamicInsert;
 @NoArgsConstructor
 public class Contract extends AbstractIdentifiedEntity {
 
-  @Cascade({CascadeType.PERSIST})
-  @OneToMany(mappedBy = "contract", orphanRemoval = true)
-  private List<SubContract> subContracts;
+  @OneToMany(
+      mappedBy = "contract",
+      fetch = FetchType.EAGER,
+      cascade = javax.persistence.CascadeType.ALL,
+      orphanRemoval = true)
+  private Set<SubContract> subContracts;
 
   @Column(name = "contract_number")
   private String contractNumber;
@@ -78,5 +80,28 @@ public class Contract extends AbstractIdentifiedEntity {
 
   public boolean linkedWithSubContracts() {
     return (subContracts != null && subContracts.size() > 0);
+  }
+
+  public void setSubContracts(Set<SubContract> subContracts) {
+    if (linkedWithSubContracts()) {
+      this.subContracts.removeIf(
+          e -> {
+            e.setContract(null);
+            return true;
+          });
+      if (subContracts != null) {
+        subContracts.forEach(this::addSubContract);
+      }
+    } else if (subContracts != null) {
+      subContracts.forEach(this::addSubContract);
+    }
+  }
+
+  public void addSubContract(SubContract subContract) {
+    if (this.subContracts == null) {
+      this.subContracts = new HashSet<>();
+    }
+    getSubContracts().add(subContract);
+    subContract.setContract(this);
   }
 }
