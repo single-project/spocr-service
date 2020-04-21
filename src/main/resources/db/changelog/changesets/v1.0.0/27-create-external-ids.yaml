@@ -14,15 +14,29 @@ databaseChangeLog:
                   name: id
                   type: BIGINT
               - column:
+                  constraints:
+                    nullable: false
+                    unique: true
+                    uniqueConstraintName: external_ids_ukey
                   name: entity_ext_id
                   type: INTEGER
               - column:
+                  constraints:
+                    nullable: false
                   name: entity_id
                   type: INTEGER
               - column:
+                  constraints:
+                    nullable: false
+                    unique: true
+                    uniqueConstraintName: external_ids_ukey
                   name: entity_type
                   type: VARCHAR(255)
               - column:
+                  constraints:
+                    nullable: false
+                    unique: true
+                    uniqueConstraintName: external_ids_ukey
                   name: ext_prog_id
                   type: INTEGER
             tableName: external_ids
