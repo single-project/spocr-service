@@ -26,7 +26,7 @@ public class ExtLinkServiceImpl {
     try {
       return extLinkRepository.save(extLink);
     } catch (DataIntegrityViolationException e) {
-      throw new SpocrConstraintViolationException("Подобная связь уже существует");
+      throw new SpocrConstraintViolationException("same-ext-link-already-exists", extLink.getEntityId(), extLink.getEntityExtId(), extLink.getEntityType(), extLink.getExtProgId());
     }
   }
 

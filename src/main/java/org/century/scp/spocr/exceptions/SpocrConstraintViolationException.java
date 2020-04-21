@@ -2,7 +2,7 @@ package org.century.scp.spocr.exceptions;
 
 public class SpocrConstraintViolationException extends SpocrException {
 
-  public SpocrConstraintViolationException(String message) {
-    super(message);
+  public SpocrConstraintViolationException(String messageFormatKey, Object... arguments) {
+    super(messageFormatKey, arguments);
   }
 }
