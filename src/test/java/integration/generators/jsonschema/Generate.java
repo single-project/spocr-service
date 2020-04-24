@@ -14,7 +14,7 @@ import org.century.scp.spocr.extregsystem.models.dto.ExtRegSystemView;
 import org.century.scp.spocr.manufacturer.models.dto.ManufacturerView;
 import org.century.scp.spocr.owner.models.domain.Owner;
 import org.century.scp.spocr.shop.models.dto.ShopView;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 public class Generate {
 

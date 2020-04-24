@@ -18,13 +18,20 @@ public class EventRepositoryImpl {
   private final JdbcTemplate jdbcTemplate;
   private MapConverter mapConverter = new MapConverter();
 
-  public List<Map<String, Object>> findAll(int q) {
+  public Long getMaxId() {
+    String sql = "SELECT h.id" + " FROM public.events AS h" + " ORDER BY h.id DESC" + " LIMIT 1";
+    Long maxId = jdbcTemplate.queryForObject(sql, Long.class);
+    return maxId == null ? 0 : maxId;
+  }
+
+  public List<Map<String, Object>> findAll(String query, Object... params) {
     String sql =
         "SELECT h.id, h.ident, h.entity, h.ts, h.body, h.username"
             + " FROM public.events AS h"
-            + " WHERE h.id > ?"
+            + " WHERE h."
+            + query
             + " ORDER BY h.id";
-    return jdbcTemplate.queryForList(sql, q);
+    return jdbcTemplate.queryForList(sql, params);
   }
 
   public void insert(String ident, String entity, Map<String, Object> body, String username) {
