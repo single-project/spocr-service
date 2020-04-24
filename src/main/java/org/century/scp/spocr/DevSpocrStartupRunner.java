@@ -31,6 +31,7 @@ import org.century.scp.spocr.contact.models.domain.ContactRole;
 import org.century.scp.spocr.contact.services.ContactRoleService;
 import org.century.scp.spocr.contact.services.ContactService;
 import org.century.scp.spocr.contract.models.domain.Contract;
+import org.century.scp.spocr.contract.models.domain.SubContract;
 import org.century.scp.spocr.contract.services.ContractService;
 import org.century.scp.spocr.counterparty.models.domain.Counterparty;
 import org.century.scp.spocr.counterparty.models.domain.ExtRegSystemCounterpartyProperties;
@@ -210,6 +211,20 @@ public class DevSpocrStartupRunner implements ApplicationRunner {
     contract.setEndDate(Date.from(new Date().toInstant().plus(1, DAYS)));
     contract.setType(enumerationService.getByIdentAndValue("CONTRACT-TYPE", "GOODS"));
     contract.setStatus(enumerationService.getByIdentAndValue("CONTRACT-STATUS", "ACTIVE"));
+    SubContract subContract = new SubContract();
+    subContract.setActive(true);
+    subContract.setName("Доп соглашение 1");
+    subContract.setStatus(enumerationService.getByIdentAndValue("CONTRACT-STATUS", "ACTIVE"));
+    subContract.setSubContractNumber("AAA111222");
+    subContract.setSubContractDate(new Date());
+    contract.addSubContract(subContract);
+    SubContract subContract2 = new SubContract();
+    subContract2.setActive(true);
+    subContract2.setName("Доп соглашение 2");
+    subContract2.setStatus(enumerationService.getByIdentAndValue("CONTRACT-STATUS", "ACTIVE"));
+    subContract2.setSubContractNumber("AAA111223");
+    subContract2.setSubContractDate(new Date());
+    contract.addSubContract(subContract2);
     contractService.create(contract);
 
     contract = new Contract();

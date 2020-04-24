@@ -31,7 +31,7 @@ public class SubContract extends AbstractIdentifiedEntity {
   private String name;
 
   @Column(name = "sub_contract_date")
-  private Date subContract;
+  private Date subContractDate;
 
   @Column(name = "comment")
   private String comment;

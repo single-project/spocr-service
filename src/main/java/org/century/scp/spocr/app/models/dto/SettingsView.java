@@ -15,4 +15,10 @@ public class SettingsView {
 
   private Map<String, String> daDataConfiguration;
 
+  private Map<String, Object> dateTimeConfig;
+
+  private Map<String, Object> calendarConfiguration;
+
+
+
 }
