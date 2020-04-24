@@ -24,15 +24,23 @@ databaseChangeLog:
                   name: comment
                   type: VARCHAR(1000)
               - column:
+                  constraints:
+                    nullable: false
                   name: contract_number
                   type: VARCHAR(255)
               - column:
+                  constraints:
+                    nullable: false
                   name: end_date
                   type: TIMESTAMP WITHOUT TIME ZONE
               - column:
+                  constraints:
+                    nullable: false
                   name: name
                   type: VARCHAR(255)
               - column:
+                  constraints:
+                    nullable: false
                   name: start_date
                   type: TIMESTAMP WITHOUT TIME ZONE
               - column:

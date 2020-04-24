@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.century.scp.spocr.base.models.dto.BaseEntityListView;
+import org.century.scp.spocr.enumeration.models.dto.EnumerationView;
 
 @Getter
 @Setter
@@ -38,6 +39,7 @@ public class RequestForCreateContract extends ContractView {
     return super.getName();
   }
 
+  @NotNull
   @Override
   public Date getEndDate() {
     return super.getEndDate();
@@ -65,5 +67,17 @@ public class RequestForCreateContract extends ContractView {
   @Override
   public BaseEntityListView getCounterparty2() {
     return super.getCounterparty2();
+  }
+
+  @NotNull
+  @Override
+  public EnumerationView getType() {
+    return super.getType();
+  }
+
+  @NotNull
+  @Override
+  public EnumerationView getStatus() {
+    return super.getStatus();
   }
 }

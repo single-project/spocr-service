@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.century.scp.spocr.base.models.dto.BaseEntityListView;
+import org.century.scp.spocr.enumeration.models.dto.EnumerationView;
 
 @Getter
 @Setter
@@ -71,6 +72,18 @@ public class RequestForUpdateContract extends ContractView {
   @Override
   public BaseEntityListView getCounterparty2() {
     return super.getCounterparty2();
+  }
+
+  @NotNull
+  @Override
+  public EnumerationView getType() {
+    return super.getType();
+  }
+
+  @NotNull
+  @Override
+  public EnumerationView getStatus() {
+    return super.getStatus();
   }
 
   @Size(min = 1)
