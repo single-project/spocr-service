@@ -6,14 +6,10 @@ databaseChangeLog:
         - createTable:
             columns:
               - column:
-                  autoIncrement: true
                   constraints:
                     nullable: false
                     primaryKey: true
                     primaryKeyName: app_settings_pkey
-                  name: id
-                  type: BIGINT
-              - column:
                   name: key
                   type: VARCHAR(255)
               - column:

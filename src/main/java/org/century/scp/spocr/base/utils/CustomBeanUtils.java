@@ -5,7 +5,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import org.century.scp.spocr.base.models.domain.IdentifiedEntity;
 import org.century.scp.spocr.exceptions.SpocrException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeansException;
@@ -22,7 +21,7 @@ import org.springframework.util.ClassUtils;
 @Slf4j
 public class CustomBeanUtils {
 
-  public static <T extends IdentifiedEntity> void copyProperties(
+  public static <T> void copyProperties(
       T source, T target, @NonNull List<String> properties) throws BeansException {
     Assert.notNull(source, "Source must not be null");
     Assert.notNull(target, "Target must not be null");
@@ -39,7 +38,7 @@ public class CustomBeanUtils {
     }
   }
 
-  private static <T extends IdentifiedEntity> void copyProperty(
+  private static <T> void copyProperty(
       T source, T target, PropertyDescriptor targetPropertyDescriptor, Method writeMethod) {
     PropertyDescriptor sourcePropertyDescriptor =
         BeanUtils.getPropertyDescriptor(source.getClass(), targetPropertyDescriptor.getName());
@@ -58,7 +57,7 @@ public class CustomBeanUtils {
     }
   }
 
-  private static <T extends IdentifiedEntity> void copy(
+  private static <T> void copy(
       T target, Method writeMethod, Object sourceValue)
       throws IllegalAccessException, InvocationTargetException {
     writeMethod.invoke(target, sourceValue);
