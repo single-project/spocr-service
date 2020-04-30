@@ -25,10 +25,7 @@ public class SettingsView {
   public void override(SettingsView settings) {
     List<String> properties = new ArrayList<>();
     properties.add("defaultDataType");
-    properties.add("availableTables");
-    properties.add("daDataConfiguration");
     properties.add("dateTimeConfig");
-    properties.add("calendarConfiguration");
     CustomBeanUtils.copyProperties(settings, this, properties);
   }
 
