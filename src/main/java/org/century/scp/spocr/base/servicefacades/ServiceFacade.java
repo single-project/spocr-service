@@ -22,5 +22,8 @@ public interface ServiceFacade<T extends IdentifiedEntity, K extends DTO> {
   @Transactional
   void update(Long id, K request, List<String> properties);
 
+  @Transactional
+  void delete(Long id);
+
 
 }

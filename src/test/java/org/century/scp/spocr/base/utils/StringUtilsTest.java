@@ -6,7 +6,7 @@ import org.junit.Test;
 public class StringUtilsTest {
 
   @Test
-  public void getIndexIfCharLocatedAtBegining() {
+  public void getIndexIfCharLocatedAtBeginning() {
     char[] ops = {'>', '<'};
     String q = ">123";
     Assert.assertEquals(0, StringUtils.getIndexIfContainsAny(q, ops));

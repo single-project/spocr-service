@@ -60,6 +60,11 @@ public class BaseServiceFacade<T extends IdentifiedEntity, K extends DTO>
     afterUpdate(entity, properties);
   }
 
+  @Override
+  public void delete(Long id) {
+    service.delete(id);
+  }
+
 
   protected void afterPersist(T entity) {
     Map<String, Object> body = new HashMap<>();

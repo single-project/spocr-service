@@ -84,4 +84,9 @@ public abstract class BaseService<T extends IdentifiedEntity> implements Service
   public <K extends IdentifiedEntity> List<K> getReferences(List<K> objects, Class<K> cl) {
     return objects.stream().map(e -> getReference(e, cl)).collect(Collectors.toList());
   }
+
+  @Override
+  public void delete(Long id) {
+    throw new UnsupportedOperationException("unsupported-operation-exception");
+  }
 }

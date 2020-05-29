@@ -30,4 +30,8 @@ public interface ServiceI<T extends IdentifiedEntity> {
   @PreAuthorize("hasAuthority('UPDATE_PRIVILEGE')")
   T update(Long id, T entity, List<String> properties);
 
+  @NonNull
+  @PreAuthorize("hasAuthority('UPDATE_PRIVILEGE')")
+  void delete(Long id);
+
 }
