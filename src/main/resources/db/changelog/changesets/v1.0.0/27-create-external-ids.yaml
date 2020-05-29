@@ -1,0 +1,43 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200324-27
+      author: akurutin (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: external_ids_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: entity_ext_id
+                  type: INTEGER
+              - column:
+                  constraints:
+                    nullable: false
+                  name: entity_id
+                  type: INTEGER
+              - column:
+                  constraints:
+                    nullable: false
+                  name: entity_type
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: ext_prog_id
+                  type: INTEGER
+            tableName: external_ids
+        - addUniqueConstraint:
+            catalogName: spocr
+            columnNames: ext_prog_id, entity_type, entity_ext_id
+            constraintName: external_ids_uidx
+            schemaName: public
+            tableName: external_ids
+            validate: true

@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200324-19
+      author: akurutin (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: owner_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: contacts_id
+                  type: BIGINT
+            tableName: owner_contacts

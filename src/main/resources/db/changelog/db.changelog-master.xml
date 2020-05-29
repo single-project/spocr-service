@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+  <include file="changesets/v1.0.0/1-create-user-to-system-roles.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/2-create-contacts.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/3-create-security-user.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/4-create-legal-rekvs.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/5-create-shop-contacts.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/6-create-counterparty-to-ext-reg-system-props.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/7-create-shop-to-types.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/8-create-persons.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/9-create-system-rules.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/10-create-sub-contracts.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/11-create-system-roles.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/12-create-shop-types.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/13-create-contracts.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/14-create-role-to-rules.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/15-create-shop-to-specializations.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/16-create-shop-to-sales-channels.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/17-create-counterparty-contacts.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/18-create-manufacturers.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/19-create-owner-contacts.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/20-create-shop-specializations.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/21-create-counterparty-payment-details.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/22-create-sales-channels.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/23-create-shop-to-ext-reg-system-props.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/24-create-addresses.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/25-create-counterparties.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/26-create-security-user-role.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/27-create-external-ids.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/28-create-shops.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/29-create-shop-departs.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/30-create-shop-to-departs.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/31-create-enumerations.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/32-create-counterparty-to-statuses.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/33-create-contact-roles.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/34-create-counterparty-to-payment-types.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/35-create-ext-reg-systems.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/36-create-owners.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/37-create-user-to-system-roles.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/38-add-foreign-keys-counterparty-contacts.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/39-add-foreign-keys-shop-contacts.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/40-add-foreign-keys-owner-contacts.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/41-add-foreign-keys-counterparties.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/42-add-foreign-keys-sub-contracts.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/43-add-foreign-keys-role-to-rules.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/44-add-foreign-keys-shop-specializations.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/45-add-foreign-keys-sales-channels.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/46-add-foreign-keys-shops.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/47-add-foreign-keys-contracts.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/48-add-foreign-keys-counterparty-to-payment-types.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/49-add-foreign-keys-counterparty-to-statuses.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/50-add-foreign-keys-counterparty-payment-details.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/51-add-foreign-keys-shop-departs.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/52-add-foreign-keys-shop-to-departs.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/53-add-foreign-keys-persons.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/54-add-foreign-keys-contacts.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/55-add-foreign-keys-counterparty-to-ext-reg-system-props.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/56-add-foreign-keys-shop-to-ext-reg-system-props.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/57-add-foreign-keys-user-to-system-roles.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/58.add-foreign-keys-shop-to-types.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/59-add-foreign-keys-shop-types.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/60-add-foreign-keys-shop-to-specializations.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/61-add-foreign-keys-shop-to-sales-channels.yaml"
+    relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/62-create-events.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/63-insert-enumerations.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/64-insert-admin.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/65-create-shop-to-manufacturers.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/66-create-app-settings.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/67-create-user-settings.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/68-insert-initial-state.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/69-create-drafts.yaml" relativeToChangelogFile="true"/>
+  <include file="changesets/v1.0.0/70-tag-v1.0.0-state.yaml" relativeToChangelogFile="true"/>
+</databaseChangeLog>

@@ -1,0 +1,46 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200324-63
+      author: akurutin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: citizenship_id
+            baseTableName: persons
+            constraintName: fkchumcksji3m4pyav25o9ern95
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: enumerations
+            validate: true
+  - changeSet:
+      id: 20200324-64
+      author: akurutin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: gender_id
+            baseTableName: persons
+            constraintName: fkcuid3v1wbeplun4l61j3y3otr
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: enumerations
+            validate: true
+  - changeSet:
+      id: 20200324-66
+      author: akurutin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: doc_type_id
+            baseTableName: persons
+            constraintName: fkmbiulsauciv7dn2054b3gagmm
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: enumerations
+            validate: true

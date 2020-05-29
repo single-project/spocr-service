@@ -12,7 +12,7 @@ public abstract class AbstractExceptionHandler<T extends Throwable> {
 
   private Class<?> exceptionClass;
 
-  public AbstractExceptionHandler(Class<?> exceptionClass) {
+  public AbstractExceptionHandler(Class<T> exceptionClass) {
     this.exceptionClass = exceptionClass;
   }
 
@@ -43,4 +43,5 @@ public abstract class AbstractExceptionHandler<T extends Throwable> {
     errorResponse.setErrors(getErrors(ex));
     return errorResponse;
   }
+
 }

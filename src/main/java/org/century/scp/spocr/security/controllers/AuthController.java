@@ -18,6 +18,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,7 +49,8 @@ public class AuthController {
   }
 
   @PostMapping("/signin")
-  public ResponseEntity<AuthenticationResponse> signin(@RequestBody AuthenticationRequest data) {
+  public ResponseEntity<AuthenticationResponse> signin(
+      @Validated @RequestBody AuthenticationRequest data) {
     String username = data.getUsername();
     authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(username, data.getPassword()));

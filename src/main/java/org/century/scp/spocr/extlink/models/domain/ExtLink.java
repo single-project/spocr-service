@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.century.scp.spocr.extlink.models.EntityType;
 
@@ -35,5 +34,4 @@ public class ExtLink {
 
   @Column(name = "ext_prog_id")
   private int extProgId;
-
 }

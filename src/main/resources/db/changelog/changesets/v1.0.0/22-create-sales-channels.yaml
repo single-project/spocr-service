@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200324-22
+      author: akurutin (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: sales_channels_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: VERSION
+                  type: BIGINT
+              - column:
+                  name: active
+                  type: BOOLEAN
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: manufacturers_id
+                  type: BIGINT
+            tableName: sales_channels

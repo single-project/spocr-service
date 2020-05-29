@@ -11,6 +11,10 @@
 * Open command prompt in the root of project and run `mvn spring-boot:run`
 * Open in browser `http://localhost:8112/spor/actuator/health` to make sure the application is up and running 
 
+## API info
+
+Detailed information about the API is available at the /swagger-ui.html or on the project's wikipedia
+
 ## Information for contributors
 
 * Use [Google Code Style Guide](https://google.github.io/styleguide/javaguide.html#s6-programming-practices)

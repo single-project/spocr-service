@@ -1,0 +1,61 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200324-50
+      author: akurutin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: counterparty_2_id
+            baseTableName: contracts
+            constraintName: fk84rjttlf64skpm6m11ama7wg9
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: counterparties
+            validate: true
+  - changeSet:
+      id: 20200324-56
+      author: akurutin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: counterparty_1_id
+            baseTableName: contracts
+            constraintName: fkmcdtkcgxfubo30gtt9wrsbhu2
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: counterparties
+            validate: true
+  - changeSet:
+        id: 20200324-89
+        author: akurutin (generated)
+        changes:
+            - addForeignKeyConstraint:
+                  baseColumnNames: type_id
+                  baseTableName: contracts
+                  constraintName: contract_type_id_fk
+                  deferrable: false
+                  initiallyDeferred: false
+                  onDelete: NO ACTION
+                  onUpdate: NO ACTION
+                  referencedColumnNames: id
+                  referencedTableName: enumerations
+                  validate: true
+  - changeSet:
+        id: 20200324-90
+        author: akurutin (generated)
+        changes:
+            - addForeignKeyConstraint:
+                  baseColumnNames: status_id
+                  baseTableName: contracts
+                  constraintName: contract_status_id_fk
+                  deferrable: false
+                  initiallyDeferred: false
+                  onDelete: NO ACTION
+                  onUpdate: NO ACTION
+                  referencedColumnNames: id
+                  referencedTableName: enumerations
+                  validate: true

@@ -3,6 +3,7 @@ package org.century.scp.spocr.security.services;
 import static org.springframework.security.core.context.SecurityContextHolder.getContext;
 
 import javax.servlet.http.HttpServletRequest;
+import org.century.scp.spocr.accesslevel.models.SystemRole;
 import org.century.scp.spocr.security.models.domain.SecurityUser;
 import org.century.scp.spocr.security.repositories.SecurityUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +16,19 @@ import org.springframework.stereotype.Service;
 public class CustomUserDetailsService implements SecurityService, UserDetailsService {
 
   private final HttpServletRequest request;
-  private final SecurityUserRepository users;
+  private final SecurityUserRepository userRepository;
 
   @Autowired
-  public CustomUserDetailsService(SecurityUserRepository users, HttpServletRequest request) {
-    this.users = users;
+  public CustomUserDetailsService(
+      SecurityUserRepository userRepository, HttpServletRequest request) {
+    this.userRepository = userRepository;
     this.request = request;
+  }
+
+  public SecurityUser addRole(int id, SystemRole... roles) {
+    SecurityUser user = findUserById(id);
+    user.addRoles(roles);
+    return userRepository.save(user);
   }
 
   @Override
@@ -44,14 +52,14 @@ public class CustomUserDetailsService implements SecurityService, UserDetailsSer
 
   @Override
   public SecurityUser findUserById(int id) {
-    return users
+    return userRepository
         .findById(id)
         .orElseThrow(() -> new UsernameNotFoundException("Username id: " + id + " not found"));
   }
 
   @Override
   public SecurityUser findUserByLogin(String login) {
-    return users
+    return userRepository
         .findByLogin(login)
         .orElseThrow(() -> new UsernameNotFoundException("Username: " + login + " not found"));
   }

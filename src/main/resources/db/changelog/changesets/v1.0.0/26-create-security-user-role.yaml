@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200324-26
+      author: akurutin (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: security_user_role_pkey
+                  name: role_name
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: security_user_role_pkey
+                  name: login
+                  type: VARCHAR(255)
+            tableName: security_user_role

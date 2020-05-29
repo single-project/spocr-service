@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200324-96
+      author: akurutin
+      changes:
+        - tagDatabase:
+            tag: v1.0.0

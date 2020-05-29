@@ -33,19 +33,21 @@ public class ErrorResponseComposer<T extends Throwable> {
 
   public Optional<ErrorResponse> compose(T ex) {
 
+    T causeEx = ex;
+
     AbstractExceptionHandler<T> handler = null;
 
-    while (ex != null) {
-      handler = handlers.get(ex.getClass());
+    while (causeEx != null) {
+      handler = handlers.get(causeEx.getClass());
       if (handler != null) break;
-      ex = (T) ex.getCause();
+      causeEx = (T) causeEx.getCause();
     }
 
-    if (handler != null) {
-      return Optional.of(handler.getErrorResponse(ex));
+    if (handler == null) {
+      handler = handlers.get(Throwable.class);
     }
 
-    return Optional.empty();
+    return Optional.of(handler.getErrorResponse(ex));
   }
 
   private Optional<AbstractExceptionHandler<T>> findHandler(T ex) {

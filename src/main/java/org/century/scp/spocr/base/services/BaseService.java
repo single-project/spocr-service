@@ -1,80 +1,92 @@
 package org.century.scp.spocr.base.services;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.github.fge.jsonpatch.JsonPatchException;
-import com.github.fge.jsonpatch.mergepatch.JsonMergePatch;
-import java.io.IOException;
 import java.util.List;
-
-import org.century.scp.spocr.base.models.domain.BaseEntity;
+import java.util.Set;
+import java.util.stream.Collectors;
+import javax.persistence.EntityManager;
+import lombok.RequiredArgsConstructor;
+import org.century.scp.spocr.base.models.domain.IdentifiedEntity;
 import org.century.scp.spocr.base.repositories.BaseRepository;
+import org.century.scp.spocr.base.utils.CustomBeanUtils;
 import org.century.scp.spocr.exceptions.SpocrEntityNotFoundException;
 import org.century.scp.spocr.exceptions.SpocrException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.lang.NonNull;
+import org.springframework.security.access.prepost.PreAuthorize;
 
-public abstract class BaseService<T extends BaseEntity> {
+@RequiredArgsConstructor
+public abstract class BaseService<T extends IdentifiedEntity> implements ServiceI<T> {
 
-  public BaseRepository<T> entityRepository;
+  private final Class<T> entityClass;
+  private final EntityManager entityManager;
+  protected final BaseRepository<T> repository;
 
-  public BaseService(BaseRepository<T> entityRepository) {
-    this.entityRepository = entityRepository;
-  }
-
-  public abstract Class<T> getEntityClass();
-
-  public abstract String getEntityName();
-
-  public T create(T object) {
-    return entityRepository.save(object);
-  }
-
-  @Transactional(isolation = Isolation.READ_COMMITTED)
-  public T update(Long id, String data) {
-    T object = get(id);
-    try {
-      object = mergePatch(object, data, getEntityClass());
-    } catch (IOException | JsonPatchException e) {
-      throw new SpocrException(e);
-    }
-    return entityRepository.save(object);
-  }
-
+  @NonNull
+  @Override
+  @PreAuthorize("hasAuthority('READ_PRIVILEGE')")
   public T get(long id) {
-    return entityRepository
+    return repository
         .findById(id)
-        .orElseThrow(() -> new SpocrEntityNotFoundException(id, getEntityName()));
+        .orElseThrow(() -> new SpocrEntityNotFoundException(entityClass, id));
   }
 
+  @NonNull
+  @Override
+  @PreAuthorize("hasAuthority('READ_PRIVILEGE')")
+  public Page<T> getPage(Pageable pageable) {
+    return repository.findAll(pageable);
+  }
+
+  @NonNull
+  @Override
+  @PreAuthorize("hasAuthority('READ_PRIVILEGE')")
   public Page<T> getBySpecification(Specification<T> specification, Pageable pageable) {
-    return entityRepository.findAll(specification, pageable);
+    return repository.findAll(specification, pageable);
   }
 
-  public List<T> getAll() {
-    return entityRepository.findAll();
+  @NonNull
+  @Override
+  @PreAuthorize("hasAuthority('CREATE_PRIVILEGE')")
+  public T create(T entity) {
+    refresh(entity);
+    return repository.save(entity);
   }
 
-  public List<T> createAll(List<T> objects) {
-    return entityRepository.saveAll(objects);
+  @NonNull
+  @Override
+  @PreAuthorize("hasAuthority('UPDATE_PRIVILEGE')")
+  public T update(Long id, T patch, List<String> properties) {
+    if (!id.equals(patch.getId())) {
+      throw new SpocrException("incorrect-entity-id.exception", id, patch.getId());
+    }
+    T current = get(id);
+    CustomBeanUtils.copyProperties(patch, current, properties);
+    refresh(current);
+    return repository.save(current);
   }
 
-  protected static <T> T mergePatch(T t, String patch, Class<T> clazz)
-      throws IOException, JsonPatchException {
-    ObjectMapper mapper = new ObjectMapper();
-    mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-    JsonNode node = mapper.convertValue(t, JsonNode.class);
-    JsonNode patchNode = mapper.readTree(patch);
-    JsonMergePatch mergePatch = JsonMergePatch.fromJson(patchNode);
-    node = mergePatch.apply(node);
-    ArrayNode fields = ((ObjectNode) node).putArray("updatedFields");
-    patchNode.fieldNames().forEachRemaining(fields::add);
-    return mapper.treeToValue(node, clazz);
+  public abstract void refresh(T entity);
+
+  public <K extends IdentifiedEntity> K getReference(K entity, Class<K> cl) {
+    if (entity.getId() != null) {
+      return entityManager.find(cl, entity.getId());
+    } else {
+      return entity;
+    }
+  }
+
+  public <K extends IdentifiedEntity> Set<K> getReferences(Set<K> objects, Class<K> cl) {
+    return objects.stream().map(e -> getReference(e, cl)).collect(Collectors.toSet());
+  }
+
+  public <K extends IdentifiedEntity> List<K> getReferences(List<K> objects, Class<K> cl) {
+    return objects.stream().map(e -> getReference(e, cl)).collect(Collectors.toList());
+  }
+
+  @Override
+  public void delete(Long id) {
+    throw new UnsupportedOperationException("unsupported-operation-exception");
   }
 }

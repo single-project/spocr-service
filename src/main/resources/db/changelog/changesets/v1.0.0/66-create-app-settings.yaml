@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200324-92
+      author: akurutin (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: app_settings_pkey
+                  name: key
+                  type: VARCHAR(255)
+              - column:
+                  name: data
+                  type: TEXT
+            tableName: app_settings

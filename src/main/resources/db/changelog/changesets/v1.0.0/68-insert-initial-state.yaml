@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200324-94
+      author: akurutin
+      changes:
+        - sqlFile:
+            dbms: postgresql
+            encoding: UTF-8
+            path: ../../../../data/data-init-settings.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true

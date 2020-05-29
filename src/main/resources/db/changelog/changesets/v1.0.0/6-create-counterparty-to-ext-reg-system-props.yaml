@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200324-6
+      author: akurutin (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: counterparty_to_ext_reg_system_props_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: properties
+                  type: TEXT
+              - column:
+                  name: ext_reg_system_id
+                  type: BIGINT
+            tableName: counterparty_to_ext_reg_system_props

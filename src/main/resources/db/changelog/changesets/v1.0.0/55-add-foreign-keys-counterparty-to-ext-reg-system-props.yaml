@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200324-69
+      author: akurutin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: ext_reg_system_id
+            baseTableName: counterparty_to_ext_reg_system_props
+            constraintName: fk69itgah5wmhriv8g4j7hhnlh
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: ext_reg_systems
+            validate: true

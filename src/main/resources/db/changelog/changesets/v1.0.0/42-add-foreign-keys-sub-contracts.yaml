@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200324-42
+      author: akurutin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: contract_id
+            baseTableName: sub_contracts
+            constraintName: fkm7dn2w8a4c4d26wjwm28jehyc
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: contracts
+            validate: true
+  - changeSet:
+        id: 20200324-91
+        author: akurutin (generated)
+        changes:
+            - addForeignKeyConstraint:
+                  baseColumnNames: status_id
+                  baseTableName: sub_contracts
+                  constraintName: sub_contract_status_id_fk
+                  deferrable: false
+                  initiallyDeferred: false
+                  onDelete: NO ACTION
+                  onUpdate: NO ACTION
+                  referencedColumnNames: id
+                  referencedTableName: enumerations
+                  validate: true

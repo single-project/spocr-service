@@ -1,19 +1,20 @@
 package org.century.scp.spocr.manufacturer.controllers;
 
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.century.scp.spocr.manufacturer.models.domain.Manufacturer;
-import org.century.scp.spocr.manufacturer.services.ManufacturerServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.century.scp.spocr.manufacturer.models.dto.ManufacturerView;
+import org.century.scp.spocr.manufacturer.models.dto.RequestForCreateManufacturer;
+import org.century.scp.spocr.manufacturer.models.dto.RequestForUpdateManufacturer;
+import org.century.scp.spocr.manufacturer.services.ManufacturerServiceFacade;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -25,50 +26,40 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/manufactures")
+@RequestMapping("/api/manufacturers")
+@RequiredArgsConstructor
 public class ManufacturerController {
 
-  private static final String DEFAULT_SORT_FIELD = "name";
-  private static final int DEFAULT_PAGE_SIZE = 200000;
-
-  private ManufacturerServiceImpl manufacturerService;
-
-  @Autowired
-  public ManufacturerController(ManufacturerServiceImpl manufacturerService) {
-    this.manufacturerService = manufacturerService;
-  }
+  private final ManufacturerServiceFacade manufacturerService;
 
   @PostMapping
-  public ResponseEntity<Manufacturer> addItem(@RequestBody Manufacturer manufacturer) {
+  public ResponseEntity<Long> addItem(
+      @Validated @RequestBody RequestForCreateManufacturer manufacturer) {
     return ResponseEntity.ok(manufacturerService.create(manufacturer));
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<Manufacturer> updateItem(@PathVariable Long id, @RequestBody String data) {
-    return ResponseEntity.ok(manufacturerService.update(id, data));
+  public ResponseEntity updateItem(
+      @PathVariable Long id, @RequestBody RequestForUpdateManufacturer patch) {
+    manufacturerService.update(id, patch, patch.getUpdatedFields());
+    return ResponseEntity.ok().build();
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Manufacturer> getItem(@PathVariable(value = "id") long id) {
+  public ResponseEntity<ManufacturerView> getItem(@PathVariable(value = "id") long id) {
     return ResponseEntity.ok(manufacturerService.get(id));
   }
 
   @GetMapping
-  public ResponseEntity<Page<Manufacturer>> getItems(
+  public ResponseEntity<Page<ManufacturerView>> getItems(
       @And({
             @Spec(path = "name", params = "q", spec = LikeIgnoreCase.class),
+          @Spec(path = "id", params = "id", spec = Equal.class),
+          @Spec(path = "name", params = "name", spec = LikeIgnoreCase.class),
             @Spec(path = "active", params = "active", spec = Equal.class)
           })
           Specification<Manufacturer> manufacturerSpecification,
-      @PageableDefault(size = DEFAULT_PAGE_SIZE)
-          @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
-          Pageable pageable) {
-    return ResponseEntity.ok(
-        manufacturerService.getBySpecification(manufacturerSpecification, pageable));
-  }
-
-  @GetMapping(value = "/all")
-  public ResponseEntity<List<Manufacturer>> getItems() {
-    return ResponseEntity.ok(manufacturerService.getAll());
+      Pageable pageable) {
+    return ResponseEntity.ok(manufacturerService.get(manufacturerSpecification, pageable));
   }
 }

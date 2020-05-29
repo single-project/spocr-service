@@ -1,16 +1,20 @@
 package org.century.scp.spocr.security.models.domain;
 
-import static org.hibernate.annotations.LazyCollectionOption.FALSE;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -18,8 +22,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.annotations.LazyCollection;
+import org.century.scp.spocr.accesslevel.models.SystemRole;
+import org.century.scp.spocr.accesslevel.models.SystemRule;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Data
@@ -56,16 +62,36 @@ public class SecurityUser implements UserDetails, Serializable {
   @Column(name = "date_update")
   private Date update;
 
-  @OneToMany
-  @JsonIgnore
-  @JoinColumn(name = "login", referencedColumnName = "login")
-  @LazyCollection(FALSE)
-  private List<SecurityRole> roles;
+  @OneToMany(fetch = FetchType.EAGER)
+  @JoinTable(
+      name = "user_to_system_roles",
+      joinColumns = @JoinColumn(name = "user_id"),
+      inverseJoinColumns = @JoinColumn(name = "system_roles_id"))
+  private List<SystemRole> roles;
+
+  public void addRole(SystemRole role) {
+    if (roles == null) {
+      roles = new ArrayList<>();
+    }
+    roles.add(role);
+  }
+
+  public void addRoles(SystemRole... roles) {
+    if (this.roles == null) {
+      this.roles = new ArrayList<>();
+    }
+    this.roles.addAll(Arrays.asList(roles));
+  }
 
   @Override
   @JsonIgnore
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return this.roles;
+    List<SystemRule> rules = new ArrayList<>();
+    List<GrantedAuthority> authorities = new ArrayList<>();
+    roles.forEach(
+        r -> rules.addAll(Optional.ofNullable(r.getSystemRules()).orElse(Collections.emptyList())));
+    rules.forEach(r -> authorities.add(new SimpleGrantedAuthority(r.getName())));
+    return authorities;
   }
 
   @Override

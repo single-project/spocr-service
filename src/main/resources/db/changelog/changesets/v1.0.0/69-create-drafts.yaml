@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200521-95
+      author: akurutin
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: drafts_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: entity
+                  type: VARCHAR(100)
+              - column:
+                  name: username
+                  type: VARCHAR(100)
+              - column:
+                  name: ts
+                  type: TIMESTAMP WITHOUT TIME ZONE
+              - column:
+                  name: body
+                  type: TEXT
+            tableName: drafts

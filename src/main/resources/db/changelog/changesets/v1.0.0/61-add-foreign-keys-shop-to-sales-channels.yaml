@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200324-80
+      author: akurutin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: sales_channels_id
+            baseTableName: shop_to_sales_channels
+            constraintName: fk3a14ceg8qbs3y0cfc5uvhqvdl
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: sales_channels
+            validate: true
+  - changeSet:
+      id: 20200324-81
+      author: akurutin (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: shop_id
+            baseTableName: shop_to_sales_channels
+            constraintName: fkdwgk9hypug7j30bukcmxnk14i
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: shops
+            validate: true

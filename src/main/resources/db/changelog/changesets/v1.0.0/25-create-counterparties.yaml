@@ -1,0 +1,52 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200324-25
+      author: akurutin (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: counterparties_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: VERSION
+                  type: BIGINT
+              - column:
+                  name: active
+                  type: BOOLEAN
+              - column:
+                  name: comment
+                  type: VARCHAR(1000)
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: no_vat
+                  type: BOOLEAN
+                  defaultValueBoolean: true
+              - column:
+                  name: counterparty_to_ext_reg_system_props_id
+                  type: BIGINT
+              - column:
+                  name: counterparty_legal_rekv_id
+                  type: BIGINT
+              - column:
+                  name: legal_type_id
+                  type: BIGINT
+              - column:
+                  name: owner_id
+                  type: BIGINT
+              - column:
+                  name: parent_id
+                  type: BIGINT
+              - column:
+                  name: counterparty_person_id
+                  type: BIGINT
+            tableName: counterparties

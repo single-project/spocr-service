@@ -1,0 +1,49 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20200324-4
+      author: akurutin (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: legal_rekvs_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: VERSION
+                  type: BIGINT
+              - column:
+                  name: full_name
+                  type: VARCHAR(255)
+              - column:
+                  name: inn
+                  type: VARCHAR(255)
+              - column:
+                  name: kpp
+                  type: VARCHAR(255)
+              - column:
+                  name: ogrn
+                  type: VARCHAR(255)
+              - column:
+                  name: ogrn_authority
+                  type: VARCHAR(255)
+              - column:
+                  name: ogrn_date
+                  type: VARCHAR(255)
+              - column:
+                  name: okonh
+                  type: VARCHAR(255)
+              - column:
+                  name: okpo
+                  type: VARCHAR(255)
+              - column:
+                  name: short_name
+                  type: VARCHAR(255)
+              - column:
+                  name: suggestion
+                  type: TEXT
+            tableName: legal_rekvs
