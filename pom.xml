@@ -6,7 +6,7 @@
 
   <groupId>org.century.scp</groupId>
   <artifactId>spocr</artifactId>
-  <version>1.0.0-alpha</version>
+  <version>1.0.0</version>
   <packaging>war</packaging>
 
   <name>Single point of counterparties reference</name>
